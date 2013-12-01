@@ -83,8 +83,12 @@ def get_buyable_buildings(current, buildings):
     return s
 
 
-def get_buyable_upgrades(current, buildings):
+def get_buyable_upgrades(current, upgrades):
     s = set()
+    for upgrade_id in upgrades:
+        cost = upgrades[upgrade_id]["cost"]
+        if current["cookies"] >=  cost:
+            s.add(upgrade_id)
     return s
 
 
