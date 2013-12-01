@@ -175,7 +175,12 @@ def main():
 
     clock = pygame.time.Clock()
 
-    lifetime, current, buildings, upgrades, xupgrades = ex1.setup(os.path.join(GAMEDIR, "params.json"))
+    rules_filenm = os.path.join(GAMEDIR, "params.json")
+    save_filenm = os.path.join(GAMEDIR, "savegame.json")
+    save_jdat, buildings, upgrades, xupgrades = ex1.setup("savegame.json", "params.json")
+    profile_id = 0
+    lifetime = save_jdat["profiles"][profile_id]["lifetime"]
+    current = save_jdat["profiles"][profile_id]["current"]
 
     x_widget = XWidget()
     donut_widget = TheDonut()
@@ -190,6 +195,8 @@ def main():
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
+                with open(save_filenm, "w") as fp:
+                    json.dump(save_jdat, fp, indent=4)
                 running = False
 
             elif event.type == pygame.KEYDOWN and event.key == pygame.K_a:

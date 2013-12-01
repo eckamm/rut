@@ -1,0 +1,145 @@
+{
+    "profiles": [
+        {
+            "current": {
+                "cookies": 0.2780000000000062, 
+                "game_cookies": 21.278000000000077, 
+                "cpc": 1.0, 
+                "buildings": {
+                    "b1": 2, 
+                    "b2": 0
+                }, 
+                "upgrades": {
+                    "um5": false, 
+                    "um4": false, 
+                    "um1": false, 
+                    "uc1": false, 
+                    "um3": false, 
+                    "um2": false, 
+                    "uf1": false, 
+                    "uf2": false, 
+                    "uf3": false, 
+                    "uf4": false, 
+                    "uf5": false
+                }, 
+                "cps": 0.2
+            }, 
+            "lifetime": {
+                "cookies": 21.278000000000077
+            }, 
+            "name": "D"
+        }, 
+        {
+            "current": {
+                "cookies": 0.0, 
+                "cpc": 1.0, 
+                "buildings": {
+                    "b1": 0, 
+                    "b2": 0
+                }, 
+                "game_cookies": 0.0, 
+                "upgrades": {
+                    "um5": false, 
+                    "um4": false, 
+                    "um1": false, 
+                    "uc1": false, 
+                    "um3": false, 
+                    "um2": false, 
+                    "uf1": false, 
+                    "uf2": false, 
+                    "uf3": false, 
+                    "uf4": false, 
+                    "uf5": false
+                }
+            }, 
+            "lifetime": {
+                "cookies": 0.0
+            }, 
+            "name": "O"
+        }, 
+        {
+            "current": {
+                "cookies": 0.0, 
+                "cpc": 1.0, 
+                "buildings": {
+                    "b1": 0, 
+                    "b2": 0
+                }, 
+                "game_cookies": 0.0, 
+                "upgrades": {
+                    "um5": false, 
+                    "um4": false, 
+                    "um1": false, 
+                    "uc1": false, 
+                    "um3": false, 
+                    "um2": false, 
+                    "uf1": false, 
+                    "uf2": false, 
+                    "uf3": false, 
+                    "uf4": false, 
+                    "uf5": false
+                }
+            }, 
+            "lifetime": {
+                "cookies": 0.0
+            }, 
+            "name": "N"
+        }, 
+        {
+            "current": {
+                "cookies": 0.0, 
+                "cpc": 1.0, 
+                "buildings": {
+                    "b1": 0, 
+                    "b2": 0
+                }, 
+                "game_cookies": 0.0, 
+                "upgrades": {
+                    "um5": false, 
+                    "um4": false, 
+                    "um1": false, 
+                    "uc1": false, 
+                    "um3": false, 
+                    "um2": false, 
+                    "uf1": false, 
+                    "uf2": false, 
+                    "uf3": false, 
+                    "uf4": false, 
+                    "uf5": false
+                }
+            }, 
+            "lifetime": {
+                "cookies": 0.0
+            }, 
+            "name": "U"
+        }, 
+        {
+            "current": {
+                "cookies": 0.0, 
+                "cpc": 1.0, 
+                "buildings": {
+                    "b1": 0, 
+                    "b2": 0
+                }, 
+                "game_cookies": 0.0, 
+                "upgrades": {
+                    "um5": false, 
+                    "um4": false, 
+                    "um1": false, 
+                    "uc1": false, 
+                    "um3": false, 
+                    "um2": false, 
+                    "uf1": false, 
+                    "uf2": false, 
+                    "uf3": false, 
+                    "uf4": false, 
+                    "uf5": false
+                }
+            }, 
+            "lifetime": {
+                "cookies": 0.0
+            }, 
+            "name": "T"
+        }
+    ]
+}

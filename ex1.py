@@ -1,4 +1,5 @@
 import sys
+import os
 import time
 import json
 """
@@ -23,32 +24,79 @@ COST_INCR = 1.15
 PAUSE = 0.1
 
 
-def setup(filenm):
+def init_savegame(filenm):
+    """
+    Create an empty save game file.
+    """
+    jdat = {
+        "profiles": [
+            {"name": "D"},
+            {"name": "O"},
+            {"name": "N"},
+            {"name": "U"},
+            {"name": "T"},
+        ]
+    }
+    with open(filenm, "w") as fp:
+        json.dump(jdat, fp, indent=4)
 
-    with open(filenm) as fp:
+
+def sync_rules(save_filenm, buildings, upgrades):
+    """
+    Re-write the save data to be in sync with the rules.
+    """
+    # Get the current save data.
+    with open(save_filenm, "r") as fp:
         jdat = json.load(fp)
+    # Sync each profile to current rules.
+    for p in jdat["profiles"]:
+        # Replace the lifetime save state.
+        tmp = {}
+        tmp["cookies"] = p.get("lifetime", {}).get("cookies", 0.0)
+        p["lifetime"] = tmp
+        # Replace the current save state.
+        tmp = {}
+        tmp["cookies"] = p.get("current", {}).get("cookies", 0.0)
+        tmp["game_cookies"] = p.get("current", {}).get("game_cookies", 0.0)
+        tmp["cpc"] = p.get("current", {}).get("cpc", 1.0)
+        # Replace the current->buildings save state.
+        tmp["buildings"] = {}
+        for building_id in buildings:
+            tmp["buildings"][building_id] = p.get("current", {}).get("buildings", {}).get(building_id, 0)
+        # Replace the current->upgrades save state.
+        tmp["upgrades"] = {}
+        for upgrade_id in upgrades:
+            tmp["upgrades"][upgrade_id] = p.get("current", {}).get("upgrades", {}).get(upgrade_id, False)
+        p["current"] = tmp
+    # Write out the synced save data.
+    with open(save_filenm, "w") as fp:
+        json.dump(jdat, fp, indent=4)
 
-    lifetime = {
-        "cookies": 0.0
-    }
-    current = {
-        "cookies": 0.0,
-        "game_cookies": 0.0,
-        "cpc": 1.0,
-        "buildings": {
-        },
-        "upgrades": {
-        }
-    }
 
-    buildings = jdat["buildings"]
-    upgrades = jdat["upgrades"]
 
-    # Prime the current state.
-    for building_id in buildings:
-        current["buildings"][building_id] = 0
-    for upgrade_id in upgrades:
-        current["upgrades"][upgrade_id] = False
+def setup(save_filenm, rules_filenm):
+    """
+    returns (save_jdat, buildings, upgrades, xupgrades)
+    """
+
+    # Make an empty save profiles file.
+    if not os.path.exists(save_filenm):
+        init_savegame(save_filenm)
+
+    # Load the rules.
+    with open(rules_filenm) as fp:
+        rules_jdat = json.load(fp)
+    buildings = rules_jdat["buildings"]
+    upgrades = rules_jdat["upgrades"]
+
+    # Load the save data.
+    with open(save_filenm) as fp:
+        save_jdat = json.load(fp)
+    # Sync the save data to match the current rules.
+    sync_rules(save_filenm, buildings, upgrades)
+    # Load the save data.
+    with open(save_filenm) as fp:
+        save_jdat = json.load(fp)
 
     # Invert the upgrade rules to be keyed by target.
     xupgrades = {}
@@ -56,7 +104,11 @@ def setup(filenm):
         xupgrades.setdefault(rule["target"], [])
         xupgrades[rule["target"]].append(upgrade_id)
 
-    return lifetime, current, buildings, upgrades, xupgrades
+    profile_id = 0
+    lifetime = save_jdat["profiles"][profile_id]["lifetime"]
+    current = save_jdat["profiles"][profile_id]["current"]
+
+    return save_jdat, buildings, upgrades, xupgrades
 
 
 def current_costs(current, buildings):
@@ -203,7 +255,10 @@ def get_upgrade_text(current, upgrades, buildings, upgrade_id):
 
 
 def main():
-    lifetime, current, buildings, upgrades, xupgrades = setup()
+    save_jdat, buildings, upgrades, xupgrades = setup("savegame.json", "params.json")
+    profile_id = 0
+    lifetime = save_jdat["profiles"][profile_id]["lifetime"]
+    current = save_jdat["profiles"][profile_id]["current"]
 
     ctrl = {
         5: "b1",
@@ -222,8 +277,9 @@ def main():
             elif xid in current["upgrades"]:
                 current["upgrades"][xid] = True
 
-        cps = calc_cps(current, buildings, upgrades, xupgrades)
+        cps, cpc = calc_cps(current, buildings, upgrades, xupgrades)
         current["cps"] = cps
+        current["cpc"] = cpc
 
         current["cookies"] = current["cookies"] + cps * PAUSE
         lifetime["cookies"] = lifetime["cookies"] + cps * PAUSE
