@@ -139,7 +139,7 @@ def get_buyable_upgrades(current, upgrades):
         x = True
         for building_id, cnt in reqs.items():
             if building_id == "game_cookies":
-                if cnt > current["cookies"]:
+                if cnt > current["game_cookies"]:
                     x = False
             elif cnt > current["buildings"][building_id]:
                 x = False
@@ -166,12 +166,14 @@ def calc_cps(current, buildings, upgrades, xupgrades):
         cps += base
     # Special case for upgrades which don't apply to a specific building.
     building_id = "*"
+    multcpc = 1
     for upgrade_id in xupgrades.get(building_id, []):
         if current["upgrades"][upgrade_id]:
             cps += upgrades[upgrade_id].get("incr_base_cps", 0.0)
     for upgrade_id in xupgrades.get(building_id, []):
         if current["upgrades"][upgrade_id]:
             cps *= upgrades[upgrade_id].get("incr_pct", 1.0)
+            multcpc *= upgrades[upgrade_id].get("incr_pct", 1.0)
     # Special case for increasing cpc: Rename function to something else!
     building_id = "click"
     cpc = 1.0
@@ -181,6 +183,7 @@ def calc_cps(current, buildings, upgrades, xupgrades):
     for upgrade_id in xupgrades.get(building_id, []):
         if current["upgrades"][upgrade_id]:
             cpc *= upgrades[upgrade_id].get("incr_pct", 1.0)
+    cpc *= multcpc
     return cps, cpc
 
 
@@ -230,7 +233,7 @@ def get_upgrade_text(current, upgrades, buildings, upgrade_id):
     reqs = upgrades[upgrade_id]["requirements"]
     building_id, cnt = reqs.items()[0]
     if building_id == "game_cookies":
-        descr = "Requires %s game cookie" % (cnt)
+        descr = "Requires %s total donut" % (cnt)
     else:
         descr = "Requires %s %s" % (cnt, buildings[building_id]["name"])
     flavor = upgrades[upgrade_id].get("flavor", "...")
@@ -238,13 +241,17 @@ def get_upgrade_text(current, upgrades, buildings, upgrade_id):
     if upgrades[upgrade_id].get("incr_pct", "") != "":
         if building_id == "click":
             descr2 = "Multiplies click by %s" % (upgrades[upgrade_id]["incr_pct"])
+        elif building_id == "*":
+            descr2 = "Multiplies both DPS and click by %s" % (upgrades[upgrade_id]["incr_pct"])
         else:
-            descr2 = "Multiplies %s's output by %s." % (buildings[building_id]["name"], upgrades[upgrade_id]["incr_pct"])
+            descr2 = "Multiplies %s's DPS by %s." % (buildings[building_id]["name"], upgrades[upgrade_id]["incr_pct"])
     if upgrades[upgrade_id].get("incr_base_cps", "") != "":
         if building_id == "click":
             descr2 = "Adds to click by %s" % (upgrades[upgrade_id]["incr_base_cps"])
+        elif building_id == "*":
+            descr2 = "Multiplies DPS by %s" % (upgrades[upgrade_id]["incr_pct"])
         else:
-            descr2 = "Adds %s to %s's base cps." % (upgrades[upgrade_id]["incr_base_cps"], buildings[building_id]["name"])
+            descr2 = "Adds %s to %s's base DPS." % (upgrades[upgrade_id]["incr_base_cps"], buildings[building_id]["name"])
     
     if cnt > 1:
         descr += "s."

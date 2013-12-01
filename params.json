@@ -2,7 +2,8 @@
 
     "buildings": {
         "b1": {"base_cost":10, "base_cps": 0.1, "name": "Mouse", "description": "Clicks the donut for you."},
-        "b2": {"base_cost":100, "base_cps": 0.7, "name": "Fryer", "description": "Fryer for your donuts."}
+        "b2": {"base_cost":100, "base_cps": 0.7, "name": "Fryer", "description": "Fryer for your donuts."},
+        "b3": {"base_cost":600, "base_cps": 4.0, "name": "Tropical Forest", "description": "Where the donut things grow."}
     },
     "upgrades": {
         "um1": {"cost": 100, "target": "b1", "incr_pct":2.0, "requirements": {"b1":1}, "name": "American Cheese", "flavor": "Boring old American cheese."},
@@ -17,8 +18,17 @@
         "uf4": {"cost": 10000, "target": "b2", "incr_pct":2.0, "requirements": {"b2":25}, "name": "Fish Fry", "flavor": "Apparently, donuts and fish go well together."},
         "uf5": {"cost": 50000, "target": "b2", "incr_pct":2.0, "requirements": {"b2":50}, "name": "Deep Fryer", "flavor": "Submerge your donuts under twice as much oil, cooking them in half the time."},
         
-        "uc1": {"cost": 50, "target": "click", "incr_pct":2.0, "requirements": {"game_cookies":100}, "name": "Mega Click", "flavor": "Click mega. Click now."}
+        "utf1": {"cost": 3000, "target": "b3", "incr_base_cps":2.0, "requirements": {"b3":1}, "name": "Rain Dance", "flavor": "A rain dance, invented by the elders."},
+        "utf2": {"cost": 6000, "target": "b3", "incr_pct":2.0, "requirements": {"b3":5}, "name": "Two Cans", "flavor": "These two cans full of dough should help coat the island."},
+        "utf3": {"cost": 30000, "target": "b3", "incr_pct":2.0, "requirements": {"b3":10}, "name": "City of Donuts", "flavor": "Your adventurers have found the city the Spainish dreamed of."},
+        "utf4": {"cost": 60000, "target": "b3", "incr_pct":2.0, "requirements": {"b3":25}, "name": "Water-Donut Converter", "flavor": "The Amazon could use donuts."},
+        "utf5": {"cost": 300000, "target": "b3", "incr_pct":2.0, "requirements": {"b3":50}, "name": "Deforestation", "flavor": "Clear out land so you can get more donuts."},
         
+        "uc1": {"cost": 50, "target": "click", "incr_pct":2.0, "requirements": {"game_cookies":100}, "name": "Mega Click", "flavor": "Click mega. Click now."},
+        
+        "u*1": {"cost": 55, "target": "*", "incr_pct":1.25, "requirements": {"game_cookies":55}, "name": "Plain Donut", "flavor": "A plain donut that always gets eaten last in the variety pack."},
+        "u*2": {"cost": 9000, "target": "*", "incr_pct":2.0, "requirements": {"b3":5}, "name": "Coffee", "flavor": "Now your workers work double time, hyped up on coffee beans made of donut extract, found in the jungle. Let's click!"}
+
     }
 }
 
