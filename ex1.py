@@ -139,7 +139,7 @@ def get_building_text(current, buildings, building_id):
     name = buildings[building_id].get("name", building_id)
     descr = buildings[building_id].get("description", "...")
     dps = buildings[building_id]["base_cps"]
-    return "%s -- Base DPS = %s -- %s" % (name, dps, descr)
+    return "%s -- Base DPS = %s\n%s" % (name, dps, descr)
 
 
 def buy_upgrade(current, upgrades, upgrade_id):
@@ -165,7 +165,7 @@ def get_upgrade_text(current, upgrades, buildings, upgrade_id):
         descr += "s."
     else:
         descr += "."
-    return "%s -- %d donuts -- %s -- %s" % (name, upgrades[upgrade_id]["cost"], descr,flavor)
+    return "%s -- %d donuts -- %s\n%s" % (name, upgrades[upgrade_id]["cost"], descr,flavor)
 
 
 
