@@ -22,7 +22,7 @@ class XWidget:
         cookies_box.top = cps_box.bottom + 10
         surface.blit(cookies_render, cookies_box)
         
-        game_cookies_render = self._font.render("Game Donuts: %d" % self.game_cookies, True, (255,255,255))
+        game_cookies_render = self._font.render("Total Donuts: %d" % self.game_cookies, True, (255,255,255))
         game_cookies_box = game_cookies_render.get_rect()
         game_cookies_box.left = 10
         game_cookies_box.top = cookies_box.bottom + 10
@@ -214,7 +214,7 @@ def main():
         cps, cpc = ex1.calc_cps(current, buildings, upgrades, xupgrades)
         current["cps"] = cps
         current["cpc"] = cpc
-        current["cookies"] = current["cookies"] + cps * 1 / float(TICK)
+        current["cookies"] += cps * 1 / float(TICK)
         current["game_cookies"] += cps * 1 / float(TICK)
         lifetime["cookies"] += cps * 1 / float(TICK)
         status = ex1.get_status(ticks, current)
