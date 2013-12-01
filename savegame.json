@@ -2,30 +2,38 @@
     "profiles": [
         {
             "current": {
-                "cookies": 0.2780000000000062, 
-                "game_cookies": 21.278000000000077, 
-                "cpc": 1.0, 
+                "cookies": 102.21199999986891, 
+                "game_cookies": 507.2119999998309, 
+                "cpc": 2.5, 
                 "buildings": {
-                    "b1": 2, 
-                    "b2": 0
+                    "b1": 10, 
+                    "b2": 0, 
+                    "b3": 0
                 }, 
                 "upgrades": {
                     "um5": false, 
                     "um4": false, 
-                    "um1": false, 
-                    "uc1": false, 
+                    "utf3": false, 
+                    "utf2": false, 
+                    "um1": true, 
+                    "utf4": false, 
                     "um3": false, 
                     "um2": false, 
+                    "utf5": false, 
+                    "u*1": true, 
+                    "u*2": false, 
+                    "uc1": true, 
+                    "utf1": false, 
                     "uf1": false, 
                     "uf2": false, 
                     "uf3": false, 
                     "uf4": false, 
                     "uf5": false
                 }, 
-                "cps": 0.2
+                "cps": 2.5
             }, 
             "lifetime": {
-                "cookies": 21.278000000000077
+                "cookies": 507.2119999998309
             }, 
             "name": "D"
         }, 
@@ -35,16 +43,24 @@
                 "cpc": 1.0, 
                 "buildings": {
                     "b1": 0, 
-                    "b2": 0
+                    "b2": 0, 
+                    "b3": 0
                 }, 
                 "game_cookies": 0.0, 
                 "upgrades": {
                     "um5": false, 
                     "um4": false, 
+                    "utf3": false, 
+                    "utf2": false, 
                     "um1": false, 
-                    "uc1": false, 
+                    "utf4": false, 
                     "um3": false, 
                     "um2": false, 
+                    "utf5": false, 
+                    "u*1": false, 
+                    "u*2": false, 
+                    "uc1": false, 
+                    "utf1": false, 
                     "uf1": false, 
                     "uf2": false, 
                     "uf3": false, 
@@ -63,16 +79,24 @@
                 "cpc": 1.0, 
                 "buildings": {
                     "b1": 0, 
-                    "b2": 0
+                    "b2": 0, 
+                    "b3": 0
                 }, 
                 "game_cookies": 0.0, 
                 "upgrades": {
                     "um5": false, 
                     "um4": false, 
+                    "utf3": false, 
+                    "utf2": false, 
                     "um1": false, 
-                    "uc1": false, 
+                    "utf4": false, 
                     "um3": false, 
                     "um2": false, 
+                    "utf5": false, 
+                    "u*1": false, 
+                    "u*2": false, 
+                    "uc1": false, 
+                    "utf1": false, 
                     "uf1": false, 
                     "uf2": false, 
                     "uf3": false, 
@@ -91,16 +115,24 @@
                 "cpc": 1.0, 
                 "buildings": {
                     "b1": 0, 
-                    "b2": 0
+                    "b2": 0, 
+                    "b3": 0
                 }, 
                 "game_cookies": 0.0, 
                 "upgrades": {
                     "um5": false, 
                     "um4": false, 
+                    "utf3": false, 
+                    "utf2": false, 
                     "um1": false, 
-                    "uc1": false, 
+                    "utf4": false, 
                     "um3": false, 
                     "um2": false, 
+                    "utf5": false, 
+                    "u*1": false, 
+                    "u*2": false, 
+                    "uc1": false, 
+                    "utf1": false, 
                     "uf1": false, 
                     "uf2": false, 
                     "uf3": false, 
@@ -119,16 +151,24 @@
                 "cpc": 1.0, 
                 "buildings": {
                     "b1": 0, 
-                    "b2": 0
+                    "b2": 0, 
+                    "b3": 0
                 }, 
                 "game_cookies": 0.0, 
                 "upgrades": {
                     "um5": false, 
                     "um4": false, 
+                    "utf3": false, 
+                    "utf2": false, 
                     "um1": false, 
-                    "uc1": false, 
+                    "utf4": false, 
                     "um3": false, 
                     "um2": false, 
+                    "utf5": false, 
+                    "u*1": false, 
+                    "u*2": false, 
+                    "uc1": false, 
+                    "utf1": false, 
                     "uf1": false, 
                     "uf2": false, 
                     "uf3": false, 

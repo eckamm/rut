@@ -43,7 +43,7 @@ class TheDonut:
 class TheBuildings:
     def __init__(self, buildings):
         self.buildings = buildings
-        self._font = pygame.font.SysFont(None, 30)
+        self._font = pygame.font.SysFont(None, 24)
         self.boxes = []
 
     def update(self, current, building_costs):
@@ -59,12 +59,13 @@ class TheBuildings:
                 color = THECOLORS["white"]
             else:
                 color = THECOLORS["orange"]
-            render = self._font.render("%s: %d  %d" % (building_id,
-                self.building_costs[building_id],
-                self.current["buildings"][building_id]),
+            name = self.buildings[building_id].get("name", building_id)
+            render = self._font.render("%s (%d) -- Cost: %d" % (name,
+                self.current["buildings"][building_id],
+                self.building_costs[building_id]),
                 True, color)
             box = render.get_rect()
-            box.left = 2 * SCREEN_WIDTH / 5
+            box.left = 1.7 * SCREEN_WIDTH / 5
             box.centery = y
             surface.blit(render, box)
             y += box.height + 10
@@ -86,10 +87,11 @@ class TheBuildings:
 
 
 
-class TheUpgrades:
-    def __init__(self, upgrades, buildings):
+class OldTheUpgrades:
+    def __init__(self, upgrades, buildings, images):
         self.upgrades = upgrades
         self.buildings = buildings
+        self.images = images
         self._font = pygame.font.SysFont(None, 30)
         self.boxes = []
 
@@ -117,6 +119,57 @@ class TheUpgrades:
             y += box.height + 10
 
             self.boxes.append(box)
+
+    def on_click(self, pos):
+        upgrade_ids = sorted(self.upgrades.keys())
+        for box, upgrade_id in zip(self.boxes, upgrade_ids):
+            if box.collidepoint(pos):
+                ex1.buy_upgrade(self.current, self.upgrades, upgrade_id)
+
+    def on_mouseover(self, pos, rollover_widget):
+        upgrade_ids = sorted(self.upgrades.keys())
+        for box, upgrade_id in zip(self.boxes, upgrade_ids):
+            if box.collidepoint(pos):
+                text = ex1.get_upgrade_text(self.current, self.upgrades, self.buildings, upgrade_id)
+                rollover_widget.update(text)
+
+
+class TheUpgrades:
+    def __init__(self, upgrades, buildings, images):
+        self.upgrades = upgrades
+        self.buildings = buildings
+        self.images = images
+        self._font = pygame.font.SysFont(None, 30)
+        self.boxes = []
+
+    def update(self, current):
+        self.current = current
+
+    def draw(self, surface):
+        buyable = ex1.get_buyable_upgrades(self.current, self.upgrades)
+        per_row = 5
+        init_left = 3.75 * SCREEN_WIDTH / 5
+        init_centery = 30
+        left = init_left
+        self.boxes = []
+        for idx, upgrade_id in enumerate(sorted(self.upgrades.keys())):
+            row = (idx // per_row)
+            col = (idx % per_row)
+
+            if self.current["upgrades"][upgrade_id]:
+                img = self.images.imgs[1]
+            elif upgrade_id in buyable:
+                img = self.images.imgs[0]
+            else:
+                img = self.images.imgs[2]
+
+            box = img.get_rect()
+            box.left = init_left + col * box.width
+            box.centery = init_centery + row * box.height
+
+            surface.blit(img, box)
+            self.boxes.append(box)
+
 
     def on_click(self, pos):
         upgrade_ids = sorted(self.upgrades.keys())
@@ -165,6 +218,15 @@ class RolloverWidget:
         surface.blit(self.line2_render, self.line2_box)
 
 
+class Images:
+    def __init__(self):
+        nms = ["placeholder1.png", "placeholder2.png", "placeholder3.png"]
+        self.imgs = []
+        for nm in nms:
+            image_file = os.path.join(GAMEDIR, nm)
+            img = pygame.image.load(image_file)
+            self.imgs.append(img)
+
 
 def main():
     pygame.init()
@@ -174,6 +236,8 @@ def main():
     pygame.display.set_caption(app_name)
 
     clock = pygame.time.Clock()
+
+    images = Images()
 
     rules_filenm = os.path.join(GAMEDIR, "params.json")
     save_filenm = os.path.join(GAMEDIR, "savegame.json")
@@ -185,7 +249,7 @@ def main():
     x_widget = XWidget()
     donut_widget = TheDonut()
     buildings_widget = TheBuildings(buildings)
-    upgrades_widget = TheUpgrades(upgrades, buildings)
+    upgrades_widget = TheUpgrades(upgrades, buildings, images)
     rollover_widget = RolloverWidget()
 
     running = True
@@ -195,8 +259,8 @@ def main():
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                with open(save_filenm, "w") as fp:
-                    json.dump(save_jdat, fp, indent=4)
+                running = False
+            elif event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
                 running = False
 
             elif event.type == pygame.KEYDOWN and event.key == pygame.K_a:
@@ -251,6 +315,9 @@ def main():
 #       finish_timer.update((ms_elapsed/1000.0)*TICK) # FINISH: does flip() returns the ela
         pygame.event.pump()
 
+    # Save the game state to a file.
+    with open(save_filenm, "w") as fp:
+        json.dump(save_jdat, fp, indent=4)
 
 
 if __name__ == '__main__':
