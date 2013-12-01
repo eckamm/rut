@@ -1,3 +1,4 @@
-Gibberish
-Gibberish 2
-Gibberish 3
+import random
+for i in range(1000):
+    print(random.randrange(10,30))
+
