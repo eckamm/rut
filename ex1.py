@@ -31,23 +31,31 @@ def setup():
         "buildings": {
             "b1": 0,
             "b2": 0,
-            "b3": 0,
+#           "b3": 0,
         },
         "upgrades": {
             "u1": False,
             "u2": False,
-            "u3": False
+            "u3": False,
+            "u4": False,
+            "u5": False,
+            "u6": False,
         }
     }
     buildings = {
-        "b1": {"base_cost":5, "base_cps": 5.0},
-        "b2": {"base_cost":50, "base_cps": 50.0},
-        "b3": {"base_cost":150, "base_cps": 100.0},
+        "b1": {"base_cost":10, "base_cps": 0.1, "name": "Glazed Donut"},
+        "b2": {"base_cost":100, "base_cps": 0.7, "name": "Frosted Donut"},
+#       "b3": {"base_cost":150, "base_cps": 100.0},
     }
     upgrades = {
-        "u1": {"cost": 100, "target": "b1", "incr_pct":1.05},
-        "u2": {"cost": 1000, "target": "b1", "incr_base_cps": 1000},
-        "u3": {"cost": 10000, "target": "*", "incr_pct":1.05},
+        "u1": {"cost": 100, "target": "b1", "incr_pct":2.0, "requirements": {"b1":1}, "name": "Extra Glaze"},
+        "u2": {"cost": 1000, "target": "b1", "incr_pct":2.0, "requirements": {"b1":1}, "name": "Special Glaze"},
+        "u3": {"cost": 10000, "target": "b1", "incr_pct":2.0, "requirements": {"b1":10}, "name": "Premium Glaze"},
+
+        "u4": {"cost": 1000, "target": "b2", "incr_base_cps":1.3, "requirements": {"b2":1}, "name": "Extra Frosting"},
+        "u5": {"cost": 10000, "target": "b2", "incr_pct":2.0, "requirements": {"b2":1}, "name": "Special Frosting"},
+        "u6": {"cost": 100000, "target": "b2", "incr_pct":2.0, "requirements": {"b2":10}, "name": "Premium Frosting"},
+
     }
     # Invert the upgrade rules to be keyed by target.
     xupgrades = {}
@@ -55,6 +63,29 @@ def setup():
         xupgrades.setdefault(rule["target"], [])
         xupgrades[rule["target"]].append(upgrade_id)
     return lifetime, current, buildings, upgrades, xupgrades
+
+
+def current_costs(current, buildings):
+    d = {}
+    for building_id in buildings.keys():
+        d[building_id] = (buildings[building_id]["base_cost"] *
+            COST_INCR ** current["buildings"][building_id])
+    return d
+
+
+def get_buyable_buildings(current, buildings):
+    s = set()
+    building_costs = current_costs(current, buildings)
+    for building_id in buildings.keys():
+        cost = building_costs[building_id]
+        if cost <= current["cookies"]:
+            s.add(building_id)
+    return s
+
+
+def get_buyable_upgrades(current, buildings):
+    s = set()
+    return s
 
 
 def calc_cps(current, buildings, upgrades, xupgrades):
@@ -82,6 +113,7 @@ def calc_cps(current, buildings, upgrades, xupgrades):
 
 
 def get_status(ticks, current):
+    return "."
     return "%12s %10s %8s %6s %6s %6s %8s %8s %8s" % (
         ticks,
         "%.0f" % current["cookies"],
@@ -93,6 +125,50 @@ def get_status(ticks, current):
         "u2=%s" % current["upgrades"]["u2"],
         "u3=%s" % current["upgrades"]["u3"],
     )
+
+
+
+def buy_building(current, buildings, building_id):
+    building_costs = current_costs(current, buildings)
+    cost = building_costs[building_id]
+    if cost <= current["cookies"]:
+        current["cookies"] -= cost
+        current["buildings"][building_id] += 1
+        return True
+    return False
+
+
+def get_building_text(current, buildings, building_id):
+    name = buildings[building_id].get("name", building_id)
+    return name
+    #descr = buildings[building_id].get("description", "...")
+    #return "%s -- %s" % (name, descr)
+
+
+def buy_upgrade(current, upgrades, upgrade_id):
+    cost = upgrades[upgrade_id]["cost"]
+    if cost > current["cookies"]:
+        return False
+    reqs = upgrades[upgrade_id]["requirements"]
+    for building_id, cnt in reqs.items():
+        if cnt > current["buildings"][building_id]:
+            return False
+    current["cookies"] -= cost
+    current["upgrades"][upgrade_id] = True
+    return True
+
+
+def get_upgrade_text(current, upgrades, buildings, upgrade_id):
+    name = upgrades[upgrade_id].get("name", upgrade_id)
+    reqs = upgrades[upgrade_id]["requirements"]
+    building_id, cnt = reqs.items()[0]
+    descr = "Requires %s %s" % (cnt, buildings[building_id]["name"])
+    if cnt > 1:
+        descr += "s."
+    else:
+        descr += "."
+    return "%s -- %d donuts -- %s" % (name, upgrades[upgrade_id]["cost"], descr)
+
 
 
 def main():
