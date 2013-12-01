@@ -70,6 +70,7 @@ def current_costs(current, buildings):
     for building_id in buildings.keys():
         d[building_id] = (buildings[building_id]["base_cost"] *
             COST_INCR ** current["buildings"][building_id])
+        d[building_id] = long(d[building_id])
     return d
 
 
