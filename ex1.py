@@ -33,6 +33,8 @@ def setup(filenm):
     }
     current = {
         "cookies": 0.0,
+        "game_cookies": 0.0,
+        "cpc": 1.0,
         "buildings": {
         },
         "upgrades": {
@@ -84,7 +86,10 @@ def get_buyable_upgrades(current, upgrades):
         cost = upgrades[upgrade_id]["cost"]
         x = True
         for building_id, cnt in reqs.items():
-            if cnt > current["buildings"][building_id]:
+            if building_id == "game_cookies":
+                if cnt > current["cookies"]:
+                    x = False
+            elif cnt > current["buildings"][building_id]:
                 x = False
                 break
         if current["cookies"] >=  cost and x:
@@ -115,7 +120,16 @@ def calc_cps(current, buildings, upgrades, xupgrades):
     for upgrade_id in xupgrades.get(building_id, []):
         if current["upgrades"][upgrade_id]:
             cps *= upgrades[upgrade_id].get("incr_pct", 1.0)
-    return cps
+    # Special case for increasing cpc: Rename function to something else!
+    building_id = "click"
+    cpc = 1.0
+    for upgrade_id in xupgrades.get(building_id, []):
+        if current["upgrades"][upgrade_id]:
+            cpc += upgrades[upgrade_id].get("incr_base_cps", 0.0)
+    for upgrade_id in xupgrades.get(building_id, []):
+        if current["upgrades"][upgrade_id]:
+            cpc *= upgrades[upgrade_id].get("incr_pct", 1.0)
+    return cps, cpc
 
 
 def get_status(ticks, current):
@@ -152,15 +166,10 @@ def get_building_text(current, buildings, building_id):
 
 
 def buy_upgrade(current, upgrades, upgrade_id):
-    cost = upgrades[upgrade_id]["cost"]
-    if cost > current["cookies"]:
-        return False
-    reqs = upgrades[upgrade_id]["requirements"]
-    for building_id, cnt in reqs.items():
-        if cnt > current["buildings"][building_id]:
-            return False
-    current["cookies"] -= cost
-    current["upgrades"][upgrade_id] = True
+    if upgrade_id in get_buyable_upgrades(current, upgrades):
+        cost = upgrades[upgrade_id]["cost"]
+        current["cookies"] -= cost
+        current["upgrades"][upgrade_id] = True
     return True
 
 
@@ -171,7 +180,7 @@ def get_upgrade_text(current, upgrades, buildings, upgrade_id):
     descr = "Requires %s %s" % (cnt, buildings[building_id]["name"])
     flavor = upgrades[upgrade_id].get("flavor", "...")
     if upgrades[upgrade_id].get("incr_pct", "") != "":
-        descr2 = "Multiples %s's output by %s." % (buildings[building_id]["name"], upgrades[upgrade_id]["incr_pct"])
+        descr2 = "Multiplies %s's output by %s." % (buildings[building_id]["name"], upgrades[upgrade_id]["incr_pct"])
     if upgrades[upgrade_id].get("incr_base_cps", "") != "":
         descr2 = "Adds %s to %s's base cps." % (upgrades[upgrade_id]["incr_base_cps"], buildings[building_id]["name"])
     

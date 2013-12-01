@@ -6,6 +6,7 @@ class XWidget:
     def __init__(self):
         self.cps = 0
         self.cookies = 0
+        self.game_cookies = 0
         self._font = pygame.font.SysFont(None, 30)
 
     def draw(self, surface):
@@ -20,6 +21,12 @@ class XWidget:
         cookies_box.left = 10
         cookies_box.top = cps_box.bottom + 10
         surface.blit(cookies_render, cookies_box)
+        
+        game_cookies_render = self._font.render("Game Donuts: %d" % self.game_cookies, True, (255,255,255))
+        game_cookies_box = game_cookies_render.get_rect()
+        game_cookies_box.left = 10
+        game_cookies_box.top = cookies_box.bottom + 10
+        surface.blit(game_cookies_render, game_cookies_box)
 
 
 class TheDonut:
@@ -186,11 +193,15 @@ def main():
                 running = False
 
             elif event.type == pygame.KEYDOWN and event.key == pygame.K_a:
-                current["buildings"]["b1"] += 1
+                current["cookies"] += 100000
+                current["game_cookies"] += 100000
+                lifetime["cookies"] += 100000
 
             elif event.type == pygame.MOUSEBUTTONDOWN and event.button == LEFTBUTTON:
                 if donut_widget.box.collidepoint(event.pos):
-                    current["cookies"] += 1
+                    current["cookies"] += current["cpc"]
+                    current["game_cookies"] += current["cpc"]
+                    lifetime["cookies"] += current["cpc"]
                 else:
                     buildings_widget.on_click(event.pos)
                     upgrades_widget.on_click(event.pos)
@@ -200,10 +211,12 @@ def main():
                 upgrades_widget.on_mouseover(event.pos, rollover_widget)
 
 
-        cps = ex1.calc_cps(current, buildings, upgrades, xupgrades)
+        cps, cpc = ex1.calc_cps(current, buildings, upgrades, xupgrades)
         current["cps"] = cps
+        current["cpc"] = cpc
         current["cookies"] = current["cookies"] + cps * 1 / float(TICK)
-        lifetime["cookies"] = lifetime["cookies"] + cps * 1 / float(TICK)
+        current["game_cookies"] += cps * 1 / float(TICK)
+        lifetime["cookies"] += cps * 1 / float(TICK)
         status = ex1.get_status(ticks, current)
         building_costs = ex1.current_costs(current, buildings)
         print >>sys.stderr, ("\r"+status),
@@ -213,6 +226,7 @@ def main():
 
         x_widget.cps = current["cps"]
         x_widget.cookies = current["cookies"]
+        x_widget.game_cookies = current["game_cookies"]
 
         buildings_widget.update(current, building_costs)
         upgrades_widget.update(current)
