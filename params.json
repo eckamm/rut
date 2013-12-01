@@ -3,7 +3,8 @@
     "buildings": {
         "b1": {"base_cost":10, "base_cps": 0.1, "name": "Mouse", "description": "Clicks the donut for you."},
         "b2": {"base_cost":100, "base_cps": 0.7, "name": "Fryer", "description": "Fryer for your donuts."},
-        "b3": {"base_cost":600, "base_cps": 4.0, "name": "Tropical Forest", "description": "Where the donut things grow."}
+        "b3": {"base_cost":600, "base_cps": 4.0, "name": "Tropical Forest", "description": "Where the donut things grow."},
+        "b4": {"base_cost":2000, "base_cps": 16.0, "name": "Fishing Vessel", "description": "Fishing for donuts."}
     },
     "upgrades": {
         "um1": {"cost": 100, "target": "b1", "incr_pct":2.0, "requirements": {"b1":1}, "name": "American Cheese", "flavor": "Boring old American cheese."},
@@ -24,7 +25,17 @@
         "utf4": {"cost": 60000, "target": "b3", "incr_pct":2.0, "requirements": {"b3":25}, "name": "Water-Donut Converter", "flavor": "The Amazon could use donuts."},
         "utf5": {"cost": 300000, "target": "b3", "incr_pct":2.0, "requirements": {"b3":50}, "name": "Deforestation", "flavor": "Clear out land so you can get more donuts."},
         
-        "uc1": {"cost": 50, "target": "click", "incr_pct":2.0, "requirements": {"game_cookies":100}, "name": "Mega Click", "flavor": "Click mega. Click now."},
+        "ufv1": {"cost": 10000, "target": "b4", "incr_base_cps":5.0, "requirements": {"b4":1}, "name": "Canoe", "flavor": "A small boat to fish for more cookies."},
+        "ufv2": {"cost": 20000, "target": "b4", "incr_pct":2.0, "requirements": {"b4":1}, "name": "Motorboat", "flavor": "A small, powerful boat to fish for more cookies."},
+        "ufv3": {"cost": 100000, "target": "b4", "incr_pct":2.0, "requirements": {"b4":1}, "name": "Steam Ship", "flavor": "A large boat to fish for more cookies."},
+        "ufv4": {"cost": 200000, "target": "b4", "incr_pct":2.0, "requirements": {"b4":1}, "name": "Submarine", "flavor": "A large, underwater boat to fish for deep-sea cookies."},
+        "ufv5": {"cost": 1000000, "target": "b4", "incr_pct":2.0, "requirements": {"b4":1}, "name": "Hydro-fission Ship", "flavor": "A large, extraordinarily powerful boat to fish for more cookies."},
+        
+        "uc1": {"cost": 50, "target": "click", "incr_pct":2.0, "requirements": {"game_cookies":100}, "name": "Bit Click", "flavor": "One click."},
+        "uc2": {"cost": 100, "target": "click", "incr_pct":2.0, "requirements": {"game_cookies":200}, "name": "Byte Click", "flavor": "A few clicks."},
+        "uc3": {"cost": 200, "target": "click", "incr_pct":2.0, "requirements": {"game_cookies":400}, "name": "Kilo Click", "flavor": "Some clicks."},
+        "uc4": {"cost": 400, "target": "click", "incr_pct":2.0, "requirements": {"game_cookies":800}, "name": "Mega Click", "flavor": "More clicks."},
+        "uc5": {"cost": 800, "target": "click", "incr_pct":2.0, "requirements": {"game_cookies":1600}, "name": "Giga Click", "flavor": "A lot of clicks."},
         
         "u*1": {"cost": 55, "target": "*", "incr_pct":1.25, "requirements": {"game_cookies":55}, "name": "Plain Donut", "flavor": "A plain donut that always gets eaten last in the variety pack."},
         "u*2": {"cost": 9000, "target": "*", "incr_pct":2.0, "requirements": {"b3":5}, "name": "Coffee", "flavor": "Now your workers work double time, hyped up on coffee beans made of donut extract, found in the jungle. Let's click!"}
