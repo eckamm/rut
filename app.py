@@ -5,6 +5,7 @@ from common import *
 class XWidget:
     def __init__(self):
         self.cps = 0
+        self.cpc = 1
         self.cookies = 0
         self.game_cookies = 0
         self._font = pygame.font.SysFont(None, 30)
@@ -16,10 +17,16 @@ class XWidget:
         cps_box.centery = 20
         surface.blit(cps_render, cps_box)
 
+        cpc_render = self._font.render("DPC: %.1f" % self.cpc, True, (255,255,255))
+        cpc_box = cpc_render.get_rect()
+        cpc_box.left = 10
+        cpc_box.top = cps_box.bottom + 10
+        surface.blit(cpc_render, cpc_box)
+
         cookies_render = self._font.render("Donuts: %d" % self.cookies, True, (255,255,255))
         cookies_box = cookies_render.get_rect()
         cookies_box.left = 10
-        cookies_box.top = cps_box.bottom + 10
+        cookies_box.top = cpc_box.bottom + 10
         surface.blit(cookies_render, cookies_box)
         
         game_cookies_render = self._font.render("Total Donuts: %d" % self.game_cookies, True, (255,255,255))
@@ -296,6 +303,7 @@ def main():
         screen.fill(THECOLORS["blue"])
 
         x_widget.cps = current["cps"]
+        x_widget.cpc = current["cpc"]
         x_widget.cookies = current["cookies"]
         x_widget.game_cookies = current["game_cookies"]
 
