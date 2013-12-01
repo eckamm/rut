@@ -128,7 +128,7 @@ class TheUpgrades:
 
 class RolloverWidget:
     def __init__(self):
-        self._font = pygame.font.SysFont(None, 30)
+        self._font = pygame.font.SysFont(None, 20)
         self.text = None
         self.update("")
 

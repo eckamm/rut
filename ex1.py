@@ -160,11 +160,12 @@ def get_upgrade_text(current, upgrades, buildings, upgrade_id):
     reqs = upgrades[upgrade_id]["requirements"]
     building_id, cnt = reqs.items()[0]
     descr = "Requires %s %s" % (cnt, buildings[building_id]["name"])
+    flavor = upgrades[upgrade_id].get("flavor", "...")
     if cnt > 1:
         descr += "s."
     else:
         descr += "."
-    return "%s -- %d donuts -- %s" % (name, upgrades[upgrade_id]["cost"], descr)
+    return "%s -- %d donuts -- %s -- %s" % (name, upgrades[upgrade_id]["cost"], descr,flavor)
 
 
 
