@@ -177,12 +177,22 @@ def get_upgrade_text(current, upgrades, buildings, upgrade_id):
     name = upgrades[upgrade_id].get("name", upgrade_id)
     reqs = upgrades[upgrade_id]["requirements"]
     building_id, cnt = reqs.items()[0]
-    descr = "Requires %s %s" % (cnt, buildings[building_id]["name"])
+    if building_id == "game_cookies":
+        descr = "Requires %s game cookie" % (cnt)
+    else:
+        descr = "Requires %s %s" % (cnt, buildings[building_id]["name"])
     flavor = upgrades[upgrade_id].get("flavor", "...")
+    building_id = upgrades[upgrade_id]["target"]
     if upgrades[upgrade_id].get("incr_pct", "") != "":
-        descr2 = "Multiplies %s's output by %s." % (buildings[building_id]["name"], upgrades[upgrade_id]["incr_pct"])
+        if building_id == "click":
+            descr2 = "Multiplies click by %s" % (upgrades[upgrade_id]["incr_pct"])
+        else:
+            descr2 = "Multiplies %s's output by %s." % (buildings[building_id]["name"], upgrades[upgrade_id]["incr_pct"])
     if upgrades[upgrade_id].get("incr_base_cps", "") != "":
-        descr2 = "Adds %s to %s's base cps." % (upgrades[upgrade_id]["incr_base_cps"], buildings[building_id]["name"])
+        if building_id == "click":
+            descr2 = "Adds to click by %s" % (upgrades[upgrade_id]["incr_base_cps"])
+        else:
+            descr2 = "Adds %s to %s's base cps." % (upgrades[upgrade_id]["incr_base_cps"], buildings[building_id]["name"])
     
     if cnt > 1:
         descr += "s."

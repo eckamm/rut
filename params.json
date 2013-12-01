@@ -15,9 +15,9 @@
         "uf2": {"cost": 1000, "target": "b2", "incr_pct":2.0, "requirements": {"b2":5}, "name": "Petroleum Oil", "flavor": "Now you can contribute to global warming too!"},
         "uf3": {"cost": 5000, "target": "b2", "incr_pct":2.0, "requirements": {"b2":10}, "name": "French Fryer", "flavor": "Fryers from France are proven to be twice as efficent as those from anywhere else."},
         "uf4": {"cost": 10000, "target": "b2", "incr_pct":2.0, "requirements": {"b2":25}, "name": "Fish Fry", "flavor": "Apparently, donuts and fish go well together."},
-        "uf5": {"cost": 50000, "target": "b2", "incr_pct":2.0, "requirements": {"b2":50}, "name": "Deep Fryer", "flavor": "Submerge your donuts under twice as much oil, cooking them in half the time."}
+        "uf5": {"cost": 50000, "target": "b2", "incr_pct":2.0, "requirements": {"b2":50}, "name": "Deep Fryer", "flavor": "Submerge your donuts under twice as much oil, cooking them in half the time."},
         
-        
+        "uc1": {"cost": 50, "target": "click", "incr_pct":2.0, "requirements": {"game_cookies":100}, "name": "Mega Click", "flavor": "Click mega. Click now."}
         
     }
 }
