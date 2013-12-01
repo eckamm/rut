@@ -15,6 +15,7 @@ local.properties
 .classpath
 .settings/
 .loadpath
+savegame.json
 
 # External tool builders
 .externalToolBuilders/
