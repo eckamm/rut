@@ -138,6 +138,9 @@ class RolloverWidget:
         if line1 == self.line1 and line2 == self.line2:
             return
 
+        self.line1 = line1
+        self.line2 = line2
+
         self.line2_render = self._font.render(self.line2, True, (155,155,155))
         self.line2_box = self.line2_render.get_rect()
         self.line2_box.bottom = SCREEN_HEIGHT - 10
@@ -145,7 +148,7 @@ class RolloverWidget:
 
         self.line1_render = self._font.render(self.line1, True, (255,255,255))
         self.line1_box = self.line1_render.get_rect()
-        self.line1_box.bottom = self.line2_box.top + 10
+        self.line1_box.bottom = self.line2_box.top - 10
         self.line1_box.centerx = SCREEN_WIDTH / 2
 
 
