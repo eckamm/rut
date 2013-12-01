@@ -129,9 +129,9 @@ class TheUpgrades:
 class RolloverWidget:
     def __init__(self):
         self._font = pygame.font.SysFont(None, 20)
-        self.line1 = ""
-        self.line2 = ""
-        self.update("")
+        self.line1 = "."
+        self.line2 = "."
+        self.update("\n")
 
     def update(self, text):
         line1, line2 = text.split("\n", 1)
@@ -139,12 +139,12 @@ class RolloverWidget:
             return
 
         self.line2_render = self._font.render(self.line2, True, (155,155,155))
-        self.line2_box = self.render.get_rect()
+        self.line2_box = self.line2_render.get_rect()
         self.line2_box.bottom = SCREEN_HEIGHT - 10
         self.line2_box.centerx = SCREEN_WIDTH / 2
 
         self.line1_render = self._font.render(self.line1, True, (255,255,255))
-        self.line1_box = self.render.get_rect()
+        self.line1_box = self.line1_render.get_rect()
         self.line1_box.bottom = self.line2_box.top + 10
         self.line1_box.centerx = SCREEN_WIDTH / 2
 
