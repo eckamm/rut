@@ -32,10 +32,10 @@
         "ufv5": {"cost": 1000000, "target": "b4", "incr_pct":2.0, "requirements": {"b4":1}, "name": "Hydro-fission Ship", "flavor": "A large, extraordinarily powerful boat to fish for more cookies."},
         
         "uc1": {"cost": 50, "target": "click", "incr_pct":2.0, "requirements": {"game_cookies":100}, "name": "Bit Click", "flavor": "One click."},
-        "uc2": {"cost": 100, "target": "click", "incr_pct":2.0, "requirements": {"game_cookies":200}, "name": "Byte Click", "flavor": "A few clicks."},
-        "uc3": {"cost": 200, "target": "click", "incr_pct":2.0, "requirements": {"game_cookies":400}, "name": "Kilo Click", "flavor": "Some clicks."},
-        "uc4": {"cost": 400, "target": "click", "incr_pct":2.0, "requirements": {"game_cookies":800}, "name": "Mega Click", "flavor": "More clicks."},
-        "uc5": {"cost": 800, "target": "click", "incr_pct":2.0, "requirements": {"game_cookies":1600}, "name": "Giga Click", "flavor": "A lot of clicks."},
+        "uc2": {"cost": 200, "target": "click", "incr_pct":2.0, "requirements": {"game_cookies":400}, "name": "Byte Click", "flavor": "A few clicks."},
+        "uc3": {"cost": 800, "target": "click", "incr_pct":2.0, "requirements": {"game_cookies":1600}, "name": "Kilo Click", "flavor": "Some clicks."},
+        "uc4": {"cost": 3200, "target": "click", "incr_pct":2.0, "requirements": {"game_cookies":6400}, "name": "Mega Click", "flavor": "More clicks."},
+        "uc5": {"cost": 12800, "target": "click", "incr_pct":2.0, "requirements": {"game_cookies":25600}, "name": "Giga Click", "flavor": "A lot of clicks."},
         
         "u*1": {"cost": 55, "target": "*", "incr_pct":1.25, "requirements": {"game_cookies":55}, "name": "Plain Donut", "flavor": "A plain donut that always gets eaten last in the variety pack."},
         "u*2": {"cost": 9000, "target": "*", "incr_pct":2.0, "requirements": {"b3":5}, "name": "Coffee", "flavor": "Now your workers work double time, hyped up on coffee beans made of donut extract, found in the jungle. Let's click!"}
