@@ -73,15 +73,24 @@ def get_buyable_buildings(current, buildings):
         cost = building_costs[building_id]
         if cost <= current["cookies"]:
             s.add(building_id)
+    
     return s
 
 
 def get_buyable_upgrades(current, upgrades):
     s = set()
     for upgrade_id in upgrades:
+        reqs = upgrades[upgrade_id]["requirements"]
         cost = upgrades[upgrade_id]["cost"]
-        if current["cookies"] >=  cost:
+        x = True
+        for building_id, cnt in reqs.items():
+            if cnt > current["buildings"][building_id]:
+                x = False
+                break
+        if current["cookies"] >=  cost and x:
             s.add(upgrade_id)
+    
+    
     return s
 
 
@@ -161,11 +170,16 @@ def get_upgrade_text(current, upgrades, buildings, upgrade_id):
     building_id, cnt = reqs.items()[0]
     descr = "Requires %s %s" % (cnt, buildings[building_id]["name"])
     flavor = upgrades[upgrade_id].get("flavor", "...")
+    if upgrades[upgrade_id].get("incr_pct", "") != "":
+        descr2 = "Multiples %s's output by %s." % (buildings[building_id]["name"], upgrades[upgrade_id]["incr_pct"])
+    if upgrades[upgrade_id].get("incr_base_cps", "") != "":
+        descr2 = "Adds %s to %s's base cps." % (upgrades[upgrade_id]["incr_base_cps"], buildings[building_id]["name"])
+    
     if cnt > 1:
         descr += "s."
     else:
         descr += "."
-    return "%s -- %d donuts -- %s\n%s" % (name, upgrades[upgrade_id]["cost"], descr,flavor)
+    return "%s -- %d donuts -- %s -- %s\n%s" % (name, upgrades[upgrade_id]["cost"], descr, descr2,flavor)
 
 
 
