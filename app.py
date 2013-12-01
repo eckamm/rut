@@ -129,20 +129,30 @@ class TheUpgrades:
 class RolloverWidget:
     def __init__(self):
         self._font = pygame.font.SysFont(None, 20)
-        self.text = None
+        self.line1 = ""
+        self.line2 = ""
         self.update("")
 
     def update(self, text):
-        if text == self.text:
+        line1, line2 = text.split("\n", 1)
+        if line1 == self.line1 and line2 == self.line2:
             return
-        self.text = text
-        self.render = self._font.render(self.text, True, (255,255,255))
-        self.box = self.render.get_rect()
-        self.box.bottom = SCREEN_HEIGHT - 10
-        self.box.centerx = SCREEN_WIDTH / 2
+
+        self.line2_render = self._font.render(self.line2, True, (155,155,155))
+        self.line2_box = self.render.get_rect()
+        self.line2_box.bottom = SCREEN_HEIGHT - 10
+        self.line2_box.centerx = SCREEN_WIDTH / 2
+
+        self.line1_render = self._font.render(self.line1, True, (255,255,255))
+        self.line1_box = self.render.get_rect()
+        self.line1_box.bottom = self.line2_box.top + 10
+        self.line1_box.centerx = SCREEN_WIDTH / 2
+
+
 
     def draw(self, surface):
-        surface.blit(self.render, self.box)
+        surface.blit(self.line1_render, self.line1_box)
+        surface.blit(self.line2_render, self.line2_box)
 
 
 
