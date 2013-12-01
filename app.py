@@ -92,10 +92,17 @@ class TheUpgrades:
     def draw(self, surface):
         y = 20
         self.boxes = []
+        buyable = ex1.get_buyable_upgrades(self.current, self.upgrades)
         for upgrade_id in sorted(self.upgrades.keys()):
+            if self.current["upgrades"][upgrade_id]:
+                color = THECOLORS["green"]
+            elif upgrade_id in buyable:
+                color = THECOLORS["white"]
+            else:
+                color = THECOLORS["orange"]
             render = self._font.render("%s: %s" % (upgrade_id,
                 self.current["upgrades"][upgrade_id]),
-                True, (255,255,255))
+                True, color)
             box = render.get_rect()
             box.left = 4 * SCREEN_WIDTH / 5
             box.centery = y
