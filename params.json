@@ -1,0 +1,17 @@
+{
+
+    "buildings": {
+        "b1": {"base_cost":10, "base_cps": 0.1, "name": "Glazed Donut", "description": "..."},
+        "b2": {"base_cost":100, "base_cps": 0.7, "name": "Frosted Donut", "description": "Much more valuable than glaze, frosting originated in Donutavia."}
+    },
+    "upgrades": {
+        "u1": {"cost": 100, "target": "b1", "incr_pct":2.0, "requirements": {"b1":1}, "name": "Extra Glaze"},
+        "u2": {"cost": 1000, "target": "b1", "incr_pct":2.0, "requirements": {"b1":1}, "name": "Special Glaze"},
+        "u3": {"cost": 10000, "target": "b1", "incr_pct":2.0, "requirements": {"b1":10}, "name": "Premium Glaze"},
+
+        "u4": {"cost": 1000, "target": "b2", "incr_base_cps":1.3, "requirements": {"b2":1}, "name": "Extra Frosting"},
+        "u5": {"cost": 10000, "target": "b2", "incr_pct":2.0, "requirements": {"b2":1}, "name": "Special Frosting"},
+        "u6": {"cost": 100000, "target": "b2", "incr_pct":2.0, "requirements": {"b2":10}, "name": "Premium Frosting"}
+    }
+}
+

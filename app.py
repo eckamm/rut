@@ -155,7 +155,7 @@ def main():
 
     clock = pygame.time.Clock()
 
-    lifetime, current, buildings, upgrades, xupgrades = ex1.setup()
+    lifetime, current, buildings, upgrades, xupgrades = ex1.setup(os.path.join(GAMEDIR, "params.json"))
 
     x_widget = XWidget()
     donut_widget = TheDonut()

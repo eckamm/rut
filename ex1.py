@@ -1,5 +1,6 @@
 import sys
 import time
+import json
 """
 lifetime
     cookies
@@ -22,46 +23,37 @@ COST_INCR = 1.15
 PAUSE = 0.1
 
 
-def setup():
+def setup(filenm):
+
+    with open(filenm) as fp:
+        jdat = json.load(fp)
+
     lifetime = {
         "cookies": 0.0
     }
     current = {
         "cookies": 0.0,
         "buildings": {
-            "b1": 0,
-            "b2": 0,
-#           "b3": 0,
         },
         "upgrades": {
-            "u1": False,
-            "u2": False,
-            "u3": False,
-            "u4": False,
-            "u5": False,
-            "u6": False,
         }
     }
-    buildings = {
-        "b1": {"base_cost":10, "base_cps": 0.1, "name": "Glazed Donut", "description": "..."},
-        "b2": {"base_cost":100, "base_cps": 0.7, "name": "Frosted Donut", "description": "Much more valuable than glaze, frosting originated in Donutavia."},
-#       "b3": {"base_cost":150, "base_cps": 100.0},
-    }
-    upgrades = {
-        "u1": {"cost": 100, "target": "b1", "incr_pct":2.0, "requirements": {"b1":1}, "name": "Extra Glaze"},
-        "u2": {"cost": 1000, "target": "b1", "incr_pct":2.0, "requirements": {"b1":1}, "name": "Special Glaze"},
-        "u3": {"cost": 10000, "target": "b1", "incr_pct":2.0, "requirements": {"b1":10}, "name": "Premium Glaze"},
 
-        "u4": {"cost": 1000, "target": "b2", "incr_base_cps":1.3, "requirements": {"b2":1}, "name": "Extra Frosting"},
-        "u5": {"cost": 10000, "target": "b2", "incr_pct":2.0, "requirements": {"b2":1}, "name": "Special Frosting"},
-        "u6": {"cost": 100000, "target": "b2", "incr_pct":2.0, "requirements": {"b2":10}, "name": "Premium Frosting"},
+    buildings = jdat["buildings"]
+    upgrades = jdat["upgrades"]
 
-    }
+    # Prime the current state.
+    for building_id in buildings:
+        current["buildings"][building_id] = 0
+    for upgrade_id in upgrades:
+        current["upgrades"][upgrade_id] = False
+
     # Invert the upgrade rules to be keyed by target.
     xupgrades = {}
     for upgrade_id, rule in upgrades.items():
         xupgrades.setdefault(rule["target"], [])
         xupgrades[rule["target"]].append(upgrade_id)
+
     return lifetime, current, buildings, upgrades, xupgrades
 
 
