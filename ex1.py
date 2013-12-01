@@ -43,8 +43,8 @@ def setup():
         }
     }
     buildings = {
-        "b1": {"base_cost":10, "base_cps": 0.1, "name": "Glazed Donut"},
-        "b2": {"base_cost":100, "base_cps": 0.7, "name": "Frosted Donut"},
+        "b1": {"base_cost":10, "base_cps": 0.1, "name": "Glazed Donut", "description": "..."},
+        "b2": {"base_cost":100, "base_cps": 0.7, "name": "Frosted Donut", "description": "Much more valuable than glaze, frosting originated in Donutavia."},
 #       "b3": {"base_cost":150, "base_cps": 100.0},
     }
     upgrades = {
@@ -144,9 +144,9 @@ def buy_building(current, buildings, building_id):
 
 def get_building_text(current, buildings, building_id):
     name = buildings[building_id].get("name", building_id)
-    return name
-    #descr = buildings[building_id].get("description", "...")
-    #return "%s -- %s" % (name, descr)
+    descr = buildings[building_id].get("description", "...")
+    dps = buildings[building_id]["base_cps"]
+    return "%s -- Base DPS = %s -- %s" % (name, dps, descr)
 
 
 def buy_upgrade(current, upgrades, upgrade_id):
