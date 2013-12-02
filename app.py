@@ -95,53 +95,6 @@ class TheBuildings:
 
 
 
-class OldTheUpgrades:
-    def __init__(self, upgrades, buildings, images):
-        self.upgrades = upgrades
-        self.buildings = buildings
-        self.images = images
-        self._font = pygame.font.SysFont(None, 30)
-        self.boxes = []
-
-    def update(self, current):
-        self.current = current
-
-    def draw(self, surface):
-        y = 20
-        self.boxes = []
-        buyable = ex1.get_buyable_upgrades(self.current, self.upgrades)
-        for upgrade_id in sorted(self.upgrades.keys()):
-            if self.current["upgrades"][upgrade_id]:
-                color = THECOLORS["green"]
-            elif upgrade_id in buyable:
-                color = THECOLORS["white"]
-            else:
-                color = THECOLORS["orange"]
-            render = self._font.render("%s: %s" % (upgrade_id,
-                self.current["upgrades"][upgrade_id]),
-                True, color)
-            box = render.get_rect()
-            box.left = 4 * SCREEN_WIDTH / 5
-            box.centery = y
-            surface.blit(render, box)
-            y += box.height + 10
-
-            self.boxes.append(box)
-
-    def on_click(self, pos):
-        upgrade_ids = sorted(self.upgrades.keys())
-        for box, upgrade_id in zip(self.boxes, upgrade_ids):
-            if box.collidepoint(pos):
-                ex1.buy_upgrade(self.current, self.upgrades, upgrade_id)
-
-    def on_mouseover(self, pos, rollover_widget):
-        upgrade_ids = sorted(self.upgrades.keys())
-        for box, upgrade_id in zip(self.boxes, upgrade_ids):
-            if box.collidepoint(pos):
-                text = ex1.get_upgrade_text(self.current, self.upgrades, self.buildings, upgrade_id)
-                rollover_widget.update(text)
-
-
 class TheUpgrades:
     def __init__(self, upgrades, buildings, images):
         self.upgrades = upgrades
@@ -156,8 +109,8 @@ class TheUpgrades:
     def draw(self, surface):
         buyable = ex1.get_buyable_upgrades(self.current, self.upgrades, can_buy=True)
         buyable2 = ex1.get_buyable_upgrades(self.current, self.upgrades, can_buy=False)
-        per_row = 5
-        init_left = 3.75 * SCREEN_WIDTH / 5
+        per_row = 6
+        init_left = 3.7 * SCREEN_WIDTH / 5
         init_centery = 30
         left = init_left
         self.boxes = []
