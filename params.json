@@ -5,7 +5,8 @@
         "b2": {"base_cost":100, "base_cps": 0.7, "name": "Fryer", "description": "Fryer for your donuts."},
         "b3": {"base_cost":600, "base_cps": 4.0, "name": "Tropical Forest", "description": "Where the donut things grow."},
         "b4": {"base_cost":2000, "base_cps": 16.0, "name": "Fishing Vessel", "description": "Fishing for donuts."},
-        "b5": {"base_cost":10000, "base_cps": 45.0, "name": "Quarry", "description": "A quarry, to mine donuts from."}
+        "b5": {"base_cost":10000, "base_cps": 45.0, "name": "Quarry", "description": "A quarry, to mine donuts from."},
+        "b6": {"base_cost":50000, "base_cps": 115.0, "name": "Extraction", "description": "A fleet of spaceships, extracting cookies from various sources."}
     },
     "upgrades": {
         "um1": {"cost": 100, "target": "b1", "incr_pct":2.0, "requirements": {"b1":1}, "name": "American Cheese", "flavor": "Boring old American cheese."},
@@ -37,6 +38,12 @@
         "uq3": {"cost": 500000, "target": "b5", "incr_pct":2.0, "requirements": {"b5":10}, "name": "Iron Tools", "flavor": "So-so tools."},
         "uq4": {"cost": 1000000, "target": "b5", "incr_pct":2.0, "requirements": {"b5":25}, "name": "Diamond Tools", "flavor": "Strong tools."},
         "uq5": {"cost": 5000000, "target": "b5", "incr_pct":2.0, "requirements": {"b5":50}, "name": "Obsidian Tools", "flavor": "Nearly unbreakable tools."},
+        
+        "ucet1": {"cost": 100000, "target": "b6", "incr_base_cps":30.0, "requirements": {"b6":1}, "name": "Launch Pad", "flavor": "Blast off!"},
+        "ucet2": {"cost": 500000, "target": "b6", "incr_pct":2.0, "requirements": {"b6":5}, "name": "Control Cabin", "flavor": "In a rocket ship."},
+        "ucet3": {"cost": 1000000, "target": "b6", "incr_pct":2.0, "requirements": {"b6":10}, "name": "Entrance Prize", "flavor": "A large spaceship to go where no one has gone before."},
+        "ucet4": {"cost": 5000000, "target": "b6", "incr_pct":2.0, "requirements": {"b6":25}, "name": "Cheese-Dough Converter", "flavor": "With the moon being made of cheese, we thought we should cash in."},
+        "ucet5": {"cost": 10000000, "target": "b6", "incr_pct":2.0, "requirements": {"b6":50}, "name": "Warp Drive", "flavor": "Makes ships 100% faster. Also has a tendency to break when you need it most."},
         
         "uc1": {"cost": 50, "target": "click", "incr_pct":2.0, "requirements": {"game_cookies":100}, "name": "Bit Click", "flavor": "One click."},
         "uc2": {"cost": 100, "target": "click", "incr_pct":2.0, "requirements": {"game_cookies":200}, "name": "Byte Click", "flavor": "A few clicks."},
