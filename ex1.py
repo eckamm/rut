@@ -131,7 +131,7 @@ def get_buyable_buildings(current, buildings):
     return s
 
 
-def get_buyable_upgrades(current, upgrades):
+def get_buyable_upgrades(current, upgrades, can_buy = True):
     s = set()
     for upgrade_id in upgrades:
         reqs = upgrades[upgrade_id]["requirements"]
@@ -144,7 +144,7 @@ def get_buyable_upgrades(current, upgrades):
             elif cnt > current["buildings"][building_id]:
                 x = False
                 break
-        if current["cookies"] >=  cost and x:
+        if current["cookies"] >=  cost and x and can_buy:
             s.add(upgrade_id)
     
     
