@@ -275,9 +275,9 @@ def main():
                 running = False
 
             elif event.type == pygame.KEYDOWN and event.key == pygame.K_a:
-                current["cookies"] += 1000000000
-                current["game_cookies"] += 1000000000
-                lifetime["cookies"] += 1000000000
+                current["cookies"] += 100000000000000000
+                current["game_cookies"] += 100000000000000000
+                lifetime["cookies"] += 100000000000000000
 
             elif event.type == pygame.MOUSEBUTTONDOWN and event.button == LEFTBUTTON:
                 if donut_widget.box.collidepoint(event.pos):
