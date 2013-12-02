@@ -6,7 +6,8 @@
         "b3": {"base_cost":600, "base_cps": 4.0, "name": "Tropical Forest", "description": "Where the donut things grow."},
         "b4": {"base_cost":2000, "base_cps": 16.0, "name": "Fishing Vessel", "description": "Fishing for donuts."},
         "b5": {"base_cost":10000, "base_cps": 45.0, "name": "Quarry", "description": "A quarry, to mine donuts from."},
-        "b6": {"base_cost":50000, "base_cps": 115.0, "name": "Extraction", "description": "A fleet of spaceships, extracting donuts from various sources."}
+        "b6": {"base_cost":50000, "base_cps": 115.0, "name": "Extraction", "description": "A fleet of spaceships, extracting donuts from various sources."},
+        "b7": {"base_cost":250000, "base_cps": 45.0, "name": "Quarry", "description": "A quarry, to mine donuts from."}
     },
     "upgrades": {
         "um1": {"cost": 100, "target": "b1", "incr_pct":2.0, "requirements": {"b1":1}, "name": "American Cheese", "flavor": "Boring old American cheese."},
@@ -50,7 +51,15 @@
         "uc3": {"cost": 200, "target": "click", "incr_pct":2.0, "requirements": {"game_cookies":400}, "name": "Kilo Click", "flavor": "Some clicks."},
         "uc4": {"cost": 400, "target": "click", "incr_pct":2.0, "requirements": {"game_cookies":800}, "name": "Mega Click", "flavor": "More clicks."},
         "uc5": {"cost": 800, "target": "click", "incr_pct":2.0, "requirements": {"game_cookies":1600}, "name": "Giga Click", "flavor": "A lot of clicks."},
-        
+        "uc6": {"cost": 1600, "target": "click", "incr_pct":2.0, "requirements": {"game_cookies":3200}, "name": "Tera Click", "flavor": "Tons of clicks."},
+        "uc7": {"cost": 3200, "target": "click", "incr_pct":2.0, "requirements": {"game_cookies":6400}, "name": "Peta Click", "flavor": "Clicks^2."},
+        "uc8": {"cost": 6400, "target": "click", "incr_pct":2.0, "requirements": {"game_cookies":12800}, "name": "Quanta Click", "flavor": "Quantum state clicks. No one knows where they are."},
+        "uc9": {"cost": 12800, "target": "click", "incr_pct":2.0, "requirements": {"game_cookies":25600}, "name": "Quinta Click", "flavor": "So many clicks."},        
+        "uc9": {"cost": 25600, "target": "click", "incr_pct":2.0, "requirements": {"game_cookies":51200}, "name": "Sixta Click", "flavor": "SO MANY CLICKS."},   
+        "uc9": {"cost": 51200, "target": "click", "incr_pct":2.0, "requirements": {"game_cookies":102400}, "name": "Septimal Click", "flavor": "Clicks^clicks."},   
+        "uc9": {"cost": 102400, "target": "click", "incr_pct":2.0, "requirements": {"game_cookies":204800}, "name": "Octal Click", "flavor": "0oclicks."},   
+        "uc9": {"cost": 204800, "target": "click", "incr_pct":2.0, "requirements": {"game_cookies":409600}, "name": "Novenal Click", "flavor": "Has something to do with cats. Click."},           
+     
         "u*1": {"cost": 55, "target": "*", "incr_pct":1.05, "requirements": {"game_cookies":555}, "name": "Plain Donut", "flavor": "A plain donut that always gets eaten last in the variety pack."},
         "u*1": {"cost": 555, "target": "*", "incr_pct":1.10, "requirements": {"game_cookies":5555}, "name": "Glazed Donut", "flavor": "A glazed donut. Yum!"},
         "u*1": {"cost": 5555, "target": "*", "incr_pct":1.15, "requirements": {"game_cookies":55555}, "name": "Vanilla Donut", "flavor": "This donut begs for sprinkles."},

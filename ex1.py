@@ -144,8 +144,12 @@ def get_buyable_upgrades(current, upgrades, can_buy = True):
             elif cnt > current["buildings"][building_id]:
                 x = False
                 break
-        if current["cookies"] >=  cost and x and can_buy:
-            s.add(upgrade_id)
+        if can_buy:
+            if current["cookies"] >=  cost and x:
+                s.add(upgrade_id)
+        else:
+            if x:
+                s.add(upgrade_id)
     
     
     return s
