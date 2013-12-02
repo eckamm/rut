@@ -9,7 +9,7 @@ class XWidget:
         self.cpc = 1
         self.cookies = 0
         self.game_cookies = 0
-        self._font = pygame.font.SysFont(None, 24)
+        self._font = pygame.font.SysFont(None, 15)
 
     def draw(self, surface):
         cps_render = self._font.render("DPS: %s" % fmt(self.cps), True, (255,255,255))
@@ -51,7 +51,7 @@ class TheDonut:
 class TheBuildings:
     def __init__(self, buildings):
         self.buildings = buildings
-        self._font = pygame.font.SysFont(None, 24)
+        self._font = pygame.font.SysFont(None, 15)
         self.boxes = []
 
     def update(self, current, building_costs):
@@ -152,7 +152,7 @@ class TheUpgrades:
 
 class RolloverWidget:
     def __init__(self):
-        self._font = pygame.font.SysFont(None, 20)
+        self._font = pygame.font.SysFont(None, 15)
         self.line1 = "."
         self.line2 = "."
         self.update("\n")
