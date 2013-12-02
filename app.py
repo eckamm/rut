@@ -1,4 +1,5 @@
 from common import *
+import ex1 
 
 
 
@@ -8,28 +9,28 @@ class XWidget:
         self.cpc = 1
         self.cookies = 0
         self.game_cookies = 0
-        self._font = pygame.font.SysFont(None, 30)
+        self._font = pygame.font.SysFont(None, 24)
 
     def draw(self, surface):
-        cps_render = self._font.render("DPS: %.1f" % self.cps, True, (255,255,255))
+        cps_render = self._font.render("DPS: %s" % fmt(self.cps), True, (255,255,255))
         cps_box = cps_render.get_rect()
         cps_box.left = 10
         cps_box.centery = 20
         surface.blit(cps_render, cps_box)
 
-        cpc_render = self._font.render("DPC: %.1f" % self.cpc, True, (255,255,255))
+        cpc_render = self._font.render("DPC: %s" % fmt(self.cpc), True, (255,255,255))
         cpc_box = cpc_render.get_rect()
         cpc_box.left = 10
         cpc_box.top = cps_box.bottom + 10
         surface.blit(cpc_render, cpc_box)
 
-        cookies_render = self._font.render("Donuts: %d" % self.cookies, True, (255,255,255))
+        cookies_render = self._font.render("Donuts: %s" % fmt(self.cookies), True, (255,255,255))
         cookies_box = cookies_render.get_rect()
         cookies_box.left = 10
         cookies_box.top = cpc_box.bottom + 10
         surface.blit(cookies_render, cookies_box)
         
-        game_cookies_render = self._font.render("Total Donuts: %d" % self.game_cookies, True, (255,255,255))
+        game_cookies_render = self._font.render("Total Donuts: %s" % fmt(self.game_cookies), True, (255,255,255))
         game_cookies_box = game_cookies_render.get_rect()
         game_cookies_box.left = 10
         game_cookies_box.top = cookies_box.bottom + 10
@@ -67,9 +68,9 @@ class TheBuildings:
             else:
                 color = THECOLORS["orange"]
             name = self.buildings[building_id].get("name", building_id)
-            render = self._font.render("%s (%d) -- Cost: %d" % (name,
+            render = self._font.render("%s (%d) -- Cost: %s" % (name,
                 self.current["buildings"][building_id],
-                self.building_costs[building_id]),
+                fmt(self.building_costs[building_id])),
                 True, color)
             box = render.get_rect()
             box.left = 1.7 * SCREEN_WIDTH / 5
@@ -240,8 +241,8 @@ class Images:
 
 def main():
     pygame.init()
-#   screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), pygame.FULLSCREEN)
-    screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+    screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), pygame.FULLSCREEN)
+#   screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
     app_name = "Rockwell's Uninformed Tidemark"
     pygame.display.set_caption(app_name)
 

@@ -2,6 +2,8 @@ import sys
 import os
 import time
 import json
+
+from common import fmt
 """
 lifetime
     cookies
@@ -221,7 +223,7 @@ def get_building_text(current, buildings, building_id):
     name = buildings[building_id].get("name", building_id)
     descr = buildings[building_id].get("description", "...")
     dps = buildings[building_id]["base_cps"]
-    return "%s -- Base DPS = %s\n%s" % (name, dps, descr)
+    return "%s -- Base DPS = %s\n%s" % (name, fmt(dps), descr)
 
 
 def buy_upgrade(current, upgrades, upgrade_id):
@@ -237,9 +239,9 @@ def get_upgrade_text(current, upgrades, buildings, upgrade_id):
     reqs = upgrades[upgrade_id]["requirements"]
     building_id, cnt = reqs.items()[0]
     if building_id == "game_cookies":
-        descr = "Requires %s total donut" % (cnt)
+        descr = "Requires %s total donut" % (fmt(cnt))
     else:
-        descr = "Requires %s %s" % (cnt, buildings[building_id]["name"])
+        descr = "Requires %s %s" % (fmt(cnt), buildings[building_id]["name"])
     flavor = upgrades[upgrade_id].get("flavor", "...")
     building_id = upgrades[upgrade_id]["target"]
     if upgrades[upgrade_id].get("incr_pct", "") != "":
@@ -251,17 +253,17 @@ def get_upgrade_text(current, upgrades, buildings, upgrade_id):
             descr2 = "Multiplies %s's DPS by %s." % (buildings[building_id]["name"], upgrades[upgrade_id]["incr_pct"])
     if upgrades[upgrade_id].get("incr_base_cps", "") != "":
         if building_id == "click":
-            descr2 = "Adds to click by %s donuts." % (upgrades[upgrade_id]["incr_base_cps"])
+            descr2 = "Adds to DPC by %s donuts." % (fmt(upgrades[upgrade_id]["incr_base_cps"]))
         elif building_id == "*":
             descr2 = "Adds to DPS by %s donuts." % (upgrades[upgrade_id]["incr_pct"])
         else:
-            descr2 = "Adds %s donuts to %s's base DPS." % (upgrades[upgrade_id]["incr_base_cps"], buildings[building_id]["name"])
+            descr2 = "Adds %s donuts to %s's base DPS." % (fmt(upgrades[upgrade_id]["incr_base_cps"]), buildings[building_id]["name"])
     
     if cnt > 1:
         descr += "s."
     else:
         descr += "."
-    return "%s -- %d donuts -- %s -- %s\n%s" % (name, upgrades[upgrade_id]["cost"], descr, descr2,flavor)
+    return "%s -- %s donuts -- %s -- %s\n%s" % (name, fmt(upgrades[upgrade_id]["cost"]), descr, descr2,flavor)
 
 
 

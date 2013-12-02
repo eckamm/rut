@@ -11,9 +11,6 @@ from pygame.color import THECOLORS
 #import pymunk.pygame_util
 
 
-import ex1
-
-
 LEFTBUTTON = 1
 CENTERBUTTON = 2
 RIGHTBUTTON = 3
@@ -26,6 +23,11 @@ HEADER = 50
 MARGIN = 10
 
 
-
-
+def fmt(n):
+    if type(n) in (long, int):
+        return "{:1,d}".format(n)
+    elif type(n) is float:
+        return "{:1,.1f}".format(n)
+    else:
+        return n
 
