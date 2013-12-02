@@ -51,8 +51,13 @@
         "uc4": {"cost": 400, "target": "click", "incr_pct":2.0, "requirements": {"game_cookies":800}, "name": "Mega Click", "flavor": "More clicks."},
         "uc5": {"cost": 800, "target": "click", "incr_pct":2.0, "requirements": {"game_cookies":1600}, "name": "Giga Click", "flavor": "A lot of clicks."},
         
-        "u*1": {"cost": 55, "target": "*", "incr_pct":1.25, "requirements": {"game_cookies":555}, "name": "Plain Donut", "flavor": "A plain donut that always gets eaten last in the variety pack."},
-        "u*2": {"cost": 9000, "target": "*", "incr_pct":2.0, "requirements": {"b3":5}, "name": "Coffee", "flavor": "Now your workers work double time, hyped up on coffee beans made of donut extract, found in the jungle. Let's click!"}
+        "u*1": {"cost": 55, "target": "*", "incr_pct":1.05, "requirements": {"game_cookies":555}, "name": "Plain Donut", "flavor": "A plain donut that always gets eaten last in the variety pack."},
+        "u*1": {"cost": 555, "target": "*", "incr_pct":1.10, "requirements": {"game_cookies":5555}, "name": "Glazed Donut", "flavor": "A glazed donut. Yum!"},
+        "u*1": {"cost": 5555, "target": "*", "incr_pct":1.15, "requirements": {"game_cookies":55555}, "name": "Vanilla Donut", "flavor": "This donut begs for sprinkles."},
+        "u*1": {"cost": 55555, "target": "*", "incr_pct":1.20, "requirements": {"game_cookies":555555}, "name": "Sprinkled Donut", "flavor": "This donut begs for vanilla frosting."},
+        "u*1": {"cost": 555555, "target": "*", "incr_pct":1.25, "requirements": {"game_cookies":5555555}, "name": "Vanilla-Sprinkled Donut", "flavor": "This donut still wants more. It's quite greedy."},
+        
+        "u*c": {"cost": 9000, "target": "*", "incr_pct":2.0, "requirements": {"b3":5}, "name": "Coffee", "flavor": "Now your workers work double time, hyped up on coffee beans made of donut extract, found in the jungle. Let's click!"}
 
     }
 }
