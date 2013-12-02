@@ -6,7 +6,7 @@
         "b3": {"base_cost":600, "base_cps": 4.0, "name": "Tropical Forest", "description": "Where the donut things grow."},
         "b4": {"base_cost":2000, "base_cps": 16.0, "name": "Fishing Vessel", "description": "Fishing for donuts."},
         "b5": {"base_cost":10000, "base_cps": 45.0, "name": "Quarry", "description": "A quarry, to mine donuts from."},
-        "b6": {"base_cost":50000, "base_cps": 115.0, "name": "Extraction", "description": "A fleet of spaceships, extracting cookies from various sources."}
+        "b6": {"base_cost":50000, "base_cps": 115.0, "name": "Extraction", "description": "A fleet of spaceships, extracting donuts from various sources."}
     },
     "upgrades": {
         "um1": {"cost": 100, "target": "b1", "incr_pct":2.0, "requirements": {"b1":1}, "name": "American Cheese", "flavor": "Boring old American cheese."},
@@ -27,11 +27,11 @@
         "utf4": {"cost": 60000, "target": "b3", "incr_pct":2.0, "requirements": {"b3":25}, "name": "Water-Donut Converter", "flavor": "The Amazon could use donuts."},
         "utf5": {"cost": 300000, "target": "b3", "incr_pct":2.0, "requirements": {"b3":50}, "name": "Deforestation", "flavor": "Clear out land so you can get more donuts."},
         
-        "ufv1": {"cost": 10000, "target": "b4", "incr_base_cps":5.0, "requirements": {"b4":1}, "name": "Canoe", "flavor": "A small boat to fish for more cookies."},
-        "ufv2": {"cost": 20000, "target": "b4", "incr_pct":2.0, "requirements": {"b4":5}, "name": "Motorboat", "flavor": "A small, powerful boat to fish for more cookies."},
-        "ufv3": {"cost": 100000, "target": "b4", "incr_pct":2.0, "requirements": {"b4":10}, "name": "Steam Ship", "flavor": "A large boat to fish for more cookies."},
-        "ufv4": {"cost": 200000, "target": "b4", "incr_pct":2.0, "requirements": {"b4":25}, "name": "Submarine", "flavor": "A large, underwater boat to fish for deep-sea cookies."},
-        "ufv5": {"cost": 1000000, "target": "b4", "incr_pct":2.0, "requirements": {"b4":50}, "name": "Hydro-fission Ship", "flavor": "A large, extraordinarily powerful boat to fish for more cookies."},
+        "ufv1": {"cost": 10000, "target": "b4", "incr_base_cps":5.0, "requirements": {"b4":1}, "name": "Canoe", "flavor": "A small boat to fish for more donuts."},
+        "ufv2": {"cost": 20000, "target": "b4", "incr_pct":2.0, "requirements": {"b4":5}, "name": "Motorboat", "flavor": "A small, powerful boat to fish for more donuts."},
+        "ufv3": {"cost": 100000, "target": "b4", "incr_pct":2.0, "requirements": {"b4":10}, "name": "Steam Ship", "flavor": "A large boat to fish for more donuts."},
+        "ufv4": {"cost": 200000, "target": "b4", "incr_pct":2.0, "requirements": {"b4":25}, "name": "Submarine", "flavor": "A large, underwater boat to fish for deep-sea donuts."},
+        "ufv5": {"cost": 1000000, "target": "b4", "incr_pct":2.0, "requirements": {"b4":50}, "name": "Hydro-fission Ship", "flavor": "A large, extraordinarily powerful boat to fish for more donuts."},
         
         "uq1": {"cost": 50000, "target": "b5", "incr_base_cps":15.0, "requirements": {"b5":1}, "name": "Wooden Tools", "flavor": "Weak tools."},
         "uq2": {"cost": 100000, "target": "b5", "incr_pct":2.0, "requirements": {"b5":5}, "name": "Cobblestone Tools", "flavor": "Kinda weak tools."},
@@ -51,7 +51,7 @@
         "uc4": {"cost": 400, "target": "click", "incr_pct":2.0, "requirements": {"game_cookies":800}, "name": "Mega Click", "flavor": "More clicks."},
         "uc5": {"cost": 800, "target": "click", "incr_pct":2.0, "requirements": {"game_cookies":1600}, "name": "Giga Click", "flavor": "A lot of clicks."},
         
-        "u*1": {"cost": 55, "target": "*", "incr_pct":1.25, "requirements": {"game_cookies":55}, "name": "Plain Donut", "flavor": "A plain donut that always gets eaten last in the variety pack."},
+        "u*1": {"cost": 55, "target": "*", "incr_pct":1.25, "requirements": {"game_cookies":555}, "name": "Plain Donut", "flavor": "A plain donut that always gets eaten last in the variety pack."},
         "u*2": {"cost": 9000, "target": "*", "incr_pct":2.0, "requirements": {"b3":5}, "name": "Coffee", "flavor": "Now your workers work double time, hyped up on coffee beans made of donut extract, found in the jungle. Let's click!"}
 
     }
