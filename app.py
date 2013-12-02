@@ -153,7 +153,8 @@ class TheUpgrades:
         self.current = current
 
     def draw(self, surface):
-        buyable = ex1.get_buyable_upgrades(self.current, self.upgrades)
+        buyable = ex1.get_buyable_upgrades(self.current, self.upgrades, can_buy=True)
+        buyable2 = ex1.get_buyable_upgrades(self.current, self.upgrades, can_buy=False)
         per_row = 5
         init_left = 3.75 * SCREEN_WIDTH / 5
         init_centery = 30
@@ -167,6 +168,8 @@ class TheUpgrades:
                 img = self.images.imgs[1]
             elif upgrade_id in buyable:
                 img = self.images.imgs[0]
+            elif upgrade_id in buyable2:
+                img = self.images.imgs[3]
             else:
                 img = self.images.imgs[2]
 
@@ -227,7 +230,7 @@ class RolloverWidget:
 
 class Images:
     def __init__(self):
-        nms = ["placeholder1.png", "placeholder2.png", "placeholder3.png"]
+        nms = ["placeholder1.png", "placeholder2.png", "placeholder3.png", "placeholder4.png"]
         self.imgs = []
         for nm in nms:
             image_file = os.path.join(GAMEDIR, nm)
