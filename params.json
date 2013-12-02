@@ -7,7 +7,8 @@
         "b4": {"base_cost":2000, "base_cps": 16.0, "name": "Fishing Vessel", "description": "Fishing for donuts."},
         "b5": {"base_cost":10000, "base_cps": 45.0, "name": "Quarry", "description": "A quarry, to mine donuts from."},
         "b6": {"base_cost":50000, "base_cps": 115.0, "name": "Extraction", "description": "A fleet of spaceships, extracting donuts from various sources."},
-        "b7": {"base_cost":250000, "base_cps": 45.0, "name": "Quarry", "description": "A quarry, to mine donuts from."}
+        "b7": {"base_cost":250000, "base_cps": 500.0, "name": "Magicians", "description": "Magic!"},
+        "b8": {"base_cost":1000000, "base_cps": 2500.0, "name": "Transporter", "description": "Go to other worlds today!"}
     },
     "upgrades": {
         "um1": {"cost": 100, "target": "b1", "incr_pct":2.0, "requirements": {"b1":1}, "name": "American Cheese", "flavor": "Boring old American cheese."},
@@ -46,25 +47,41 @@
         "ucet4": {"cost": 5000000, "target": "b6", "incr_pct":2.0, "requirements": {"b6":25}, "name": "Cheese-Dough Converter", "flavor": "With the moon being made of cheese, we thought we should cash in."},
         "ucet5": {"cost": 10000000, "target": "b6", "incr_pct":2.0, "requirements": {"b6":50}, "name": "Warp Drive", "flavor": "Makes ships 100% faster. Also has a tendency to break when you need it most."},
         
+        "ucet1": {"cost": 1250000, "target": "b7", "incr_base_cps":30.0, "requirements": {"b7":1}, "name": "Lead", "flavor": "Boring metal."},
+        "ucet2": {"cost": 2500000, "target": "b7", "incr_pct":2.0, "requirements": {"b7":5}, "name": "Copper", "flavor": "Shiny and rather expensive."},
+        "ucet3": {"cost": 12500000, "target": "b7", "incr_pct":2.0, "requirements": {"b7":10}, "name": "Silver", "flavor": "More shiny and more expensive."},
+        "ucet4": {"cost": 25000000, "target": "b7", "incr_pct":2.0, "requirements": {"b7":25}, "name": "Gold", "flavor": "Weak, shiny and EXPENSIVE."},
+        "ucet5": {"cost": 125000000, "target": "b7", "incr_pct":2.0, "requirements": {"b7":50}, "name": "Platinum", "flavor": "SHINYYYYYY!"},
+        
+        "ucet1": {"cost": 1250000, "target": "b8", "incr_base_cps":30.0, "requirements": {"b8":1}, "name": "Black Hole", "flavor": "A hole. Note that it is black."},
+        "ucet2": {"cost": 2500000, "target": "b8", "incr_pct":2.0, "requirements": {"b8":5}, "name": "White Hole", "flavor": "A white hole. Note that it is white."},
+        "ucet3": {"cost": 12500000, "target": "b8", "incr_pct":2.0, "requirements": {"b8":10}, "name": "Wormhole", "flavor": "Like a black and white hole, combined into one."},
+        "ucet4": {"cost": 25000000, "target": "b8", "incr_pct":2.0, "requirements": {"b8":25}, "name": "Big Hole", "flavor": "Bigger than all other holes combined."},
+        "ucet5": {"cost": 125000000, "target": "b8", "incr_pct":2.0, "requirements": {"b8":50}, "name": "Magic Hole", "flavor": "Go though it, and PRESTO! You're in another universe!"},
+        
         "uc1": {"cost": 50, "target": "click", "incr_pct":2.0, "requirements": {"game_cookies":100}, "name": "Bit Click", "flavor": "One click."},
         "uc2": {"cost": 100, "target": "click", "incr_pct":2.0, "requirements": {"game_cookies":200}, "name": "Byte Click", "flavor": "A few clicks."},
-        "uc3": {"cost": 200, "target": "click", "incr_pct":2.0, "requirements": {"game_cookies":400}, "name": "Kilo Click", "flavor": "Some clicks."},
         "uc4": {"cost": 400, "target": "click", "incr_pct":2.0, "requirements": {"game_cookies":800}, "name": "Mega Click", "flavor": "More clicks."},
         "uc5": {"cost": 800, "target": "click", "incr_pct":2.0, "requirements": {"game_cookies":1600}, "name": "Giga Click", "flavor": "A lot of clicks."},
         "uc6": {"cost": 1600, "target": "click", "incr_pct":2.0, "requirements": {"game_cookies":3200}, "name": "Tera Click", "flavor": "Tons of clicks."},
-        "uc7": {"cost": 3200, "target": "click", "incr_pct":2.0, "requirements": {"game_cookies":6400}, "name": "Peta Click", "flavor": "Clicks^2."},
         "uc8": {"cost": 6400, "target": "click", "incr_pct":2.0, "requirements": {"game_cookies":12800}, "name": "Quanta Click", "flavor": "Quantum state clicks. No one knows where they are."},
         "uc9": {"cost": 12800, "target": "click", "incr_pct":2.0, "requirements": {"game_cookies":25600}, "name": "Quinta Click", "flavor": "So many clicks."},        
-        "uc9": {"cost": 25600, "target": "click", "incr_pct":2.0, "requirements": {"game_cookies":51200}, "name": "Sixta Click", "flavor": "SO MANY CLICKS."},   
-        "uc9": {"cost": 51200, "target": "click", "incr_pct":2.0, "requirements": {"game_cookies":102400}, "name": "Septimal Click", "flavor": "Clicks^clicks."},   
-        "uc9": {"cost": 102400, "target": "click", "incr_pct":2.0, "requirements": {"game_cookies":204800}, "name": "Octal Click", "flavor": "0oclicks."},   
-        "uc9": {"cost": 204800, "target": "click", "incr_pct":2.0, "requirements": {"game_cookies":409600}, "name": "Novenal Click", "flavor": "Has something to do with cats. Click."},           
-     
+        "uc11": {"cost": 51200, "target": "click", "incr_pct":2.0, "requirements": {"game_cookies":102400}, "name": "Septimal Click", "flavor": "Clicks^clicks."},   
+        "uc13": {"cost": 204800, "target": "click", "incr_pct":2.0, "requirements": {"game_cookies":409600}, "name": "Novenal Click", "flavor": "Has something to do with cats. Click."},           
+        "uc15": {"cost": 819200, "target": "click", "incr_pct":2.0, "requirements": {"game_cookies":1638400}, "name": "Hyper Click", "flavor": "MOAR COFFEE."},  
+        "uc18": {"cost": 6553600, "target": "click", "incr_pct":2.0, "requirements": {"game_cookies":13107200}, "name": "Ultra Click", "flavor": "Ultratabulasticarablar!."},  
+        
         "u*1": {"cost": 55, "target": "*", "incr_pct":1.05, "requirements": {"game_cookies":555}, "name": "Plain Donut", "flavor": "A plain donut that always gets eaten last in the variety pack."},
-        "u*1": {"cost": 555, "target": "*", "incr_pct":1.10, "requirements": {"game_cookies":5555}, "name": "Glazed Donut", "flavor": "A glazed donut. Yum!"},
-        "u*1": {"cost": 5555, "target": "*", "incr_pct":1.15, "requirements": {"game_cookies":55555}, "name": "Vanilla Donut", "flavor": "This donut begs for sprinkles."},
-        "u*1": {"cost": 55555, "target": "*", "incr_pct":1.20, "requirements": {"game_cookies":555555}, "name": "Sprinkled Donut", "flavor": "This donut begs for vanilla frosting."},
-        "u*1": {"cost": 555555, "target": "*", "incr_pct":1.25, "requirements": {"game_cookies":5555555}, "name": "Vanilla-Sprinkled Donut", "flavor": "This donut still wants more. It's quite greedy."},
+        "u*2": {"cost": 555, "target": "*", "incr_pct":1.10, "requirements": {"game_cookies":5555}, "name": "Glazed Donut", "flavor": "A glazed donut. Yum!"},
+        "u*3": {"cost": 5555, "target": "*", "incr_pct":1.15, "requirements": {"game_cookies":55555}, "name": "Vanilla Donut", "flavor": "This donut begs for sprinkles."},
+        "u*4": {"cost": 55555, "target": "*", "incr_pct":1.20, "requirements": {"game_cookies":555555}, "name": "Sprinkled Donut", "flavor": "This donut begs for vanilla frosting."},
+        "u*5": {"cost": 555555, "target": "*", "incr_pct":1.25, "requirements": {"game_cookies":5555555}, "name": "Vanilla-Sprinkled Donut", "flavor": "This donut still wants more. It's quite greedy."},
+        "u*6": {"cost": 5555555, "target": "*", "incr_pct":1.30, "requirements": {"game_cookies":55555555}, "name": "Plainer Donut", "flavor": "A plainer donut that always gets eaten laster in the variety pack."},
+        "u*7": {"cost": 55555555, "target": "*", "incr_pct":1.35, "requirements": {"game_cookies":555555555}, "name": "Glazeder Donut", "flavor": "A glazeder donut. Yummytabular!"},
+        "u*8": {"cost": 555555555, "target": "*", "incr_pct":1.40, "requirements": {"game_cookies":5555555555}, "name": "Vanillar Donut", "flavor": "This donut begs for sprinkleser."},
+        "u*9": {"cost": 5555555555, "target": "*", "incr_pct":1.45, "requirements": {"game_cookies":55555555555}, "name": "Sprinkleder Donut", "flavor": "This donut begs for vanillar frosting."},
+        "u*10": {"cost": 55555555555, "target": "*", "incr_pct":1.50, "requirements": {"game_cookies":555555555555}, "name": "Vanillar-Sprinkleder Donut", "flavor": "This donut still wants more. It's quite greedyer."},
+        
         
         "u*c": {"cost": 9000, "target": "*", "incr_pct":2.0, "requirements": {"b3":5}, "name": "Coffee", "flavor": "Now your workers work double time, hyped up on coffee beans made of donut extract, found in the jungle. Let's click!"}
 
