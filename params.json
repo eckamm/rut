@@ -7,7 +7,7 @@
         "b4": {"base_cost":2000, "base_cps": 16.0, "name": "Fishing Vessel", "description": "Fishing for donuts."},
         "b5": {"base_cost":10000, "base_cps": 45.0, "name": "Quarry", "description": "A quarry, to mine donuts from."},
         "b6": {"base_cost":50000, "base_cps": 115.0, "name": "Extraction", "description": "A fleet of spaceships, extracting donuts from various sources."},
-        "b7": {"base_cost":250000, "base_cps": 500.0, "name": "Magicians", "description": "Magic!"},
+        "b7": {"base_cost":250000, "base_cps": 500.0, "name": "Magician", "description": "Magic!"},
         "b8": {"base_cost":1000000, "base_cps": 2500.0, "name": "Transporter", "description": "Go to other worlds today!"}
     },
     "upgrades": {
@@ -47,17 +47,17 @@
         "ucet4": {"cost": 5000000, "target": "b6", "incr_pct":2.0, "requirements": {"b6":25}, "name": "Cheese-Dough Converter", "flavor": "With the moon being made of cheese, we thought we should cash in."},
         "ucet5": {"cost": 10000000, "target": "b6", "incr_pct":2.0, "requirements": {"b6":50}, "name": "Warp Drive", "flavor": "Makes ships 100% faster. Also has a tendency to break when you need it most."},
         
-        "ucet1": {"cost": 1250000, "target": "b7", "incr_base_cps":30.0, "requirements": {"b7":1}, "name": "Lead", "flavor": "Boring metal."},
-        "ucet2": {"cost": 2500000, "target": "b7", "incr_pct":2.0, "requirements": {"b7":5}, "name": "Copper", "flavor": "Shiny and rather expensive."},
-        "ucet3": {"cost": 12500000, "target": "b7", "incr_pct":2.0, "requirements": {"b7":10}, "name": "Silver", "flavor": "More shiny and more expensive."},
-        "ucet4": {"cost": 25000000, "target": "b7", "incr_pct":2.0, "requirements": {"b7":25}, "name": "Gold", "flavor": "Weak, shiny and EXPENSIVE."},
-        "ucet5": {"cost": 125000000, "target": "b7", "incr_pct":2.0, "requirements": {"b7":50}, "name": "Platinum", "flavor": "SHINYYYYYY!"},
+        "umg1": {"cost": 1250000, "target": "b7", "incr_base_cps":30.0, "requirements": {"b7":1}, "name": "Lead", "flavor": "Boring metal."},
+        "umg2": {"cost": 2500000, "target": "b7", "incr_pct":2.0, "requirements": {"b7":5}, "name": "Copper", "flavor": "Shiny and rather expensive."},
+        "umg3": {"cost": 12500000, "target": "b7", "incr_pct":2.0, "requirements": {"b7":10}, "name": "Silver", "flavor": "More shiny and more expensive."},
+        "umg4": {"cost": 25000000, "target": "b7", "incr_pct":2.0, "requirements": {"b7":25}, "name": "Gold", "flavor": "Weak, shiny and EXPENSIVE."},
+        "umg5": {"cost": 125000000, "target": "b7", "incr_pct":2.0, "requirements": {"b7":50}, "name": "Platinum", "flavor": "SHINYYYYYY!"},
         
-        "ucet1": {"cost": 1250000, "target": "b8", "incr_base_cps":30.0, "requirements": {"b8":1}, "name": "Black Hole", "flavor": "A hole. Note that it is black."},
-        "ucet2": {"cost": 2500000, "target": "b8", "incr_pct":2.0, "requirements": {"b8":5}, "name": "White Hole", "flavor": "A white hole. Note that it is white."},
-        "ucet3": {"cost": 12500000, "target": "b8", "incr_pct":2.0, "requirements": {"b8":10}, "name": "Wormhole", "flavor": "Like a black and white hole, combined into one."},
-        "ucet4": {"cost": 25000000, "target": "b8", "incr_pct":2.0, "requirements": {"b8":25}, "name": "Big Hole", "flavor": "Bigger than all other holes combined."},
-        "ucet5": {"cost": 125000000, "target": "b8", "incr_pct":2.0, "requirements": {"b8":50}, "name": "Magic Hole", "flavor": "Go though it, and PRESTO! You're in another universe!"},
+        "ut1": {"cost": 1250000, "target": "b8", "incr_base_cps":30.0, "requirements": {"b8":1}, "name": "Black Hole", "flavor": "A hole. Note that it is black."},
+        "ut2": {"cost": 2500000, "target": "b8", "incr_pct":2.0, "requirements": {"b8":5}, "name": "White Hole", "flavor": "A white hole. Note that it is white."},
+        "ut3": {"cost": 12500000, "target": "b8", "incr_pct":2.0, "requirements": {"b8":10}, "name": "Wormhole", "flavor": "Like a black and white hole, combined into one."},
+        "ut4": {"cost": 25000000, "target": "b8", "incr_pct":2.0, "requirements": {"b8":25}, "name": "Big Hole", "flavor": "Bigger than all other holes combined."},
+        "ut5": {"cost": 125000000, "target": "b8", "incr_pct":2.0, "requirements": {"b8":50}, "name": "Magic Hole", "flavor": "Go though it, and PRESTO! You're in another universe!"},
         
         "uc1": {"cost": 50, "target": "click", "incr_pct":2.0, "requirements": {"game_cookies":100}, "name": "Bit Click", "flavor": "One click."},
         "uc2": {"cost": 100, "target": "click", "incr_pct":2.0, "requirements": {"game_cookies":200}, "name": "Byte Click", "flavor": "A few clicks."},
