@@ -110,8 +110,8 @@ class TheUpgrades:
         buyable = ex1.get_buyable_upgrades(self.current, self.upgrades, can_buy=True)
         buyable2 = ex1.get_buyable_upgrades(self.current, self.upgrades, can_buy=False)
         per_row = 6
-        init_left = 3.7 * SCREEN_WIDTH / 5
-        init_centery = 30
+        init_left = SCREEN_WIDTH - 40 * per_row
+        init_centery = 20
         left = init_left
         self.boxes = []
         for idx, upgrade_id in enumerate(sorted(self.upgrades.keys())):

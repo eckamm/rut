@@ -1,19 +1,31 @@
-more columns for upgrades
+0-9 difficulty (0 -> easiest)
+a-j desirability (a -> most desirable)
 
-icons for buildings
+0c: use narrower font
+0e: add background image
 
-upgrades at 100 buildings
+1b: upgrades at 100 buildings
+1e: add sounds
 
-golden cookies
+DONE: 2a: more columns for upgrades
+2c: add line to rollover and use bigger font
+2g: time played
 
-heavenly shards / soft-reset
+3b: offline cookie accumulation
+3c: icons for buildings
+3d: show donut click effect (+NNN)
+3e: animate donut click
 
-time played
+4c: icons for upgrades
+4f: profile selection UI
 
-offline cookie accumulation
+5a: heavenly shards / soft-reset
 
-profile selection UI
+6a: golden cookies
 
-icons for upgrades
 
+goals:
+    ?i: polish
+    ?d: completeness
+    ?a: more features
 
