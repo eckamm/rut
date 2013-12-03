@@ -6,20 +6,28 @@ import json
 from common import fmt
 """
 lifetime
-    cookies
+    cookies -> float (earned ever)
 
 current
-    cookies
-    cps
-    buildings[building_id]
-        base_cost
-        base_cps
-    upgrades[upgrade_id]
-        cost
-        target
-        incr_pct
-        incr_base_cps
-        requirements[building_id] -> int
+    cookies -> float (currently owned)
+    game_cookies -> float (earned in current game)
+    cps -> float? (updated by update_state())
+    cpc -> float? (updated by update_state())
+    buildings[building_id] -> int
+    upgrades[upgrade_id] -> bool
+
+    golden -> {"last_ts": float, "start_ts": float, "expires_ts": float}
+
+buildings[building_id]
+    base_cost
+    base_cps
+
+upgrades[upgrade_id]
+    cost
+    target
+    incr_pct
+    incr_base_cps
+    requirements[building_id] -> int
 
 """
 COST_INCR = 1.15
@@ -191,6 +199,18 @@ def calc_cps(current, buildings, upgrades, xupgrades):
             cpc *= upgrades[upgrade_id].get("incr_pct", 1.0)
     cpc *= multcpc
     return cps, cpc
+
+
+def update_state(elapsed, lifetime, current, buildings, upgrades, xupgrades):
+    """
+    elapsed is time in seconds since last update; e.g. 1/float(TICK)
+    """
+    cps, cpc = calc_cps(current, buildings, upgrades, xupgrades)
+    current["cps"] = cps
+    current["cpc"] = cpc
+    current["cookies"] += cps * elapsed
+    current["game_cookies"] += cps * elapsed
+    lifetime["cookies"] += cps * elapsed
 
 
 def get_status(ticks, current):

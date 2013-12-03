@@ -1,8 +1,16 @@
 0-9 difficulty (0 -> easiest)
 a-j desirability (a -> most desirable)
 
+5a: Android version
+1d: py2exe version
+1c: fullscreen/window switching
+
+----
+
 0c: use narrower font
-0e: add background image
+IN PROGRESS: 0e: add background image
+    replace background.png with real image
+    
 
 1b: upgrades at 100 buildings
 1e: add sounds
@@ -28,4 +36,5 @@ goals:
     ?i: polish
     ?d: completeness
     ?a: more features
+
 

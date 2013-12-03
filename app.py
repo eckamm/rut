@@ -1,6 +1,8 @@
 from common import *
 import ex1 
 
+import pygame.transform
+
 
 
 class XWidget:
@@ -192,6 +194,20 @@ class Images:
             self.imgs.append(img)
 
 
+class BackgroundWidget:
+    def __init__(self):
+        img = pygame.image.load(os.path.join(GAMEDIR, BACKGROUND_IMAGE))
+        self.img = pygame.transform.smoothscale(img, (SCREEN_WIDTH, SCREEN_HEIGHT))
+        self.box = self.img.get_rect()
+        self.box.center = (SCREEN_WIDTH/2, SCREEN_HEIGHT/2)
+
+
+    def draw(self, surface):
+        surface.blit(self.img, self.box)
+
+
+
+
 def main():
     pygame.init()
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), pygame.FULLSCREEN)
@@ -210,6 +226,7 @@ def main():
     lifetime = save_jdat["profiles"][profile_id]["lifetime"]
     current = save_jdat["profiles"][profile_id]["current"]
 
+    background_widget = BackgroundWidget()
     x_widget = XWidget()
     donut_widget = TheDonut()
     buildings_widget = TheBuildings(buildings)
@@ -245,20 +262,23 @@ def main():
                 buildings_widget.on_mouseover(event.pos, rollover_widget)
                 upgrades_widget.on_mouseover(event.pos, rollover_widget)
 
+        # FINISH: make functions in ex1 which do all this work.
+        # ex1.update_state(lifetime, current, elapsed)
+        # ex1.calc_aux(lifetime, current) -> building_status, upgrade_status, golden_status?
+#       cps, cpc = ex1.calc_cps(current, buildings, upgrades, xupgrades)
+#       current["cps"] = cps
+#       current["cpc"] = cpc
+#       current["cookies"] += cps * 1 / float(TICK)
+#       current["game_cookies"] += cps * 1 / float(TICK)
+#       lifetime["cookies"] += cps * 1 / float(TICK)
+        elapsed = 1 / float(TICK)
+        ex1.update_state(elapsed, lifetime, current, buildings, upgrades, xupgrades)
 
-        cps, cpc = ex1.calc_cps(current, buildings, upgrades, xupgrades)
-        current["cps"] = cps
-        current["cpc"] = cpc
-        current["cookies"] += cps * 1 / float(TICK)
-        current["game_cookies"] += cps * 1 / float(TICK)
-        lifetime["cookies"] += cps * 1 / float(TICK)
-        status = ex1.get_status(ticks, current)
         building_costs = ex1.current_costs(current, buildings)
-        print >>sys.stderr, ("\r"+status),
+#       status = ex1.get_status(ticks, current)
+#       print >>sys.stderr, ("\r"+status),
 
-
-        screen.fill(THECOLORS["blue"])
-
+        # FINISH: make a XWidget.update() method.  Rename XWidget.
         x_widget.cps = current["cps"]
         x_widget.cpc = current["cpc"]
         x_widget.cookies = current["cookies"]
@@ -267,6 +287,9 @@ def main():
         buildings_widget.update(current, building_costs)
         upgrades_widget.update(current)
 
+        screen.fill(THECOLORS["blue"])
+
+        background_widget.draw(screen)
         x_widget.draw(screen)
         buildings_widget.draw(screen)
         upgrades_widget.draw(screen)

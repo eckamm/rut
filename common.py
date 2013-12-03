@@ -22,6 +22,7 @@ TICK = 50
 HEADER = 50
 MARGIN = 10
 
+BACKGROUND_IMAGE = "background.png"
 
 def fmt(n):
     if type(n) in (long, int):
