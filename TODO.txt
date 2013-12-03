@@ -3,23 +3,27 @@ a-j desirability (a -> most desirable)
 
 5a: Android version
 1d: py2exe version
-1c: fullscreen/window switching
+
+??: make upgrades better, not just incr_base_cps and incr_pct;
+
+??: order the upgrades properly
 
 ----
 
 0c: use narrower font
-IN PROGRESS: 0e: add background image
-    replace background.png with real image
-    
+DONE: 0e: add background image
 
-1b: upgrades at 100 buildings
+DONE: 1b: upgrades at 100 buildings
 1e: add sounds
+1h: fullscreen/window switching
 
 DONE: 2a: more columns for upgrades
 2c: add line to rollover and use bigger font
 2g: time played
 
-3b: offline cookie accumulation
+DONE: 3b: offline cookie accumulation
+3a: make background.png
+3b: show background effect as game launches
 3c: icons for buildings
 3d: show donut click effect (+NNN)
 3e: animate donut click

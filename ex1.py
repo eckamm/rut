@@ -5,18 +5,35 @@ import json
 
 from common import fmt
 """
-lifetime
-    cookies -> float (earned ever)
+profiles[]
 
-current
-    cookies -> float (currently owned)
-    game_cookies -> float (earned in current game)
-    cps -> float? (updated by update_state())
-    cpc -> float? (updated by update_state())
-    buildings[building_id] -> int
-    upgrades[upgrade_id] -> bool
+    timing
+        start_ts -> float; set in startup() and shutdown()
+        stop_ts -> float; set in startup() and shutdown()
+        bg_seconds -> float; set by startup()
+        fg_seconds -> float; set by shutdown()
 
-    golden -> {"last_ts": float, "start_ts": float, "expires_ts": float}
+    lifetime
+        cookies -> float (earned ever)
+        bg_cookies -> float
+        shards -> int (always round down)
+
+    current
+        cookies -> float (currently owned)
+        game_cookies -> float (earned in current game)
+        cps -> float? (updated by update_state())
+        cpc -> float? (updated by update_state())
+        buildings[building_id] -> int
+        upgrades[upgrade_id] -> bool
+
+        golden -> 
+            next_ts
+            start_ts .. end_ts
+            activated
+            effect     (frenzy, super-frenzy, lucky, super-lucky, free-building)
+            state -> IN|OUT
+
+
 
 buildings[building_id]
     base_cost
@@ -60,27 +77,55 @@ def sync_rules(save_filenm, buildings, upgrades):
         jdat = json.load(fp)
     # Sync each profile to current rules.
     for p in jdat["profiles"]:
-        # Replace the lifetime save state.
+        # Replace the "timing" save state data.
+        tmp = {}
+        tmp["start_ts"] = p.get("timing", {}).get("start_ts", 0.0)
+        tmp["stop_ts"] = p.get("timing", {}).get("stop_ts", 0.0)
+        tmp["bg_seconds"] = p.get("timing", {}).get("bg_seconds", 0.0)
+        tmp["fg_seconds"] = p.get("timing", {}).get("fg_seconds", 0.0)
+        p["timing"] = tmp
+        # Replace the "lifetime" save state data.
         tmp = {}
         tmp["cookies"] = p.get("lifetime", {}).get("cookies", 0.0)
+        tmp["bg_cookies"] = p.get("lifetime", {}).get("bg_cookies", 0.0)
+        tmp["shards"] = p.get("lifetime", {}).get("shards", 0)
         p["lifetime"] = tmp
-        # Replace the current save state.
-        tmp = {}
-        tmp["cookies"] = p.get("current", {}).get("cookies", 0.0)
-        tmp["game_cookies"] = p.get("current", {}).get("game_cookies", 0.0)
-        tmp["cpc"] = p.get("current", {}).get("cpc", 1.0)
-        # Replace the current->buildings save state.
-        tmp["buildings"] = {}
-        for building_id in buildings:
-            tmp["buildings"][building_id] = p.get("current", {}).get("buildings", {}).get(building_id, 0)
-        # Replace the current->upgrades save state.
-        tmp["upgrades"] = {}
-        for upgrade_id in upgrades:
-            tmp["upgrades"][upgrade_id] = p.get("current", {}).get("upgrades", {}).get(upgrade_id, False)
-        p["current"] = tmp
+        # Replace the "current" save state data.
+        p["current"] = mk_new_current(buildings, upgrades, src=p.get("current", {}))
+#       tmp = {}
+#       tmp["cookies"] = p.get("current", {}).get("cookies", 0.0)
+#       tmp["game_cookies"] = p.get("current", {}).get("game_cookies", 0.0)
+#       tmp["cpc"] = p.get("current", {}).get("cpc", 1.0)
+#       # Replace the current->buildings save state.
+#       tmp["buildings"] = {}
+#       for building_id in buildings:
+#           tmp["buildings"][building_id] = p.get("current", {}).get("buildings", {}).get(building_id, 0)
+#       # Replace the current->upgrades save state.
+#       tmp["upgrades"] = {}
+#       for upgrade_id in upgrades:
+#           tmp["upgrades"][upgrade_id] = p.get("current", {}).get("upgrades", {}).get(upgrade_id, False)
+#       p["current"] = tmp
     # Write out the synced save data.
     with open(save_filenm, "w") as fp:
         json.dump(jdat, fp, indent=4)
+
+
+def mk_new_current(buildings, upgrades, src={}):
+    """
+    create new "current" optionally copying in data from src
+    """
+    current = {}
+    current["cookies"] = src.get("cookies", 0.0)
+    current["game_cookies"] = src.get("game_cookies", 0.0)
+    current["cpc"] = src.get("cpc", 1.0)
+    current["cps"] = src.get("cps", 0.0)
+    current["buildings"] = {}
+    for building_id in buildings:
+        current["buildings"][building_id] = src.get("buildings", {}).get(building_id, 0)
+    current["upgrades"] = {}
+    for upgrade_id in upgrades:
+        current["upgrades"][upgrade_id] = src.get("upgrades", {}).get(upgrade_id, False)
+    return current
 
 
 
@@ -201,16 +246,50 @@ def calc_cps(current, buildings, upgrades, xupgrades):
     return cps, cpc
 
 
-def update_state(elapsed, lifetime, current, buildings, upgrades, xupgrades):
+def update_state(elapsed, lifetime, current, buildings, upgrades, xupgrades, bg=False):
     """
     elapsed is time in seconds since last update; e.g. 1/float(TICK)
     """
+    sfactor = 1 + lifetime["shards"]
     cps, cpc = calc_cps(current, buildings, upgrades, xupgrades)
+    cps *= sfactor
+    cpc *= sfactor
     current["cps"] = cps
     current["cpc"] = cpc
     current["cookies"] += cps * elapsed
     current["game_cookies"] += cps * elapsed
     lifetime["cookies"] += cps * elapsed
+    if bg is True:
+        lifetime["bg_cookies"] += cps * elapsed
+
+
+def startup(timing, lifetime, current, buildings, upgrades, xupgrades):
+    """
+    call this to start a game session
+    """
+    now = time.time()
+    if timing["stop_ts"] != 0.0:
+        bg_elapsed = now - timing["stop_ts"]
+        timing["bg_seconds"] += bg_elapsed
+        prev_cookies = current["cookies"]
+        slimdown_factor = 0.1
+        update_state(slimdown_factor*bg_elapsed, lifetime, current, buildings, upgrades, xupgrades, bg=True)
+        print >>sys.stderr, "handled %.1f bg_seconds; gained %.1f donuts" % (bg_elapsed, current["cookies"]-prev_cookies)
+    timing["start_ts"] = now
+    timing["stop_ts"] = 0.0
+
+
+def shutdown(timing):
+    """
+    call this to end a game session
+    """
+    now = time.time()
+    fg_elapsed = now - timing["start_ts"]
+    timing["start_ts"] = 0.0
+    print >>sys.stderr, "handled %.1f fg_seconds" % fg_elapsed
+    timing["fg_seconds"] += fg_elapsed
+    timing["stop_ts"] = now
+
 
 
 def get_status(ticks, current):
@@ -226,6 +305,22 @@ def get_status(ticks, current):
         "u2=%s" % current["upgrades"]["u2"],
         "u3=%s" % current["upgrades"]["u3"],
     )
+
+
+
+def soft_reset(profiles, profile_id, buildings, upgrades):
+    """
+    do a "soft reset"
+
+    A soft reset establishes how many shards you have and resets
+    the current game session.
+    """
+    # FINISH: need formula
+    profiles[profile_id]["lifetime"]["shards"] = int( profiles[profile_id]["lifetime"]["cookies"]/(1000.0*1000*1000*1000) )
+    profiles[profile_id]["current"] = mk_new_current(buildings, upgrades)
+    print >>sys.stderr, "handled soft reset; shards=%s" % (profiles[profile_id]["lifetime"]["shards"],)
+    
+
 
 
 

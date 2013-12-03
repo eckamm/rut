@@ -210,8 +210,8 @@ class BackgroundWidget:
 
 def main():
     pygame.init()
-    screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), pygame.FULLSCREEN)
-#   screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+#   screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), pygame.FULLSCREEN)
+    screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
     app_name = "Rockwell's Uninformed Tidemark"
     pygame.display.set_caption(app_name)
 
@@ -225,6 +225,10 @@ def main():
     profile_id = 0
     lifetime = save_jdat["profiles"][profile_id]["lifetime"]
     current = save_jdat["profiles"][profile_id]["current"]
+    timing = save_jdat["profiles"][profile_id]["timing"]
+
+    # Must do startup() to handle background accumulation.
+    ex1.startup(timing, lifetime, current, buildings, upgrades, xupgrades)
 
     background_widget = BackgroundWidget()
     x_widget = XWidget()
@@ -249,7 +253,13 @@ def main():
                 current["game_cookies"] += 100000000000000000
                 lifetime["cookies"] += 100000000000000000
 
+            elif event.type == pygame.KEYDOWN and event.key == pygame.K_s:
+                ex1.soft_reset(save_jdat["profiles"], profile_id, buildings, upgrades)
+                # save_jdat["profiles"]["current"] has been replaced; need to update pointer
+                current = save_jdat["profiles"][profile_id]["current"]
+
             elif event.type == pygame.MOUSEBUTTONDOWN and event.button == LEFTBUTTON:
+                # FINISH: put a function in ex1 to do this type of thing
                 if donut_widget.box.collidepoint(event.pos):
                     current["cookies"] += current["cpc"]
                     current["game_cookies"] += current["cpc"]
@@ -302,6 +312,9 @@ def main():
 #       timer.update((ms_elapsed/1000.0)*TICK) # FINISH: does flip() returns the elapsed ti
 #       finish_timer.update((ms_elapsed/1000.0)*TICK) # FINISH: does flip() returns the ela
         pygame.event.pump()
+
+    # Must do shutdown() to prep for background accumulation.
+    ex1.shutdown(timing)
 
     # Save the game state to a file.
     with open(save_filenm, "w") as fp:
