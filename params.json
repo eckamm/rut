@@ -10,8 +10,8 @@
         "b7": {"base_cost":250000, "base_cps": 500.0, "name": "Magician", "description": "Magic!"},
         "b8": {"base_cost":1000000, "base_cps": 2500.0, "name": "Transporter", "description": "Go to other worlds today!"},
         "b9": {"base_cost":100000000, "base_cps": 250000.0, "name": "Energy-Donut Transverter", "description": "Change massive amounts of energy to donuts."},
-        "ba1": {"base_cost":5000000000, "base_cps": 10000000.0, "name": "Donut Duplicator", "description": "Duplicates donuts."}
-        
+        "bA": {"base_cost":5000000000, "base_cps": 10000000.0, "name": "Donut Duplicator", "description": "Duplicates donuts."},
+        "bB": {"base_cost":100000000000, "base_cps": 100000000.0, "name": "Singularity", "description": "A donut, compressed to a single point."}
     },
     "upgrades": {
         "um1": {"cost": 100, "target": "b1", "incr_pct":2.0, "requirements": {"b1":1}, "name": "American Cheese", "flavor": "Boring old American cheese."},
@@ -19,87 +19,106 @@
         "um3": {"cost": 10000, "target": "b1", "incr_pct":2.0, "requirements": {"b1":10}, "name": "Swiss Cheese", "flavor": "Cheese with holes. For a mouse, a mobile, edible home. Hope they don't run away."},
         "um4": {"cost": 500000, "target": "b1", "incr_pct":2.0, "requirements": {"b1":25}, "name": "Blue Cheese", "flavor": "Goes well on top of green eggs and ham."},
         "um5": {"cost": 1000000, "target": "b1", "incr_pct":2.0, "requirements": {"b1":50}, "name": "Nacho Cheese", "flavor": "I guess it is yo cheese now..."},
+        "um6": {"cost": 10000000, "target": "b1", "incr_pct":2.0, "requirements": {"b1":100}, "name": "The Big Cheese", "flavor": "If the mice find out about this, you'll never click again."},
         
         "uf1": {"cost": 500, "target": "b2", "incr_base_cps":1.3, "requirements": {"b2":1}, "name": "Vegtable Oil", "flavor": "A way to make your donuts have slightly more nutritional value."},
         "uf2": {"cost": 100, "target": "b2", "incr_pct":2.0, "requirements": {"b2":5}, "name": "Petroleum Oil", "flavor": "Now you can contribute to global warming too!"},
         "uf3": {"cost": 5000, "target": "b2", "incr_pct":2.0, "requirements": {"b2":10}, "name": "French Fryer", "flavor": "Fryers from France are proven to be twice as efficent as those from anywhere else."},
         "uf4": {"cost": 10000, "target": "b2", "incr_pct":2.0, "requirements": {"b2":25}, "name": "Fish Fry", "flavor": "Apparently, donuts and fish go well together."},
         "uf5": {"cost": 500000, "target": "b2", "incr_pct":2.0, "requirements": {"b2":50}, "name": "Deep Fryer", "flavor": "Submerge your donuts under twice as much oil, cooking them in half the time."},
+        "uf6": {"cost": 5000000, "target": "b2", "incr_pct":2.0, "requirements": {"b2":100}, "name": "Fire Fryer", "flavor": "Yes, this is a fire hazard."},        
         
         "utf1": {"cost": 3000, "target": "b3", "incr_base_cps":2.0, "requirements": {"b3":1}, "name": "Rain Dance", "flavor": "A rain dance, invented by the elders."},
         "utf2": {"cost": 6000, "target": "b3", "incr_pct":2.0, "requirements": {"b3":5}, "name": "Two Cans", "flavor": "These two cans full of dough should help coat the island."},
         "utf3": {"cost": 30000, "target": "b3", "incr_pct":2.0, "requirements": {"b3":10}, "name": "City of Donuts", "flavor": "Your adventurers have found the city the Spainish dreamed of."},
         "utf4": {"cost": 600000, "target": "b3", "incr_pct":2.0, "requirements": {"b3":25}, "name": "Water-Donut Converter", "flavor": "The Amazon could use donuts."},
         "utf5": {"cost": 3000000, "target": "b3", "incr_pct":2.0, "requirements": {"b3":50}, "name": "Deforestation", "flavor": "Clear out land so you can get more donuts."},
+        "utf6": {"cost": 30000000, "target": "b3", "incr_pct":2.0, "requirements": {"b3":100}, "name": "Reforestation", "flavor": "Turns out, donut trees exist."},
         
         "ufv1": {"cost": 10000, "target": "b4", "incr_base_cps":5.0, "requirements": {"b4":1}, "name": "Canoe", "flavor": "A small boat to fish for more donuts."},
         "ufv2": {"cost": 20000, "target": "b4", "incr_pct":2.0, "requirements": {"b4":5}, "name": "Motorboat", "flavor": "A small, powerful boat to fish for more donuts."},
         "ufv3": {"cost": 100000, "target": "b4", "incr_pct":2.0, "requirements": {"b4":10}, "name": "Steam Ship", "flavor": "A large boat to fish for more donuts."},
         "ufv4": {"cost": 2000000, "target": "b4", "incr_pct":2.0, "requirements": {"b4":25}, "name": "Submarine", "flavor": "A large, underwater boat to fish for deep-sea donuts."},
         "ufv5": {"cost": 10000000, "target": "b4", "incr_pct":2.0, "requirements": {"b4":50}, "name": "Hydro-fission Ship", "flavor": "A large, extraordinarily powerful boat to fish for more donuts."},
+        "ufv6": {"cost": 100000000, "target": "b4", "incr_pct":2.0, "requirements": {"b4":100}, "name": "Calamari", "flavor": "Donut of the sea."},        
         
         "uq1": {"cost": 10000, "target": "b5", "incr_base_cps":15.0, "requirements": {"b5":1}, "name": "Wooden Tools", "flavor": "Weak tools."},
         "uq2": {"cost": 50000, "target": "b5", "incr_pct":2.0, "requirements": {"b5":5}, "name": "Cobblestone Tools", "flavor": "Kinda weak tools."},
         "uq3": {"cost": 500000, "target": "b5", "incr_pct":2.0, "requirements": {"b5":10}, "name": "Iron Tools", "flavor": "So-so tools."},
         "uq4": {"cost": 1000000, "target": "b5", "incr_pct":2.0, "requirements": {"b5":25}, "name": "Diamond Tools", "flavor": "Strong tools."},
         "uq5": {"cost": 50000000, "target": "b5", "incr_pct":2.0, "requirements": {"b5":50}, "name": "Obsidian Tools", "flavor": "Nearly unbreakable tools."},
-        
+        "uq6": {"cost": 500000000, "target": "b5", "incr_pct":2.0, "requirements": {"b5":100}, "name": "Bedrock Tools", "flavor": "Unbreakable tools."},
+      
+      
         "ucet1": {"cost": 100000, "target": "b6", "incr_base_cps":30.0, "requirements": {"b6":1}, "name": "Launch Pad", "flavor": "Blast off!"},
         "ucet2": {"cost": 500000, "target": "b6", "incr_pct":2.0, "requirements": {"b6":5}, "name": "Control Cabin", "flavor": "In a rocket ship."},
         "ucet3": {"cost": 1000000, "target": "b6", "incr_pct":2.0, "requirements": {"b6":10}, "name": "Entrance Prize", "flavor": "A large spaceship to go where no one has gone before."},
         "ucet4": {"cost": 50000000, "target": "b6", "incr_pct":2.0, "requirements": {"b6":25}, "name": "Cheese-Dough Converter", "flavor": "With the moon being made of cheese, we thought we should cash in."},
         "ucet5": {"cost": 100000000, "target": "b6", "incr_pct":2.0, "requirements": {"b6":50}, "name": "Warp Drive", "flavor": "Makes ships 100% faster. Also has a tendency to break when you need it most."},
+        "ucet6": {"cost": 1000000000, "target": "b6", "incr_pct":2.0, "requirements": {"b6":100}, "name": "Donut Planet", "flavor": "A planet. Looks like a donut. If it's not one, at least we have moon rocks."},
+        
         
         "umg1": {"cost": 1250000, "target": "b7", "incr_base_cps":100.0, "requirements": {"b7":1}, "name": "Lead", "flavor": "Boring metal."},
         "umg2": {"cost": 2500000, "target": "b7", "incr_pct":2.0, "requirements": {"b7":5}, "name": "Copper", "flavor": "Shiny and rather expensive."},
         "umg3": {"cost": 12500000, "target": "b7", "incr_pct":2.0, "requirements": {"b7":10}, "name": "Silver", "flavor": "More shiny and more expensive."},
         "umg4": {"cost": 250000000, "target": "b7", "incr_pct":2.0, "requirements": {"b7":25}, "name": "Gold", "flavor": "Weak, shiny and EXPENSIVE."},
         "umg5": {"cost": 1250000000, "target": "b7", "incr_pct":2.0, "requirements": {"b7":50}, "name": "Platinum", "flavor": "SHINYYYYYY!"},
+        "umg6": {"cost": 12500000000, "target": "b7", "incr_pct":2.0, "requirements": {"b7":100}, "name": "Philosopher's Stone", "flavor": "Makes donuts. Has a side effect of eternal life."},
         
         "ut1": {"cost": 1000000, "target": "b8", "incr_base_cps":500.0, "requirements": {"b8":1}, "name": "Black Hole", "flavor": "A hole. Note that it is black."},
         "ut2": {"cost": 5000000, "target": "b8", "incr_pct":2.0, "requirements": {"b8":5}, "name": "White Hole", "flavor": "A white hole. Note that it is white."},
         "ut3": {"cost": 50000000, "target": "b8", "incr_pct":2.0, "requirements": {"b8":10}, "name": "Wormhole", "flavor": "Like a black and white hole, combined into one."},
         "ut4": {"cost": 100000000, "target": "b8", "incr_pct":2.0, "requirements": {"b8":25}, "name": "Big Hole", "flavor": "Bigger than all other holes combined."},
         "ut5": {"cost": 5000000000, "target": "b8", "incr_pct":2.0, "requirements": {"b8":50}, "name": "Magic Hole", "flavor": "Go though it, and PRESTO! You're in another universe!"},
+        "ut6": {"cost": 50000000000, "target": "b8", "incr_pct":2.0, "requirements": {"b8":100}, "name": "Square Hole", "flavor": "A physical impossibility, before your very eyes!"},
+        
         
         "uedt1": {"cost": 1000000, "target": "b9", "incr_base_cps":50000.0, "requirements": {"b9":1}, "name": "Flux Capacitor", "flavor": "What is flux? This helpful piece of machinery will get it out of your life."},
         "uedt2": {"cost": 5000000, "target": "b9", "incr_pct":2.0, "requirements": {"b9":5}, "name": "Lambert Particle", "flavor": "Humphry Lambert discovered this while studing sedimentary rocks. LOOK AT THE LAYERS."},
         "uedt3": {"cost": 50000000, "target": "b9", "incr_pct":2.0, "requirements": {"b9":10}, "name": "Schnauzer's Unindustrialized Diffusion", "flavor": "Rumored to be something about chipmunks."},
         "uedt4": {"cost": 100000000, "target": "b9", "incr_pct":2.0, "requirements": {"b9":25}, "name": "Cohen's Quark", "flavor": "No one notices this because it is so small and carries virtually zero energy."},
         "uedt5": {"cost": 5000000000, "target": "b9", "incr_pct":2.0, "requirements": {"b9":50}, "name": "Endymion Matter", "flavor": "Named for Edward Endymion, of foosball fame."},
+        "uedt6": {"cost": 50000000000, "target": "b9", "incr_pct":2.0, "requirements": {"b9":100}, "name": "Schlutz's Universe", "flavor": "A theorietical universe, made of donuts."},
         
-        "udd1": {"cost": 250000000, "target": "ba1", "incr_base_cps":2500000.0, "requirements": {"ba1":1}, "name": "Dual Core", "flavor": "2"},
-        "udd2": {"cost": 500000000, "target": "ba1", "incr_pct":2.0, "requirements": {"ba1":5}, "name": "Quad Core", "flavor": "2*2"},
-        "udd3": {"cost": 2500000000, "target": "ba1", "incr_pct":2.0, "requirements": {"ba1":10}, "name": "Octal Core", "flavor": "2*2+2+2"},
-        "udd4": {"cost": 50000000000, "target": "ba1", "incr_pct":2.0, "requirements": {"ba1":25}, "name": "Decisi Core", "flavor": "(2*2)*(2*2)"},
-        "udd5": {"cost": 250000000000, "target": "ba1", "incr_pct":2.0, "requirements": {"ba1":50}, "name": "Tridecdual Core", "flavor": "(22*2)-(2*2*2*2)+(2*2)"},
         
-        "uc1": {"cost": 50, "target": "click", "incr_pct":2.0, "requirements": {"game_cookies":100}, "name": "Bit Click", "flavor": "One click."},
-        "uc2": {"cost": 100, "target": "click", "incr_pct":2.0, "requirements": {"game_cookies":200}, "name": "Byte Click", "flavor": "A few clicks."},
-        "uc4": {"cost": 400, "target": "click", "incr_pct":2.0, "requirements": {"game_cookies":800}, "name": "Mega Click", "flavor": "More clicks."},
-        "uc5": {"cost": 800, "target": "click", "incr_pct":2.0, "requirements": {"game_cookies":1600}, "name": "Giga Click", "flavor": "A lot of clicks."},
-        "uc6": {"cost": 1600, "target": "click", "incr_pct":2.0, "requirements": {"game_cookies":3200}, "name": "Tera Click", "flavor": "Tons of clicks."},
-        "uc8": {"cost": 6400, "target": "click", "incr_pct":2.0, "requirements": {"game_cookies":12800}, "name": "Quanta Click", "flavor": "Quantum state clicks. No one knows where they are."},
-        "uc9": {"cost": 12800, "target": "click", "incr_pct":2.0, "requirements": {"game_cookies":25600}, "name": "Quinta Click", "flavor": "So many clicks."},        
-        "uca1": {"cost": 51200, "target": "click", "incr_pct":2.0, "requirements": {"game_cookies":102400}, "name": "Septimal Click", "flavor": "Clicks^clicks."},   
-        "uca2": {"cost": 204800, "target": "click", "incr_pct":2.0, "requirements": {"game_cookies":409600}, "name": "Novenal Click", "flavor": "Has something to do with cats. Click."},           
-        "uca3": {"cost": 819200, "target": "click", "incr_pct":2.0, "requirements": {"game_cookies":1638400}, "name": "Hyper Click", "flavor": "MOAR COFFEE."},  
-        "uca4": {"cost": 6553600, "target": "click", "incr_pct":2.0, "requirements": {"game_cookies":13107200}, "name": "Ultra Click", "flavor": "Ultratabulasticarablar!."},  
+        "udd1": {"cost": 250000000, "target": "bA", "incr_base_cps":2500000.0, "requirements": {"bA":1}, "name": "Dual Core", "flavor": "2"},
+        "udd2": {"cost": 500000000, "target": "bA", "incr_pct":2.0, "requirements": {"bA":5}, "name": "Quad Core", "flavor": "2*2"},
+        "udd3": {"cost": 2500000000, "target": "bA", "incr_pct":2.0, "requirements": {"bA":10}, "name": "Octal Core", "flavor": "2*2+2+2"},
+        "udd4": {"cost": 50000000000, "target": "bA", "incr_pct":2.0, "requirements": {"bA":25}, "name": "Decisi Core", "flavor": "(2*2)*(2*2)"},
+        "udd5": {"cost": 250000000000, "target": "bA", "incr_pct":2.0, "requirements": {"bA":50}, "name": "Tridecdual Core", "flavor": "(22*2)-(2*2*2*2)+(2*2)"},
+        "udd6": {"cost": 2500000000000, "target": "bA", "incr_pct":2.0, "requirements": {"bA":100}, "name": "QuadQuad Quadratic Core", "flavor": "2((22*2)-(2*2*2*2)+(2*2))"},        
+        
+        "uod1": {"cost": 2500000000, "target": "bB", "incr_base_cps":25000000.0, "requirements": {"bB":1}, "name": "Mass Condenser", "flavor": "Condenses mass on to your donut."},
+        "uod2": {"cost": 5000000000, "target": "bB", "incr_pct":2.0, "requirements": {"bB":5}, "name": "Spin", "flavor": "Now avaliable in two flavors!"},
+        "uod3": {"cost": 25000000000, "target": "bB", "incr_pct":2.0, "requirements": {"bB":10}, "name": "Recursive Metajoke", "flavor": "Now you may laugh at this description about laughing about this description outside the game."},
+        "uod4": {"cost": 500000000000, "target": "bB", "incr_pct":2.0, "requirements": {"bB":25}, "name": "Antimatter", "flavor": "Now you can explode at home too!"},
+        "uod5": {"cost": 2500000000000, "target": "bB", "incr_pct":2.0, "requirements": {"bB":50}, "name": "Alternate Universes", "flavor": "It was bound to happen somewhere."},
+        "uod6": {"cost": 25000000000000, "target": "bB", "incr_pct":2.0, "requirements": {"bB":100}, "name": "Meta Donut", "flavor": "Out of this world."},
+        
+        
+        "uc1": {"cost": 50, "target": "click", "incr_pct":2.0, "requirements": {"game_cookies":100}, "name": "Singular Click", "flavor": "One click."},
+        "uc2": {"cost": 200, "target": "click", "incr_pct":2.0, "requirements": {"game_cookies":400}, "name": "Dual Click", "flavor": "A small group clicks."},
+        "uc3": {"cost": 800, "target": "click", "incr_pct":2.0, "requirements": {"game_cookies":1600}, "name": "Triple Click", "flavor": "A few clicks."},
+        "uc4": {"cost": 3200, "target": "click", "incr_pct":2.0, "requirements": {"game_cookies":6400}, "name": "Quad Click", "flavor": "Some clicks."},
+        "uc5": {"cost": 12800, "target": "click", "incr_pct":2.0, "requirements": {"game_cookies":25600}, "name": "Quinta Click", "flavor": "Some more clicks."},
+        "uc6": {"cost": 51200, "target": "click", "incr_pct":2.0, "requirements": {"game_cookies":102400}, "name": "Sixtal Click", "flavor": "A gang of clicks."},
+        "uc7": {"cost": 204800, "target": "click", "incr_pct":2.0, "requirements": {"game_cookies":409600}, "name": "Septimal Click", "flavor": "A lot of clicks."},
+        "uc8": {"cost": 819200, "target": "click", "incr_pct":2.0, "requirements": {"game_cookies":1638400}, "name": "Octal Click", "flavor": "A LOT of clicks."},
+        "uc9": {"cost": 3276800, "target": "click", "incr_pct":2.0, "requirements": {"game_cookies":6553600}, "name": "Novenal Click", "flavor": "Too many clicks."},
+        "ucA": {"cost": 13107200, "target": "click", "incr_pct":2.0, "requirements": {"game_cookies":26214400}, "name": "Deci Click", "flavor": "Really, 1000000000 clicks? Might want to think about outside storage."},
         
         "u*1": {"cost": 55, "target": "*", "incr_pct":1.05, "requirements": {"game_cookies":555}, "name": "Plain Donut", "flavor": "A plain donut that always gets eaten last in the variety pack."},
         "u*2": {"cost": 555, "target": "*", "incr_pct":1.10, "requirements": {"game_cookies":5555}, "name": "Glazed Donut", "flavor": "A glazed donut. Yum!"},
         "u*3": {"cost": 5555, "target": "*", "incr_pct":1.15, "requirements": {"game_cookies":55555}, "name": "Vanilla Donut", "flavor": "This donut begs for sprinkles."},
         "u*4": {"cost": 55555, "target": "*", "incr_pct":1.20, "requirements": {"game_cookies":555555}, "name": "Sprinkled Donut", "flavor": "This donut begs for vanilla frosting."},
         "u*5": {"cost": 555555, "target": "*", "incr_pct":1.25, "requirements": {"game_cookies":5555555}, "name": "Vanilla-Sprinkled Donut", "flavor": "This donut still wants more. It's quite greedy."},
-        "u*6": {"cost": 5555555, "target": "*", "incr_pct":1.30, "requirements": {"game_cookies":55555555}, "name": "Plainer Donut", "flavor": "A plainer donut that always gets eaten laster in the variety pack."},
-        "u*7": {"cost": 55555555, "target": "*", "incr_pct":1.35, "requirements": {"game_cookies":555555555}, "name": "Glazeder Donut", "flavor": "A glazeder donut. Yummytabular!"},
-        "u*8": {"cost": 555555555, "target": "*", "incr_pct":1.40, "requirements": {"game_cookies":5555555555}, "name": "Vanillar Donut", "flavor": "This donut begs for sprinkleser."},
-        "u*9": {"cost": 5555555555, "target": "*", "incr_pct":1.45, "requirements": {"game_cookies":55555555555}, "name": "Sprinkleder Donut", "flavor": "This donut begs for vanillar frosting."},
-        "u*a1": {"cost": 55555555555, "target": "*", "incr_pct":1.50, "requirements": {"game_cookies":555555555555}, "name": "Vanillar-Sprinkleder Donut", "flavor": "This donut still wants more. It's quite greedyer."},
-        
-        
-        "u*c": {"cost": 9000, "target": "*", "incr_pct":2.0, "requirements": {"b3":5}, "name": "Coffee", "flavor": "Now your workers work double time, hyped up on coffee beans made of donut extract, found in the jungle. Let's click!"}
+        "u*6": {"cost": 5555555, "target": "*", "incr_pct":1.30, "requirements": {"game_cookies":55555555}, "name": "Chocolate Donut", "flavor": "Chocolate donut rules all."},
+        "u*7": {"cost": 55555555, "target": "*", "incr_pct":1.35, "requirements": {"game_cookies":555555555}, "name": "Positive Donut", "flavor": "Stuck in the center."},
+        "u*8": {"cost": 555555555, "target": "*", "incr_pct":1.40, "requirements": {"game_cookies":5555555555}, "name": "Negative Donut", "flavor": "Almost glows with the current of tomorrow."},
+        "u*9": {"cost": 5555555555, "target": "*", "incr_pct":1.45, "requirements": {"game_cookies":55555555555}, "name": "Red and Green Donut", "flavor": "Donuts are the new standard near fireplaces."},
+        "u*A": {"cost": 55555555555, "target": "*", "incr_pct":1.50, "requirements": {"game_cookies":555555555555}, "name": "Hollow Donut", "flavor": "Been done before."}
 
+        
     }
 }
 
