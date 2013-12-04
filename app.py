@@ -253,7 +253,7 @@ def main():
                 current["game_cookies"] += 100000000000000000
                 lifetime["cookies"] += 100000000000000000
 
-            elif event.type == pygame.KEYDOWN and event.key == pygame.K_s:
+            elif event.type == pygame.KEYDOWN and event.key == pygame.K_r:
                 ex1.soft_reset(save_jdat["profiles"], profile_id, buildings, upgrades)
                 # save_jdat["profiles"]["current"] has been replaced; need to update pointer
                 current = save_jdat["profiles"][profile_id]["current"]
