@@ -42,12 +42,12 @@
         "ufv5": {"cost": 10000000, "target": "b4", "incr_pct":2.0, "requirements": {"b4":50}, "name": "Hydro-fission Ship", "flavor": "A large, extraordinarily powerful boat to fish for more donuts."},
         "ufv6": {"cost": 100000000, "target": "b4", "incr_pct":2.0, "requirements": {"b4":100}, "name": "Calamari", "flavor": "Donut of the sea."},        
         
-        "uq1": {"cost": 10000, "target": "b5", "incr_base_cps":15.0, "requirements": {"b5":1}, "name": "Wooden Tools", "flavor": "Weak tools."},
-        "uq2": {"cost": 50000, "target": "b5", "incr_pct":2.0, "requirements": {"b5":5}, "name": "Cobblestone Tools", "flavor": "Kinda weak tools."},
-        "uq3": {"cost": 500000, "target": "b5", "incr_pct":2.0, "requirements": {"b5":10}, "name": "Iron Tools", "flavor": "So-so tools."},
-        "uq4": {"cost": 1000000, "target": "b5", "incr_pct":2.0, "requirements": {"b5":25}, "name": "Diamond Tools", "flavor": "Strong tools."},
-        "uq5": {"cost": 50000000, "target": "b5", "incr_pct":2.0, "requirements": {"b5":50}, "name": "Obsidian Tools", "flavor": "Nearly unbreakable tools."},
-        "uq6": {"cost": 500000000, "target": "b5", "incr_pct":2.0, "requirements": {"b5":100}, "name": "Bedrock Tools", "flavor": "Unbreakable tools."},
+        "uq1": {"cost": 100000, "target": "b5", "incr_base_cps":15.0, "requirements": {"b5":1}, "name": "Wooden Tools", "flavor": "Weak tools."},
+        "uq2": {"cost": 500000, "target": "b5", "incr_pct":2.0, "requirements": {"b5":5}, "name": "Cobblestone Tools", "flavor": "Kinda weak tools."},
+        "uq3": {"cost": 5000000, "target": "b5", "incr_pct":2.0, "requirements": {"b5":10}, "name": "Iron Tools", "flavor": "So-so tools."},
+        "uq4": {"cost": 10000000, "target": "b5", "incr_pct":2.0, "requirements": {"b5":25}, "name": "Diamond Tools", "flavor": "Strong tools."},
+        "uq5": {"cost": 500000000, "target": "b5", "incr_pct":2.0, "requirements": {"b5":50}, "name": "Obsidian Tools", "flavor": "Nearly unbreakable tools."},
+        "uq6": {"cost": 5000000000, "target": "b5", "incr_pct":2.0, "requirements": {"b5":100}, "name": "Bedrock Tools", "flavor": "Unbreakable tools."},
       
       
         "ucet1": {"cost": 100000, "target": "b6", "incr_base_cps":30.0, "requirements": {"b6":1}, "name": "Launch Pad", "flavor": "Blast off!"},
