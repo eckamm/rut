@@ -441,9 +441,13 @@ def get_upgrade_text(current, upgrades, buildings, upgrade_id):
     reqs = upgrades[upgrade_id]["requirements"]
     building_id, cnt = reqs.items()[0]
     if building_id == "game_cookies":
-        descr = "Requires %s total donut" % (fmt(cnt))
+        descr = "Requires %s total donuts" % (fmt(cnt))
     else:
         descr = "Requires %s %s" % (fmt(cnt), buildings[building_id]["name"])
+        if cnt > 1:
+            descr += "s."
+        else:
+            descr += "."
     flavor = upgrades[upgrade_id].get("flavor", "...")
     building_id = upgrades[upgrade_id]["target"]
     if upgrades[upgrade_id].get("incr_pct", "") != "":
@@ -461,10 +465,7 @@ def get_upgrade_text(current, upgrades, buildings, upgrade_id):
         else:
             descr2 = "Adds %s donuts to %s's base DPS." % (fmt(upgrades[upgrade_id]["incr_base_cps"]), buildings[building_id]["name"])
     
-    if cnt > 1:
-        descr += "s."
-    else:
-        descr += "."
+    
     return "%s -- %s donuts -- %s -- %s\n%s" % (name, fmt(upgrades[upgrade_id]["cost"]), descr, descr2,flavor)
 
 
