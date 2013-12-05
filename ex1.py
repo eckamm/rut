@@ -3,6 +3,7 @@ import os
 import time
 import json
 import random
+import math
 
 from common import fmt
 """
@@ -400,7 +401,7 @@ def soft_reset(profiles, profile_id, buildings, upgrades):
     the current game session.
     """
     # FINISH: need formula
-    profiles[profile_id]["lifetime"]["shards"] = int( profiles[profile_id]["lifetime"]["cookies"]/(1000.0*1000*1000*1000) )
+    profiles[profile_id]["lifetime"]["shards"] = int((math.sqrt(1+(8*(profiles[profile_id]["lifetime"]["cookies"]/(10**12))))-1)/2)
     profiles[profile_id]["current"] = mk_new_current(buildings, upgrades)
     print >>sys.stderr, "handled soft reset; shards=%s" % (profiles[profile_id]["lifetime"]["shards"],)
     
