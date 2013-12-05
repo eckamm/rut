@@ -335,7 +335,7 @@ def update_state(elapsed, lifetime, current, buildings, upgrades, xupgrades, bg=
     """
     elapsed is time in seconds since last update; e.g. 1/float(TICK)
     """
-    sfactor = 1 + lifetime["shards"]
+    sfactor = 1 + (lifetime["shards"]/50.0)
     cps, cpc = calc_cps(current, buildings, upgrades, xupgrades)
     cps *= sfactor
     cpc *= sfactor
