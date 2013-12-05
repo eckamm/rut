@@ -7,6 +7,8 @@ a-j desirability (a -> most desirable)
 ??: make upgrades better, not just incr_base_cps and incr_pct;
 
 ??: order the upgrades properly
+??: soft reset UI
+??: stats UI
 
 ----
 
@@ -22,7 +24,7 @@ DONE: 2a: more columns for upgrades
 2g: time played
 
 DONE: 3b: offline cookie accumulation
-3a: make background.png
+3a: make background.png UI
 3b: show background effect as game launches
 3c: icons for buildings
 3d: show donut click effect (+NNN)
@@ -31,7 +33,7 @@ DONE: 3b: offline cookie accumulation
 4c: icons for upgrades
 4f: profile selection UI
 
-5a: heavenly shards / soft-reset
+DONE: 5a: heavenly shards / soft-reset engine
 
 6a: golden cookies
 

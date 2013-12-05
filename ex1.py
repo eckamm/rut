@@ -2,6 +2,7 @@ import sys
 import os
 import time
 import json
+import random
 
 from common import fmt
 """
@@ -26,12 +27,11 @@ profiles[]
         buildings[building_id] -> int
         upgrades[upgrade_id] -> bool
 
-        golden -> 
-            next_ts
-            start_ts .. end_ts
-            activated
-            effect     (frenzy, super-frenzy, lucky, super-lucky, free-building)
-            state -> IN|OUT
+        golden
+            state -> string; waiting|available
+            timer -> float; counts down to next state transition
+            active -> bool; if active when state is available then apply effect
+            kind -> string; a key from GoldenModel.rules
 
 
 
@@ -49,6 +49,76 @@ upgrades[upgrade_id]
 """
 COST_INCR = 1.15
 PAUSE = 0.1
+
+
+class GoldenModel:
+    """
+    state -> string; waiting|available
+    timer -> float; counts down to next state transition
+    active -> bool; if active when state is available then apply effect
+    kind -> string; a key from GoldenModel.rules
+
+    timeline of a golden cookie
+
+    ------+++++++------++++/////-------
+    1     2      1     2   3    1
+
+    1 -> state=waiting   active=False
+    2 -> state=available active=False
+    3 -> state=available active=True
+
+    - -> time spent waiting for a golden cookie
+    + -> time wasted not clicking on an available golden
+    / -> time golden cookie effects are in effect
+
+    ["cps", 2.0] -> multiple CPS by two
+    ["cpc", 2.0] -> multiple CPC by two
+    ["cookies", 2.0] -> add 2*current["cookies"]
+    """
+    rules = {
+        "gr10": {"name": "Frenzy", "weight": 10, "effects": [["cps", 2.0], ["cpc", 2.0]]},
+        "gr20": {"name": "Super-frenzy", "weight": 5, "effects": [["cps", 8.0], ["cpc", 8.0]]},
+    }
+
+    def __init__(self, data):
+        # data is a reference to savegame["profiles"][profile_id]["golden"]
+        self.data = data
+
+    def update(self, elapsed):
+        d = self.data
+        d["timer"] -= elapsed
+        if d["state"] == "waiting":
+            if d["timer"] <= 0.0:
+                # transition from waiting to available
+                d["state"] = "available"
+                d["timer"] = float(random.randrange(3, 6))
+                pot = []
+                for rule_id in self.rules:
+                    pot.extend([rule_id]*self.rules[rule_id]["weight"])
+                d["kind"] = random.choice(pot)
+                print >>sys.stderr, "golden transitioned to available; kind=%s; timer=%.1f" % (d["kind"], d["timer"])
+        elif d["state"] == "available":
+            if d["timer"] <= 0.0:
+                # transition from available to waiting
+                d["state"] = "waiting"
+                d["timer"] = float(random.randrange(3, 20))
+                d["active"] = False
+                print >>sys.stderr, "golden transitioned to waiting; timer=%.1f" % (d["timer"],)
+        else:
+            pass
+
+    def activate(self):
+        d = self.data
+        if d["state"] == "available":
+            d["active"] = True
+
+    def get_ctrl(self):
+        d = self.data
+        if d["active"]:
+            return d["kind"], self.rules[d["kind"]]
+        return None
+
+
 
 
 def init_savegame(filenm):
@@ -125,6 +195,11 @@ def mk_new_current(buildings, upgrades, src={}):
     current["upgrades"] = {}
     for upgrade_id in upgrades:
         current["upgrades"][upgrade_id] = src.get("upgrades", {}).get(upgrade_id, False)
+    current["golden"] = {}
+    current["golden"]["state"] = src.get("golden", {}).get("state", "waiting")
+    current["golden"]["timer"] = src.get("golden", {}).get("timer", 1.0)
+    current["golden"]["active"] = src.get("golden", {}).get("active", False)
+    current["golden"]["kind"] = src.get("golden", {}).get("kind", "")
     return current
 
 
@@ -243,6 +318,15 @@ def calc_cps(current, buildings, upgrades, xupgrades):
         if current["upgrades"][upgrade_id]:
             cpc *= upgrades[upgrade_id].get("incr_pct", 1.0)
     cpc *= multcpc
+
+    golden = GoldenModel(current["golden"])
+    ctrl = golden.get_ctrl()
+    if ctrl is None:
+        gfactor = 1.0
+    else:
+        gfactor = 2.0
+    cps = cps * gfactor
+
     return cps, cpc
 
 

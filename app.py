@@ -1,7 +1,9 @@
 from common import *
 import ex1 
+from statswidget import StatsWidget
 
 import pygame.transform
+
 
 
 
@@ -37,6 +39,7 @@ class XWidget:
         game_cookies_box.left = 10
         game_cookies_box.top = cookies_box.bottom + 10
         surface.blit(game_cookies_render, game_cookies_box)
+
 
 
 class TheDonut:
@@ -95,6 +98,37 @@ class TheBuildings:
                 text = ex1.get_building_text(self.current, self.buildings, building_id)
                 rollover_widget.update(text)
 
+
+
+class GoldenWidget:
+    def __init__(self):
+        image_file = "golden-available.png"
+        self.available_img = pygame.image.load(os.path.join(GAMEDIR, image_file))
+        self.available_box = self.available_img.get_rect()
+        self.available_box.center = (SCREEN_WIDTH/2, SCREEN_HEIGHT/2)
+        image_file = "golden-active.png"
+        self.active_img = pygame.image.load(os.path.join(GAMEDIR, image_file))
+        self.active_box = self.active_img.get_rect()
+        self.active_box.center = (SCREEN_WIDTH/2, SCREEN_HEIGHT/2)
+
+
+    def update(self, golden):
+        self.golden = golden
+
+    def draw(self, surface):
+        if self.golden.data["state"] != "available":
+            return
+        if self.golden.data["active"]:
+            surface.blit(self.active_img, self.active_box)
+        else:
+            surface.blit(self.available_img, self.available_box)
+
+    def on_click(self, pos):
+        if self.golden.data["state"] != "available":
+            return
+        if self.available_box.collidepoint(pos):
+            self.golden.activate()
+ 
 
 
 class TheUpgrades:
@@ -227,6 +261,8 @@ def main():
     current = save_jdat["profiles"][profile_id]["current"]
     timing = save_jdat["profiles"][profile_id]["timing"]
 
+    golden = ex1.GoldenModel(current["golden"])
+
     # Must do startup() to handle background accumulation.
     ex1.startup(timing, lifetime, current, buildings, upgrades, xupgrades)
 
@@ -236,6 +272,7 @@ def main():
     buildings_widget = TheBuildings(buildings)
     upgrades_widget = TheUpgrades(upgrades, buildings, images)
     rollover_widget = RolloverWidget()
+    golden_widget = GoldenWidget()
 
     running = True
     ticks = 0
@@ -267,6 +304,7 @@ def main():
                 else:
                     buildings_widget.on_click(event.pos)
                     upgrades_widget.on_click(event.pos)
+                    golden_widget.on_click(event.pos)
 
             elif event.type == pygame.MOUSEMOTION:
                 buildings_widget.on_mouseover(event.pos, rollover_widget)
@@ -283,6 +321,7 @@ def main():
 #       lifetime["cookies"] += cps * 1 / float(TICK)
         elapsed = 1 / float(TICK)
         ex1.update_state(elapsed, lifetime, current, buildings, upgrades, xupgrades)
+        golden.update(elapsed)
 
         building_costs = ex1.current_costs(current, buildings)
 #       status = ex1.get_status(ticks, current)
@@ -296,6 +335,7 @@ def main():
 
         buildings_widget.update(current, building_costs)
         upgrades_widget.update(current)
+        golden_widget.update(golden)
 
         screen.fill(THECOLORS["blue"])
 
@@ -305,6 +345,8 @@ def main():
         upgrades_widget.draw(screen)
         donut_widget.draw(screen)
         rollover_widget.draw(screen)
+
+        golden_widget.draw(screen)
 
         pygame.display.flip()
         ms_elapsed = clock.tick(TICK)
