@@ -93,7 +93,7 @@ class GoldenModel:
             if d["timer"] <= 0.0:
                 # transition from waiting to available
                 d["state"] = "available"
-                d["timer"] = float(random.randrange(3, 6))
+                d["timer"] = float(random.randrange(60, 61))
                 pot = []
                 for rule_id in self.rules:
                     pot.extend([rule_id]*self.rules[rule_id]["weight"])
@@ -103,7 +103,7 @@ class GoldenModel:
             if d["timer"] <= 0.0:
                 # transition from available to waiting
                 d["state"] = "waiting"
-                d["timer"] = float(random.randrange(3, 20))
+                d["timer"] = float(random.randrange(1, 10))
                 d["active"] = False
                 print >>sys.stderr, "golden transitioned to waiting; timer=%.1f" % (d["timer"],)
         else:
@@ -342,7 +342,7 @@ def update_state(elapsed, lifetime, current, buildings, upgrades, xupgrades, bg=
     """
     elapsed is time in seconds since last update; e.g. 1/float(TICK)
     """
-    sfactor = 1 + lifetime["shards"]
+    sfactor = 1 + (lifetime["shards"]/50.0)
     cps, cpc = calc_cps(current, buildings, upgrades, xupgrades)
     cps *= sfactor
     cpc *= sfactor
@@ -446,9 +446,13 @@ def get_upgrade_text(current, upgrades, buildings, upgrade_id):
     reqs = upgrades[upgrade_id]["requirements"]
     building_id, cnt = reqs.items()[0]
     if building_id == "game_cookies":
-        descr = "Requires %s total donut" % (fmt(cnt))
+        descr = "Requires %s total donuts" % (fmt(cnt))
     else:
         descr = "Requires %s %s" % (fmt(cnt), buildings[building_id]["name"])
+        if cnt > 1:
+            descr += "s."
+        else:
+            descr += "."
     flavor = upgrades[upgrade_id].get("flavor", "...")
     building_id = upgrades[upgrade_id]["target"]
     if upgrades[upgrade_id].get("incr_pct", "") != "":
@@ -466,10 +470,7 @@ def get_upgrade_text(current, upgrades, buildings, upgrade_id):
         else:
             descr2 = "Adds %s donuts to %s's base DPS." % (fmt(upgrades[upgrade_id]["incr_base_cps"]), buildings[building_id]["name"])
     
-    if cnt > 1:
-        descr += "s."
-    else:
-        descr += "."
+    
     return "%s -- %s donuts -- %s -- %s\n%s" % (name, fmt(upgrades[upgrade_id]["cost"]), descr, descr2,flavor)
 
 
