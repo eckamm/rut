@@ -52,6 +52,7 @@ COST_INCR = 1.15
 PAUSE = 0.1
 
 
+
 class GoldenModel:
     """
     state -> string; waiting|available
@@ -77,8 +78,8 @@ class GoldenModel:
     ["cookies", 2.0] -> add 2*current["cookies"]
     """
     rules = {
-        "gr10": {"name": "Frenzy", "weight": 10, "effects": [["cps", 2.0], ["cpc", 2.0]]},
-        "gr20": {"name": "Super-frenzy", "weight": 5, "effects": [["cps", 8.0], ["cpc", 8.0]]},
+        "gr10": {"name": "Frenzy", "weight": 10, "effects": {"cps": 2.0, "cpc": 2.0}},
+        "gr20": {"name": "Super-frenzy", "weight": 5, "effects": {"cps": 8.0, "cpc": 8.0}},
     }
 
     def __init__(self, data):
@@ -116,9 +117,17 @@ class GoldenModel:
     def get_ctrl(self):
         d = self.data
         if d["active"]:
-            return d["kind"], self.rules[d["kind"]]
+            return self.rules[d["kind"]]
         return None
 
+    def get_factors(self):
+        """
+        returns (cps_factor, cpc_factor)
+        """
+        rule = self.get_ctrl()
+        if rule is None:
+            return 1.0, 1.0
+        return (rule["effects"].get("cps", 1.0), rule["effects"].get("cpc", 1.0))
 
 
 
@@ -320,13 +329,11 @@ def calc_cps(current, buildings, upgrades, xupgrades):
             cpc *= upgrades[upgrade_id].get("incr_pct", 1.0)
     cpc *= multcpc
 
+    # Apply golden cookie factors.
     golden = GoldenModel(current["golden"])
-    ctrl = golden.get_ctrl()
-    if ctrl is None:
-        gfactor = 1.0
-    else:
-        gfactor = 2.0
-    cps = cps * gfactor
+    cps_factor, cpc_factor = golden.get_factors()
+    cps *= cps_factor
+    cpc *= cpc_factor
 
     return cps, cpc
 
