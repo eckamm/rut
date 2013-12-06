@@ -9,6 +9,7 @@ a-j desirability (a -> most desirable)
 ??: order the upgrades properly
 ??: soft reset UI
 ??: stats UI
+??: better golden cookie UI
 
 ----
 
@@ -35,7 +36,7 @@ DONE: 3b: offline cookie accumulation
 
 DONE: 5a: heavenly shards / soft-reset engine
 
-6a: golden cookies
+DONE: 6a: golden cookies
 
 
 goals:

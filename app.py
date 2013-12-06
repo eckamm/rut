@@ -1,3 +1,5 @@
+import random
+
 from common import *
 import ex1 
 from statswidget import StatsWidget
@@ -16,25 +18,25 @@ class XWidget:
         self._font = pygame.font.SysFont(None, 15)
 
     def draw(self, surface):
-        cps_render = self._font.render("DPS: %s" % fmt(self.cps), True, (255,255,255))
+        cps_render = self._font.render("DPS: %s" % fmt(self.cps), True, TEXT_COLOR)
         cps_box = cps_render.get_rect()
         cps_box.left = 10
         cps_box.centery = 20
         surface.blit(cps_render, cps_box)
 
-        cpc_render = self._font.render("DPC: %s" % fmt(self.cpc), True, (255,255,255))
+        cpc_render = self._font.render("DPC: %s" % fmt(self.cpc), True, TEXT_COLOR)
         cpc_box = cpc_render.get_rect()
         cpc_box.left = 10
         cpc_box.top = cps_box.bottom + 10
         surface.blit(cpc_render, cpc_box)
 
-        cookies_render = self._font.render("Donuts: %s" % fmt(self.cookies), True, (255,255,255))
+        cookies_render = self._font.render("Donuts: %s" % fmt(self.cookies), True, TEXT_COLOR)
         cookies_box = cookies_render.get_rect()
         cookies_box.left = 10
         cookies_box.top = cpc_box.bottom + 10
         surface.blit(cookies_render, cookies_box)
         
-        game_cookies_render = self._font.render("Total Donuts: %s" % fmt(self.game_cookies), True, (255,255,255))
+        game_cookies_render = self._font.render("Total Donuts: %s" % fmt(self.game_cookies), True, TEXT_COLOR)
         game_cookies_box = game_cookies_render.get_rect()
         game_cookies_box.left = 10
         game_cookies_box.top = cookies_box.bottom + 10
@@ -44,10 +46,17 @@ class XWidget:
 
 class TheDonut:
     def __init__(self):
-        image_file = "donut.png"
+        image_file = DONUT_IMAGE
         self.img = pygame.image.load(os.path.join(GAMEDIR, image_file))
+        self.img = pygame.transform.smoothscale(self.img, (256, 256))
         self.box = self.img.get_rect()
-        self.box.center = (SCREEN_WIDTH/5, SCREEN_HEIGHT/2)
+        self.box.center = (SCREEN_WIDTH/6, SCREEN_HEIGHT/2)
+
+    def update(self):
+        pass
+
+    def on_click(self, pos):
+        pass
 
     def draw(self, surface):
         surface.blit(self.img, self.box)
@@ -69,7 +78,7 @@ class TheBuildings:
         buyable = ex1.get_buyable_buildings(self.current, self.buildings)
         for building_id in sorted(self.buildings.keys()):
             if building_id in buyable:
-                color = THECOLORS["white"]
+                color = TEXT_COLOR
             else:
                 color = THECOLORS["orange"]
             name = self.buildings[building_id].get("name", building_id)
@@ -101,27 +110,58 @@ class TheBuildings:
 
 
 class GoldenWidget:
+    """
+    waiting -> nothing
+    available -> display in random place on screen
+    available and active -> display name and effect under big donut
+    """
     def __init__(self):
-        image_file = "golden-available.png"
+        image_file = GOLDEN_AVAILABLE_IMAGE
         self.available_img = pygame.image.load(os.path.join(GAMEDIR, image_file))
+        self.available_img = pygame.transform.smoothscale(self.available_img, (40, 40))
         self.available_box = self.available_img.get_rect()
         self.available_box.center = (SCREEN_WIDTH/2, SCREEN_HEIGHT/2)
-        image_file = "golden-active.png"
+
+        image_file = GOLDEN_ACTIVE_IMAGE
         self.active_img = pygame.image.load(os.path.join(GAMEDIR, image_file))
+        self.active_img = pygame.transform.smoothscale(self.active_img, (40, 40))
         self.active_box = self.active_img.get_rect()
-        self.active_box.center = (SCREEN_WIDTH/2, SCREEN_HEIGHT/2)
+        self.active_box.center = (SCREEN_WIDTH/6, 4*SCREEN_HEIGHT/5)
+        self.last_state = ("", False)  # state, active
+
+        self._font = pygame.font.SysFont(None, 15)
 
 
     def update(self, golden):
         self.golden = golden
-
-    def draw(self, surface):
-        if self.golden.data["state"] != "available":
+        if self.last_state == (self.golden.data["state"], self.golden.data["active"]):
             return
-        if self.golden.data["active"]:
-            surface.blit(self.active_img, self.active_box)
-        else:
-            surface.blit(self.available_img, self.available_box)
+        # Track the last state for the next call.
+        self.last_state = (golden.data["state"], golden.data["active"])
+        # There was a state transition, so pick a new random location for next golden.
+        self.x = random.randrange(SCREEN_WIDTH)
+        self.y = random.randrange(SCREEN_HEIGHT)
+        self.available_box.center = (self.x, self.y)
+        if self.golden.data["state"] == "waiting":
+            # Draw will do nothing during waiting state.
+            self.draw = lambda x:None
+        elif self.golden.data["state"] == "available" and not self.golden.data["active"]:
+            self.draw = self._draw_avail
+        elif self.golden.data["state"] == "available" and self.golden.data["active"]:
+            self.draw = self._draw_active
+            # Prep the text for the current golden.
+            rule = self.golden.get_ctrl()
+            self.text_render = self._font.render("%s" % (rule["name"],), True, (0,255,0))
+            self.text_box = self.text_render.get_rect()
+            self.text_box.top = self.active_box.bottom
+            self.text_box.centerx = self.active_box.centerx
+
+    def _draw_avail(self, surface):
+        surface.blit(self.available_img, self.available_box)
+
+    def _draw_active(self, surface):
+        surface.blit(self.active_img, self.active_box)
+        surface.blit(self.text_render, self.text_box)
 
     def on_click(self, pos):
         if self.golden.data["state"] != "available":
@@ -206,7 +246,7 @@ class RolloverWidget:
         self.line2_box.bottom = SCREEN_HEIGHT - 10
         self.line2_box.centerx = SCREEN_WIDTH / 2
 
-        self.line1_render = self._font.render(self.line1, True, (255,255,255))
+        self.line1_render = self._font.render(self.line1, True, TEXT_COLOR)
         self.line1_box = self.line1_render.get_rect()
         self.line1_box.bottom = self.line2_box.top - 10
         self.line1_box.centerx = SCREEN_WIDTH / 2
@@ -220,7 +260,7 @@ class RolloverWidget:
 
 class Images:
     def __init__(self):
-        nms = ["placeholder1.png", "placeholder2.png", "placeholder3.png", "placeholder4.png"]
+        nms = [UPGRADE_STATE1_IMAGE, UPGRADE_STATE2_IMAGE, UPGRADE_STATE3_IMAGE, UPGRADE_STATE4_IMAGE]
         self.imgs = []
         for nm in nms:
             image_file = os.path.join(GAMEDIR, nm)
@@ -244,8 +284,7 @@ class BackgroundWidget:
 
 def main():
     pygame.init()
-#   screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), pygame.FULLSCREEN)
-    screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+    screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), DISPLAY_FLAGS)
     app_name = "Rockwell's Uninformed Tidemark"
     pygame.display.set_caption(app_name)
 
