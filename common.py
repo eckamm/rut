@@ -27,27 +27,25 @@ HEADER = 50
 MARGIN = 10
 
 
+IMAGESET_KEY = os.environ.get("IMAGESET", "a").lower()
+BACKGROUND_IMAGE = os.path.join("imageset-%s" % (IMAGESET_KEY,), "background.png")
+GOLDEN_AVAILABLE_IMAGE = os.path.join("imageset-%s" % (IMAGESET_KEY,), "golden-available.png")
+GOLDEN_ACTIVE_IMAGE = os.path.join("imageset-%s" % (IMAGESET_KEY,), "golden-active.png")
+DONUT_IMAGE = os.path.join("imageset-%s" % (IMAGESET_KEY,), "donut.png")
+DONUT_CLICKED_IMAGE = os.path.join("imageset-%s" % (IMAGESET_KEY,), "donut-clicked.png")
+UPGRADE_STATE1_IMAGE = os.path.join("imageset-%s" % (IMAGESET_KEY,), "placeholder1.png")
+UPGRADE_STATE2_IMAGE = os.path.join("imageset-%s" % (IMAGESET_KEY,), "placeholder2.png")
+UPGRADE_STATE3_IMAGE = os.path.join("imageset-%s" % (IMAGESET_KEY,), "placeholder3.png")
+UPGRADE_STATE4_IMAGE = os.path.join("imageset-%s" % (IMAGESET_KEY,), "placeholder4.png")
+BUILDING1_IMAGE = os.path.join("imageset-%s" % (IMAGESET_KEY,), "build1.png")
+BUILDING2_IMAGE = os.path.join("imageset-%s" % (IMAGESET_KEY,), "build2.png")
 
-if os.environ.get("IMAGESET") == "1":
+if IMAGESET_KEY == "a":
     TEXT_COLOR = (255, 255, 255)
-    BACKGROUND_IMAGE = "a-background.png"
-    GOLDEN_AVAILABLE_IMAGE = "a-golden-available.png"
-    GOLDEN_ACTIVE_IMAGE = "a-golden-active.png"
-    DONUT_IMAGE = "a-donut.png"
-    UPGRADE_STATE1_IMAGE = "a-placeholder1.png"
-    UPGRADE_STATE2_IMAGE = "a-placeholder2.png"
-    UPGRADE_STATE3_IMAGE = "a-placeholder3.png"
-    UPGRADE_STATE4_IMAGE = "a-placeholder4.png"
+elif IMAGESET_KEY == "b":
+    TEXT_COLOR = (255, 255, 255)
 else:
     TEXT_COLOR = (255, 255, 255)
-    BACKGROUND_IMAGE = "background.png"
-    GOLDEN_AVAILABLE_IMAGE = "golden-available.png"
-    GOLDEN_ACTIVE_IMAGE = "golden-active.png"
-    DONUT_IMAGE = "donut.png"
-    UPGRADE_STATE1_IMAGE = "placeholder1.png"
-    UPGRADE_STATE2_IMAGE = "placeholder2.png"
-    UPGRADE_STATE3_IMAGE = "placeholder3.png"
-    UPGRADE_STATE4_IMAGE = "placeholder4.png"
 
 
 def fmt(n):

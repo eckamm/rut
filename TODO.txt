@@ -9,7 +9,6 @@ a-j desirability (a -> most desirable)
 ??: order the upgrades properly
 ??: soft reset UI
 ??: stats UI
-??: better golden cookie UI
 
 ----
 
@@ -17,21 +16,25 @@ a-j desirability (a -> most desirable)
 DONE: 0e: add background image
 
 DONE: 1b: upgrades at 100 buildings
+DONE: 1b: make building icons clickable
+DONE: 1d: Goldens can appear half off the screen when near screen edges.
 1e: add sounds
 1h: fullscreen/window switching
 
 DONE: 2a: more columns for upgrades
 2c: add line to rollover and use bigger font
-2g: time played
+DONE: 2g: time played
 
 DONE: 3b: offline cookie accumulation
 3a: make background.png UI
-3b: show background effect as game launches
-3c: icons for buildings
-3d: show donut click effect (+NNN)
-3e: animate donut click
+3b: show offline gains as game launches
+DONE: 3b: better golden cookie UI
+DONE: 3c: plumbing for building icons
+3c: make individual building icons
+DONE: 3d: show donut click effect
+DONE: 3e: animate donut click
 
-4c: icons for upgrades
+4c: make individual upgrade icons
 4f: profile selection UI
 
 DONE: 5a: heavenly shards / soft-reset engine

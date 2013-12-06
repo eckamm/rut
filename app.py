@@ -43,31 +43,43 @@ class XWidget:
         surface.blit(game_cookies_render, game_cookies_box)
 
 
-
 class TheDonut:
     def __init__(self):
         image_file = DONUT_IMAGE
-        self.img = pygame.image.load(os.path.join(GAMEDIR, image_file))
-        self.img = pygame.transform.smoothscale(self.img, (256, 256))
-        self.box = self.img.get_rect()
-        self.box.center = (SCREEN_WIDTH/6, SCREEN_HEIGHT/2)
+        self.img1 = pygame.image.load(os.path.join(GAMEDIR, image_file))
+        self.img1 = pygame.transform.smoothscale(self.img1, (256, 256))
+        self.box1 = self.img1.get_rect()
+        self.box1.center = (SCREEN_WIDTH/6, SCREEN_HEIGHT/2)
+        image_file = DONUT_CLICKED_IMAGE
+        self.img2 = pygame.image.load(os.path.join(GAMEDIR, image_file))
+        self.img2 = pygame.transform.smoothscale(self.img2, (256, 256))
+        self.box2 = self.img2.get_rect()
+        self.box2.center = (SCREEN_WIDTH/6, SCREEN_HEIGHT/2)
+        self.timer = 0.0
 
-    def update(self):
-        pass
+    def update(self, elapsed):
+        if self.timer > 0.0:
+            self.timer -= elapsed
 
     def on_click(self, pos):
-        pass
+        if self.box1.collidepoint(pos):
+            if self.timer <= 0.0:
+                self.timer = 0.06
+            return True
 
     def draw(self, surface):
-        surface.blit(self.img, self.box)
+        if self.timer <= 0.0:
+            # normal
+            surface.blit(self.img1, self.box1)
+        else:
+            # pressed
+            surface.blit(self.img2, self.box2)
 
 
 class TheBuildings:
     def __init__(self, buildings):
-        image_file = "build1.png"
-        self.img1 = pygame.image.load(os.path.join(GAMEDIR, image_file))
-        image_file = "build2.png"
-        self.img2 = pygame.image.load(os.path.join(GAMEDIR, image_file))
+        self.img1 = pygame.image.load(os.path.join(GAMEDIR, BUILDING1_IMAGE))
+        self.img2 = pygame.image.load(os.path.join(GAMEDIR, BUILDING2_IMAGE))
         self.buildings = buildings
         self._font = pygame.font.SysFont(None, 15)
         self.boxes = []
@@ -83,7 +95,7 @@ class TheBuildings:
         self.building_costs = building_costs
 
     def draw(self, surface):
-        y = 20
+        y = self.images[0].get_rect().h//2
         self.boxes = []
         buyable = ex1.get_buyable_buildings(self.current, self.buildings)
         for idx, building_id in enumerate(sorted(self.buildings.keys())):
@@ -96,28 +108,31 @@ class TheBuildings:
                 self.current["buildings"][building_id],
                 fmt(self.building_costs[building_id])),
                 True, color)
-            box = render.get_rect()
-            box.left = 1.4 * SCREEN_WIDTH / 5
-            box.centery = y
-            surface.blit(render, box)
-            box2 = self.images[idx].get_rect()
-            box2.centery = box.centery
-            box2.right = box.left
-            surface.blit(self.images[idx],box2)
-            y += box.height + 40
 
-            self.boxes.append(box)
+            box2 = self.images[idx].get_rect()
+            box2.centery = y
+            box2.left = 1.4 * SCREEN_WIDTH / 5
+            surface.blit(self.images[idx],box2)
+
+            box = render.get_rect()
+            box.left = box2.right
+            box.centery = box2.centery
+            surface.blit(render, box)
+
+            y += box2.height + 5
+            self.boxes.append((box, box2))
 
     def on_click(self, pos):
         building_ids = sorted(self.buildings.keys())
-        for box, building_id in zip(self.boxes, building_ids):
-            if box.collidepoint(pos):
+        for (box1, box2), building_id in zip(self.boxes, building_ids):
+            if box1.collidepoint(pos) or box2.collidepoint(pos):
                 ex1.buy_building(self.current, self.buildings, building_id)
+                return True
 
     def on_mouseover(self, pos, rollover_widget):
         building_ids = sorted(self.buildings.keys())
-        for box, building_id in zip(self.boxes, building_ids):
-            if box.collidepoint(pos):
+        for (box1, box2), building_id in zip(self.boxes, building_ids):
+            if box1.collidepoint(pos) or box2.collidepoint(pos):
                 text = ex1.get_building_text(self.current, self.buildings, building_id)
                 rollover_widget.update(text)
 
@@ -145,6 +160,12 @@ class GoldenWidget:
 
         self._font = pygame.font.SysFont(None, 15)
 
+    def _pick_random_pos(self):
+        w_margin = SCREEN_WIDTH//20
+        h_margin = SCREEN_HEIGHT//20
+        x = w_margin + random.randrange(SCREEN_WIDTH-2*w_margin)
+        y = h_margin + random.randrange(SCREEN_HEIGHT-2*h_margin)
+        return x, y
 
     def update(self, golden):
         self.golden = golden
@@ -153,9 +174,7 @@ class GoldenWidget:
         # Track the last state for the next call.
         self.last_state = (golden.data["state"], golden.data["active"])
         # There was a state transition, so pick a new random location for next golden.
-        self.x = random.randrange(SCREEN_WIDTH)
-        self.y = random.randrange(SCREEN_HEIGHT)
-        self.available_box.center = (self.x, self.y)
+        self.available_box.center = self._pick_random_pos()
         if self.golden.data["state"] == "waiting":
             # Draw will do nothing during waiting state.
             self.draw = lambda x:None
@@ -182,6 +201,7 @@ class GoldenWidget:
             return
         if self.available_box.collidepoint(pos):
             self.golden.activate()
+            return True
  
 
 
@@ -230,6 +250,7 @@ class TheUpgrades:
         for box, upgrade_id in zip(self.boxes, upgrade_ids):
             if box.collidepoint(pos):
                 ex1.buy_upgrade(self.current, self.upgrades, upgrade_id)
+                return True
 
     def on_mouseover(self, pos, rollover_widget):
         upgrade_ids = sorted(self.upgrades.keys())
@@ -349,15 +370,19 @@ def main():
                 current = save_jdat["profiles"][profile_id]["current"]
 
             elif event.type == pygame.MOUSEBUTTONDOWN and event.button == LEFTBUTTON:
-                # FINISH: put a function in ex1 to do this type of thing
-                if donut_widget.box.collidepoint(event.pos):
+                # Note that the on_click() methods do their own click detection and
+                # return True when the click was on the owning object.
+                if golden_widget.on_click(event.pos):
+                    pass
+                elif donut_widget.on_click(event.pos):
+                    # FINISH: put a function in ex1 to do this type of thing
                     current["cookies"] += current["cpc"]
                     current["game_cookies"] += current["cpc"]
                     lifetime["cookies"] += current["cpc"]
-                else:
-                    buildings_widget.on_click(event.pos)
-                    upgrades_widget.on_click(event.pos)
-                    golden_widget.on_click(event.pos)
+                elif buildings_widget.on_click(event.pos):
+                    pass
+                elif upgrades_widget.on_click(event.pos):
+                    pass
 
             elif event.type == pygame.MOUSEMOTION:
                 buildings_widget.on_mouseover(event.pos, rollover_widget)
@@ -375,6 +400,7 @@ def main():
         elapsed = 1 / float(TICK)
         ex1.update_state(elapsed, lifetime, current, buildings, upgrades, xupgrades)
         golden.update(elapsed)
+        donut_widget.update(elapsed)
 
         building_costs = ex1.current_costs(current, buildings)
 #       status = ex1.get_status(ticks, current)
