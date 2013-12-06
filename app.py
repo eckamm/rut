@@ -64,9 +64,19 @@ class TheDonut:
 
 class TheBuildings:
     def __init__(self, buildings):
+        image_file = "build1.png"
+        self.img1 = pygame.image.load(os.path.join(GAMEDIR, image_file))
+        image_file = "build2.png"
+        self.img2 = pygame.image.load(os.path.join(GAMEDIR, image_file))
         self.buildings = buildings
         self._font = pygame.font.SysFont(None, 15)
         self.boxes = []
+        self.images = []
+        for i in range(len(self.buildings.keys())):
+            if i % 2:
+                self.images.append(self.img1)
+            else:
+                self.images.append(self.img2)
 
     def update(self, current, building_costs):
         self.current = current
@@ -76,7 +86,7 @@ class TheBuildings:
         y = 20
         self.boxes = []
         buyable = ex1.get_buyable_buildings(self.current, self.buildings)
-        for building_id in sorted(self.buildings.keys()):
+        for idx, building_id in enumerate(sorted(self.buildings.keys())):
             if building_id in buyable:
                 color = TEXT_COLOR
             else:
@@ -90,7 +100,11 @@ class TheBuildings:
             box.left = 1.4 * SCREEN_WIDTH / 5
             box.centery = y
             surface.blit(render, box)
-            y += box.height + 10
+            box2 = self.images[idx].get_rect()
+            box2.centery = box.centery
+            box2.right = box.left
+            surface.blit(self.images[idx],box2)
+            y += box.height + 40
 
             self.boxes.append(box)
 
