@@ -78,8 +78,10 @@ class GoldenModel:
     ["cookies", 2.0] -> add 2*current["cookies"]
     """
     rules = {
-        "gr10": {"name": "Frenzy", "weight": 10, "effects": {"cps": 2.0, "cpc": 2.0}},
-        "gr20": {"name": "Super-frenzy", "weight": 5, "effects": {"cps": 8.0, "cpc": 8.0}},
+        "gr10": {"name": "Frenzy", "weight": 20, "effects": {"cps": 2.0, "cpc": 2.0}, "duration": 15.0},
+        "gr20": {"name": "Super-frenzy", "weight": 10, "effects": {"cps": 8.0, "cpc": 8.0}, "duration": 10.0},
+        "gr30": {"name": "Super-click", "weight": 1, "effects": {"cps": 1.0, "cpc": 1000.0}, "duration": 5.0},
+        "gr40": {"name": "MEGAFRENZY", "weight": 1, "effects": {"cps": 55.0, "cpc": 55.0}, "duration": 5.0},
     }
 
     def __init__(self, data):
@@ -93,17 +95,18 @@ class GoldenModel:
             if d["timer"] <= 0.0:
                 # transition from waiting to available
                 d["state"] = "available"
-                d["timer"] = float(random.randrange(60, 61))
+                #d["timer"] = float(random.randrange(60, 61))
                 pot = []
                 for rule_id in self.rules:
                     pot.extend([rule_id]*self.rules[rule_id]["weight"])
                 d["kind"] = random.choice(pot)
+                d["timer"] = self.rules[d["kind"]]["duration"]
                 print >>sys.stderr, "golden transitioned to available; kind=%s; timer=%.1f" % (d["kind"], d["timer"])
         elif d["state"] == "available":
             if d["timer"] <= 0.0:
                 # transition from available to waiting
                 d["state"] = "waiting"
-                d["timer"] = float(random.randrange(1, 10))
+                d["timer"] = float(random.randrange(60, 180))
                 d["active"] = False
                 print >>sys.stderr, "golden transitioned to waiting; timer=%.1f" % (d["timer"],)
         else:

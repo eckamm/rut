@@ -79,8 +79,8 @@
         "uedt4": {"cost": 10000000000, "target": "b9", "incr_pct":2.0, "requirements": {"b9":25}, "name": "Cohen's Quark", "flavor": "No one notices this because it is so small and carries virtually zero energy."},
         "uedt5": {"cost": 500000000000, "target": "b9", "incr_pct":2.0, "requirements": {"b9":50}, "name": "Endymion Matter", "flavor": "Named for Edward Endymion, of foosball fame."},
         "uedt6": {"cost": 5000000000000, "target": "b9", "incr_pct":2.0, "requirements": {"b9":100}, "name": "Schlutz's Universe", "flavor": "A theorietical universe, made of donuts."},
-        
-        
+         
+         
         "udd1": {"cost": 25000000000, "target": "bA", "incr_base_cps":2500000.0, "requirements": {"bA":1}, "name": "Dual Core", "flavor": "2"},
         "udd2": {"cost": 50000000000, "target": "bA", "incr_pct":2.0, "requirements": {"bA":5}, "name": "Quad Core", "flavor": "2*2"},
         "udd3": {"cost": 250000000000, "target": "bA", "incr_pct":2.0, "requirements": {"bA":10}, "name": "Octal Core", "flavor": "2*2+2+2"},

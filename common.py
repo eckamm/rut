@@ -27,7 +27,7 @@ HEADER = 50
 MARGIN = 10
 
 
-IMAGESET_KEY = os.environ.get("IMAGESET", "a").lower()
+IMAGESET_KEY = os.environ.get("IMAGESET", "b").lower()
 IMAGE_DIR = "imageset-%s" % (IMAGESET_KEY,)
 BACKGROUND_IMAGE = os.path.join(IMAGE_DIR, "background.png")
 GOLDEN_AVAILABLE_IMAGE = os.path.join(IMAGE_DIR, "golden-available.png")
