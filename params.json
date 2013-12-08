@@ -120,12 +120,12 @@
         ["uod6", {"cost": 25000000000000000, "target": "bB", "incr_pct":2.0, "requirements": {"bB":100}, "name": "Meta Donut", "flavor": "Out of this world."}],
         
         ["uu1", {"cost": 1000000000000000, "target": "*", "incr_pct":5.0, "requirements": {"bC":1}, "name": "Upgrade -1", "flavor": "Definitely not a glitch."}],
-        ["uu2", {"cost": 10000000000000000, "target": "*", "incr_pct":55.0, "requirements": {"bC":5}, "name": "Upgrade MissingNo", "flavor": "Use HiddenPower!"}],
-        ["uu3", {"cost": 1000000000000000000, "target": "*", "incr_pct":555.0, "requirements": {"bC":10}, "name": "Upgrade Wall Through", "flavor": "Doors are so 5 minutes ago."}],
-        ["uu4", {"cost": 1000000000000000000000, "target": "*", "incr_pct":5555.0, "requirements": {"bC":25}, "name": "Upgrade of Enchanting", "flavor": "A basic potionsmithy ought to take this up."}],
-        ["uu5", {"cost": 10000000000000000000000000, "target": "*", "incr_pct":55555.0, "requirements": {"bC":50}, "name": "Upgrade UUDDLRLRAB", "flavor": "Definitly no cheating going on here."}],
-        ["uu6", {"cost": 1000000000000000000000000000000, "target": "*", "incr_pct":555555.0, "requirements": {"bC":100}, "name": "Upgrade Finale", "flavor": "Goodbye! (There's definitly not a 200 building upgrade for this one...)"}],
-        ["uu7", {"cost": 1000000000000000000000000000000000000, "target": "*", "incr_pct":0.0, "requirements": {"bC":200}, "name": "Upgrade %REt5$GfWtfdfR", "flavor": "%$tF4TGsdUY4$FDg%"}]
+        ["uu2", {"cost": 100000000000000000, "target": "*", "incr_pct":55.0, "requirements": {"bC":5}, "name": "Upgrade MissingNo", "flavor": "Use HiddenPower!"}],
+        ["uu3", {"cost": 100000000000000000000, "target": "*", "incr_pct":555.0, "requirements": {"bC":10}, "name": "Upgrade Wall Through", "flavor": "Doors are so 5 minutes ago."}],
+        ["uu4", {"cost": 1000000000000000000000000, "target": "*", "incr_pct":5555.0, "requirements": {"bC":25}, "name": "Upgrade of Enchanting", "flavor": "A basic potionsmithy ought to take this up."}],
+        ["uu5", {"cost": 100000000000000000000000000000, "target": "*", "incr_pct":55555.0, "requirements": {"bC":50}, "name": "Upgrade UUDDLRLRAB", "flavor": "Definitly no cheating going on here."}],
+        ["uu6", {"cost": 100000000000000000000000000000000000, "target": "*", "incr_pct":555555.0, "requirements": {"bC":100}, "name": "Upgrade Finale", "flavor": "Goodbye! (There's definitly not a 200 building upgrade for this one...)"}],
+        ["uu7", {"cost": 1000000000000000000000000000000000000000000, "target": "*", "incr_pct":0.0, "requirements": {"bC":200}, "name": "Upgrade %REt5$GfWtfdfR", "flavor": "%$tF4TGsdUY4$FDg%"}]
 
 
 
