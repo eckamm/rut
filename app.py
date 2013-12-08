@@ -46,12 +46,12 @@ class XWidget:
 class TheDonut:
     def __init__(self):
         image_file = DONUT_IMAGE
-        self.img1 = pygame.image.load(os.path.join(GAMEDIR, image_file))
+        self.img1 = pygame.image.load(os.path.join(GAMEDIR, image_file)).convert_alpha()
         self.img1 = pygame.transform.smoothscale(self.img1, (256, 256))
         self.box1 = self.img1.get_rect()
         self.box1.center = (SCREEN_WIDTH/6, SCREEN_HEIGHT/2)
         image_file = DONUT_CLICKED_IMAGE
-        self.img2 = pygame.image.load(os.path.join(GAMEDIR, image_file))
+        self.img2 = pygame.image.load(os.path.join(GAMEDIR, image_file)).convert_alpha()
         self.img2 = pygame.transform.smoothscale(self.img2, (256, 256))
         self.box2 = self.img2.get_rect()
         self.box2.center = (SCREEN_WIDTH/6, SCREEN_HEIGHT/2)
@@ -64,7 +64,7 @@ class TheDonut:
     def on_click(self, pos):
         if self.box1.collidepoint(pos):
             if self.timer <= 0.0:
-                self.timer = 0.06
+                self.timer = 0.16
             return True
 
     def draw(self, surface):
@@ -76,19 +76,31 @@ class TheDonut:
             surface.blit(self.img2, self.box2)
 
 
+class FPSWidget:
+    def __init__(self):
+        self._font = pygame.font.SysFont(None, 15)
+        self.fps = 0.0
+
+    def update(self, fps):
+        self.fps = fps
+
+    def draw(self, surface):
+        render = self._font.render("%5.2f fps" % (self.fps,), True, THECOLORS["white"])
+        box = render.get_rect()
+        box.bottomleft = (0, SCREEN_HEIGHT)
+        surface.blit(render, box)
+
+
+
 class TheBuildings:
     def __init__(self, buildings):
-        self.img1 = pygame.image.load(os.path.join(GAMEDIR, BUILDING1_IMAGE))
-        self.img2 = pygame.image.load(os.path.join(GAMEDIR, BUILDING2_IMAGE))
+        self.images = []
+        for building_id in sorted(buildings.keys()):
+            filenm = os.path.join(GAMEDIR, IMAGE_DIR, "building-%s.png" % (building_id,))
+            self.images.append(pygame.image.load(filenm).convert_alpha())
         self.buildings = buildings
         self._font = pygame.font.SysFont(None, 15)
         self.boxes = []
-        self.images = []
-        for i in range(len(self.buildings.keys())):
-            if i % 2:
-                self.images.append(self.img1)
-            else:
-                self.images.append(self.img2)
 
     def update(self, current, building_costs):
         self.current = current
@@ -146,13 +158,13 @@ class GoldenWidget:
     """
     def __init__(self):
         image_file = GOLDEN_AVAILABLE_IMAGE
-        self.available_img = pygame.image.load(os.path.join(GAMEDIR, image_file))
+        self.available_img = pygame.image.load(os.path.join(GAMEDIR, image_file)).convert_alpha()
         self.available_img = pygame.transform.smoothscale(self.available_img, (40, 40))
         self.available_box = self.available_img.get_rect()
         self.available_box.center = (SCREEN_WIDTH/2, SCREEN_HEIGHT/2)
 
         image_file = GOLDEN_ACTIVE_IMAGE
-        self.active_img = pygame.image.load(os.path.join(GAMEDIR, image_file))
+        self.active_img = pygame.image.load(os.path.join(GAMEDIR, image_file)).convert_alpha()
         self.active_img = pygame.transform.smoothscale(self.active_img, (40, 40))
         self.active_box = self.active_img.get_rect()
         self.active_box.center = (SCREEN_WIDTH/6, 4*SCREEN_HEIGHT/5)
@@ -299,13 +311,13 @@ class Images:
         self.imgs = []
         for nm in nms:
             image_file = os.path.join(GAMEDIR, nm)
-            img = pygame.image.load(image_file)
+            img = pygame.image.load(image_file).convert_alpha()
             self.imgs.append(img)
 
 
 class BackgroundWidget:
     def __init__(self):
-        img = pygame.image.load(os.path.join(GAMEDIR, BACKGROUND_IMAGE))
+        img = pygame.image.load(os.path.join(GAMEDIR, BACKGROUND_IMAGE)).convert_alpha()
         self.img = pygame.transform.smoothscale(img, (SCREEN_WIDTH, SCREEN_HEIGHT))
         self.box = self.img.get_rect()
         self.box.center = (SCREEN_WIDTH/2, SCREEN_HEIGHT/2)
@@ -324,6 +336,7 @@ def main():
     pygame.display.set_caption(app_name)
 
     clock = pygame.time.Clock()
+    ms_elapsed = 0.0
 
     images = Images()
 
@@ -341,6 +354,7 @@ def main():
     ex1.startup(timing, lifetime, current, buildings, upgrades, xupgrades)
 
     background_widget = BackgroundWidget()
+    fps_widget = FPSWidget()
     x_widget = XWidget()
     donut_widget = TheDonut()
     buildings_widget = TheBuildings(buildings)
@@ -391,20 +405,12 @@ def main():
         # FINISH: make functions in ex1 which do all this work.
         # ex1.update_state(lifetime, current, elapsed)
         # ex1.calc_aux(lifetime, current) -> building_status, upgrade_status, golden_status?
-#       cps, cpc = ex1.calc_cps(current, buildings, upgrades, xupgrades)
-#       current["cps"] = cps
-#       current["cpc"] = cpc
-#       current["cookies"] += cps * 1 / float(TICK)
-#       current["game_cookies"] += cps * 1 / float(TICK)
-#       lifetime["cookies"] += cps * 1 / float(TICK)
-        elapsed = 1 / float(TICK)
+        elapsed = ms_elapsed/1000.0
         ex1.update_state(elapsed, lifetime, current, buildings, upgrades, xupgrades)
         golden.update(elapsed)
         donut_widget.update(elapsed)
 
         building_costs = ex1.current_costs(current, buildings)
-#       status = ex1.get_status(ticks, current)
-#       print >>sys.stderr, ("\r"+status),
 
         # FINISH: make a XWidget.update() method.  Rename XWidget.
         x_widget.cps = current["cps"]
@@ -424,11 +430,13 @@ def main():
         upgrades_widget.draw(screen)
         donut_widget.draw(screen)
         rollover_widget.draw(screen)
+        fps_widget.draw(screen)
 
         golden_widget.draw(screen)
 
         pygame.display.flip()
         ms_elapsed = clock.tick(TICK)
+        fps_widget.update(clock.get_fps())
 
 #       timer.update((ms_elapsed/1000.0)*TICK) # FINISH: does flip() returns the elapsed ti
 #       finish_timer.update((ms_elapsed/1000.0)*TICK) # FINISH: does flip() returns the ela
@@ -444,4 +452,8 @@ def main():
 
 if __name__ == '__main__':
     GAMEDIR = os.path.dirname(os.path.abspath(sys.argv[0]))
-    sys.exit(main())
+    if os.environ.get("PROFILE", "") == "1":
+        import profile
+        profile.run("main()")
+    else:
+        sys.exit(main())
