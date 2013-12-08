@@ -24,7 +24,8 @@ def _f(self, lifetime, current):
 
 
 class StatsWidget:
-    bg_color = THECOLORS["brown"]
+#   bg_color = THECOLORS["brown"]
+    bg_color = (THECOLORS["brown"][0], THECOLORS["brown"][1], THECOLORS["brown"][2], 128)
 
     def __init__(self):
         self.showing = False
@@ -47,7 +48,9 @@ class StatsWidget:
             self._draw(surface)
 
     def _draw_bg(self, surface):
-        self.bg_surface = pygame.Surface((int(0.8*SCREEN_WIDTH), int(0.8*SCREEN_HEIGHT)))
+#       self.bg_surface = pygame.Surface((int(0.8*SCREEN_WIDTH), int(0.8*SCREEN_HEIGHT)))
+#       self.bg_surface.set_alpha(128)
+        self.bg_surface = pygame.Surface((int(0.8*SCREEN_WIDTH), int(0.8*SCREEN_HEIGHT)), pygame.SRCALPHA)
         self.bg_surface.fill(self.bg_color)
         self.bg_box = self.bg_surface.get_rect()
         self.bg_box.center = (SCREEN_WIDTH/2, SCREEN_HEIGHT/2)

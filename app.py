@@ -8,6 +8,11 @@ import pygame.transform
 
 
 
+def make_text(font, text):
+    """
+    returns (text_surface, bg_surface, box)
+    """
+        
 
 class XWidget:
     def __init__(self):
@@ -15,28 +20,28 @@ class XWidget:
         self.cpc = 1
         self.cookies = 0
         self.game_cookies = 0
-        self._font = pygame.font.Font(os.path.join(GAMEDIR, FONT1_FILE), 15)
+        self._font = pygame.font.Font(os.path.join(GAMEDIR, FONT1_FILE), 20)
 
     def draw(self, surface):
-        cps_render = self._font.render("DPS: %s" % fmt(self.cps), True, TEXT_COLOR)
+        cps_render = self._font.render("DPS: %s" % fmt(self.cps), TEXT_ANTIALIAS, TEXT_COLOR, TEXT_BACKGROUND)
         cps_box = cps_render.get_rect()
         cps_box.left = 10
         cps_box.centery = 20
         surface.blit(cps_render, cps_box)
 
-        cpc_render = self._font.render("DPC: %s" % fmt(self.cpc), True, TEXT_COLOR)
+        cpc_render = self._font.render("DPC: %s" % fmt(self.cpc), TEXT_ANTIALIAS, TEXT_COLOR, TEXT_BACKGROUND)
         cpc_box = cpc_render.get_rect()
         cpc_box.left = 10
         cpc_box.top = cps_box.bottom + 10
         surface.blit(cpc_render, cpc_box)
 
-        cookies_render = self._font.render("Donuts: %s" % fmt(self.cookies), True, TEXT_COLOR)
+        cookies_render = self._font.render("Donuts: %s" % fmt(self.cookies), TEXT_ANTIALIAS, TEXT_COLOR, TEXT_BACKGROUND)
         cookies_box = cookies_render.get_rect()
         cookies_box.left = 10
         cookies_box.top = cpc_box.bottom + 10
         surface.blit(cookies_render, cookies_box)
         
-        game_cookies_render = self._font.render("Total Donuts: %s" % fmt(self.game_cookies), True, TEXT_COLOR)
+        game_cookies_render = self._font.render("Total Donuts: %s" % fmt(self.game_cookies), TEXT_ANTIALIAS, TEXT_COLOR, TEXT_BACKGROUND)
         game_cookies_box = game_cookies_render.get_rect()
         game_cookies_box.left = 10
         game_cookies_box.top = cookies_box.bottom + 10
@@ -85,7 +90,8 @@ class FPSWidget:
         self.fps = fps
 
     def draw(self, surface):
-        render = self._font.render("%5.2f fps" % (self.fps,), True, THECOLORS["white"])
+        antialias = False
+        render = self._font.render("%5.2f fps" % (self.fps,), antialias, THECOLORS["white"])
         box = render.get_rect()
         box.bottomleft = (0, SCREEN_HEIGHT)
         surface.blit(render, box)
@@ -119,7 +125,7 @@ class TheBuildings:
             render = self._font.render("%s (%d) -- Cost: %s" % (name,
                 self.current["buildings"][building_id],
                 fmt(self.building_costs[building_id])),
-                True, color)
+                TEXT_ANTIALIAS, color, TEXT_BACKGROUND)
 
             box2 = self.images[idx].get_rect()
             box2.centery = y
@@ -196,7 +202,7 @@ class GoldenWidget:
             self.draw = self._draw_active
             # Prep the text for the current golden.
             rule = self.golden.get_ctrl()
-            self.text_render = self._font.render("%s" % (rule["name"],), True, (0,255,0))
+            self.text_render = self._font.render("%s" % (rule["name"],), TEXT_ANTIALIAS, (0, 255, 0), TEXT_BACKGROUND)
             self.text_box = self.text_render.get_rect()
             self.text_box.top = self.active_box.bottom
             self.text_box.centerx = self.active_box.centerx
@@ -288,12 +294,12 @@ class RolloverWidget:
         self.line1 = line1
         self.line2 = line2
 
-        self.line2_render = self._font.render(self.line2, True, (155,155,155))
+        self.line2_render = self._font.render(self.line2, TEXT_ANTIALIAS, (155, 155, 155), TEXT_BACKGROUND)
         self.line2_box = self.line2_render.get_rect()
         self.line2_box.bottom = SCREEN_HEIGHT - 10
         self.line2_box.centerx = SCREEN_WIDTH / 2
 
-        self.line1_render = self._font.render(self.line1, True, TEXT_COLOR)
+        self.line1_render = self._font.render(self.line1, TEXT_ANTIALIAS, TEXT_COLOR, TEXT_BACKGROUND)
         self.line1_box = self.line1_render.get_rect()
         self.line1_box.bottom = self.line2_box.top - 10
         self.line1_box.centerx = SCREEN_WIDTH / 2
@@ -331,7 +337,7 @@ class BackgroundWidget:
 
 def main():
     pygame.init()
-    screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), DISPLAY_FLAGS)
+    screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), DISPLAY_FLAGS, 32)
     app_name = "Rockwell's Uninformed Tidemark"
     pygame.display.set_caption(app_name)
 

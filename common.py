@@ -20,8 +20,9 @@ SCREEN_WIDTH = 1000
 SCREEN_HEIGHT = 600
 if os.environ.get("USE_WINDOW"):
     DISPLAY_FLAGS = 0
+    DISPLAY_FLAGS = pygame.DOUBLEBUF
 else:
-    DISPLAY_FLAGS = pygame.FULLSCREEN
+    DISPLAY_FLAGS = pygame.FULLSCREEN|pygame.DOUBLEBUF
 TICK = 50
 HEADER = 50
 MARGIN = 10
@@ -32,6 +33,7 @@ FONT2_FILE = os.path.join(FONTDIR, "MunroNarrow.ttf")
 FONT3_FILE = os.path.join(FONTDIR, "MunroSmall.ttf")
 FONT1_FILE = os.path.join(FONTDIR, "aesymatt.ttf")
 FONT1_FILE = os.path.join(FONTDIR, "Arcade.ttf")
+FONT1_FILE = os.path.join(FONTDIR, "Munro.ttf")
 FONT1_FILE = os.path.join(FONTDIR, "MunroNarrow.ttf")
 
 IMAGESET_KEY = os.environ.get("IMAGESET", "b").lower()
@@ -49,11 +51,17 @@ BUILDING1_IMAGE = os.path.join(IMAGE_DIR, "build1.png")
 BUILDING2_IMAGE = os.path.join(IMAGE_DIR, "build2.png")
 
 if IMAGESET_KEY == "a":
-    TEXT_COLOR = (255, 255, 255)
+    TEXT_COLOR = (255, 255, 255, 255)
+    TEXT_BACKGROUND = (25, 25, 25, 20)
+    TEXT_ANTIALIAS = False
 elif IMAGESET_KEY == "b":
-    TEXT_COLOR = (255, 255, 255)
+    TEXT_COLOR = (255, 255, 255, 255)
+    TEXT_BACKGROUND = (25, 25, 25, 20)
+    TEXT_ANTIALIAS = False
 else:
-    TEXT_COLOR = (255, 255, 255)
+    TEXT_COLOR = (255, 255, 255, 255)
+    TEXT_BACKGROUND = (25, 25, 25, 20)
+    TEXT_ANTIALIAS = False
 
 
 def fmt(n):
