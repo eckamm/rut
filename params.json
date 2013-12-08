@@ -11,7 +11,9 @@
         "b8": {"base_cost":1000000, "base_cps": 2500.0, "name": "Transporter", "description": "Go to other worlds today!"},
         "b9": {"base_cost":100000000, "base_cps": 250000.0, "name": "Energy-Donut Transverter", "description": "Change massive amounts of energy to donuts."},
         "bA": {"base_cost":5000000000, "base_cps": 10000000.0, "name": "Donut Duplicator", "description": "Duplicates donuts."},
-        "bB": {"base_cost":100000000000, "base_cps": 100000000.0, "name": "Singularity", "description": "A donut, compressed to a single point."}
+        "bB": {"base_cost":100000000000, "base_cps": 100000000.0, "name": "Singularity", "description": "A donut, compressed to a single point."},
+        "bC": {"base_cost":100000000000000, "base_cps": 0.0, "name": "Upgrafibulation Device", "description": "WHOO MOAR UPGRADES!"}
+
     },
     "upgrades": [
 
@@ -115,8 +117,19 @@
         ["uod3", {"cost": 25000000000000, "target": "bB", "incr_pct":2.0, "requirements": {"bB":10}, "name": "Recursive Metajoke", "flavor": "Now you may laugh at this description about laughing about this description outside the game."}],
         ["uod4", {"cost": 500000000000000, "target": "bB", "incr_pct":2.0, "requirements": {"bB":25}, "name": "Antimatter", "flavor": "Now you can explode at home too!"}],
         ["uod5", {"cost": 2500000000000000, "target": "bB", "incr_pct":2.0, "requirements": {"bB":50}, "name": "Alternate Universes", "flavor": "It was bound to happen somewhere."}],
-        ["uod6", {"cost": 25000000000000000, "target": "bB", "incr_pct":2.0, "requirements": {"bB":100}, "name": "Meta Donut", "flavor": "Out of this world."}]
+        ["uod6", {"cost": 25000000000000000, "target": "bB", "incr_pct":2.0, "requirements": {"bB":100}, "name": "Meta Donut", "flavor": "Out of this world."}],
         
+        ["uu1", {"cost": 1000000000000000, "target": "*", "incr_pct":5.0, "requirements": {"bC":1}, "name": "Upgrade -1", "flavor": "Definitely not a glitch."}],
+        ["uu2", {"cost": 10000000000000000, "target": "*", "incr_pct":55.0, "requirements": {"bC":5}, "name": "Upgrade MissingNo", "flavor": "Use HiddenPower!"}],
+        ["uu3", {"cost": 1000000000000000000, "target": "*", "incr_pct":555.0, "requirements": {"bC":10}, "name": "Upgrade Wall Through", "flavor": "Doors are so 5 minutes ago."}],
+        ["uu4", {"cost": 1000000000000000000000, "target": "*", "incr_pct":5555.0, "requirements": {"bC":25}, "name": "Upgrade of Enchanting", "flavor": "A basic potionsmithy ought to take this up."}],
+        ["uu5", {"cost": 10000000000000000000000000, "target": "*", "incr_pct":55555.0, "requirements": {"bC":50}, "name": "Upgrade UUDDLRLRAB", "flavor": "Definitly no cheating going on here."}],
+        ["uu6", {"cost": 1000000000000000000000000000000, "target": "*", "incr_pct":555555.0, "requirements": {"bC":100}, "name": "Upgrade Finale", "flavor": "Goodbye! (There's definitly not a 200 building upgrade for this one...)"}],
+        ["uu7", {"cost": 1000000000000000000000000000000000000, "target": "*", "incr_pct":0.0, "requirements": {"bC":200}, "name": "Upgrade %REt5$GfWtfdfR", "flavor": "%$tF4TGsdUY4$FDg%"}]
+
+
+
+
     ]
 }
 
