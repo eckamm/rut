@@ -175,19 +175,6 @@ def sync_rules(save_filenm, buildings, upgrades):
         p["lifetime"] = tmp
         # Replace the "current" save state data.
         p["current"] = mk_new_current(buildings, upgrades, src=p.get("current", {}))
-#       tmp = {}
-#       tmp["cookies"] = p.get("current", {}).get("cookies", 0.0)
-#       tmp["game_cookies"] = p.get("current", {}).get("game_cookies", 0.0)
-#       tmp["cpc"] = p.get("current", {}).get("cpc", 1.0)
-#       # Replace the current->buildings save state.
-#       tmp["buildings"] = {}
-#       for building_id in buildings:
-#           tmp["buildings"][building_id] = p.get("current", {}).get("buildings", {}).get(building_id, 0)
-#       # Replace the current->upgrades save state.
-#       tmp["upgrades"] = {}
-#       for upgrade_id in upgrades:
-#           tmp["upgrades"][upgrade_id] = p.get("current", {}).get("upgrades", {}).get(upgrade_id, False)
-#       p["current"] = tmp
     # Write out the synced save data.
     with open(save_filenm, "w") as fp:
         json.dump(jdat, fp, indent=4)
@@ -216,6 +203,9 @@ def mk_new_current(buildings, upgrades, src={}):
     return current
 
 
+class xdict(dict):
+    pass
+
 
 def setup(save_filenm, rules_filenm):
     """
@@ -229,8 +219,14 @@ def setup(save_filenm, rules_filenm):
     # Load the rules.
     with open(rules_filenm) as fp:
         rules_jdat = json.load(fp)
+
     buildings = rules_jdat["buildings"]
-    upgrades = rules_jdat["upgrades"]
+    t_upgrades = rules_jdat["upgrades"]
+    upgrades = xdict()
+    upgrades.order = []
+    for upgrade_id, d in t_upgrades:
+        upgrades.order.append(upgrade_id)
+        upgrades[upgrade_id] = d
 
     # Load the save data.
     with open(save_filenm) as fp:

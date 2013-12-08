@@ -361,6 +361,7 @@ def main():
     upgrades_widget = TheUpgrades(upgrades, buildings, images)
     rollover_widget = RolloverWidget()
     golden_widget = GoldenWidget()
+    stats_widget = StatsWidget()
 
     running = True
     ticks = 0
@@ -372,6 +373,9 @@ def main():
                 running = False
             elif event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
                 running = False
+
+            elif event.type == pygame.KEYDOWN and event.key == pygame.K_1:
+                stats_widget.showing = True
 
             elif event.type == pygame.KEYDOWN and event.key == pygame.K_a:
                 current["cookies"] += 100000000000000000
@@ -386,7 +390,9 @@ def main():
             elif event.type == pygame.MOUSEBUTTONDOWN and event.button == LEFTBUTTON:
                 # Note that the on_click() methods do their own click detection and
                 # return True when the click was on the owning object.
-                if golden_widget.on_click(event.pos):
+                if stats_widget.on_click(event.pos):
+                    pass
+                elif golden_widget.on_click(event.pos):
                     pass
                 elif donut_widget.on_click(event.pos):
                     # FINISH: put a function in ex1 to do this type of thing
@@ -409,6 +415,7 @@ def main():
         ex1.update_state(elapsed, lifetime, current, buildings, upgrades, xupgrades)
         golden.update(elapsed)
         donut_widget.update(elapsed)
+        stats_widget.update(current, lifetime)
 
         building_costs = ex1.current_costs(current, buildings)
 
@@ -433,6 +440,7 @@ def main():
         fps_widget.draw(screen)
 
         golden_widget.draw(screen)
+        stats_widget.draw(screen)
 
         pygame.display.flip()
         ms_elapsed = clock.tick(TICK)
