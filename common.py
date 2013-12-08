@@ -30,8 +30,9 @@ FONTDIR = "fonts"
 FONT1_FILE = os.path.join(FONTDIR, "Munro.ttf")
 FONT2_FILE = os.path.join(FONTDIR, "MunroNarrow.ttf")
 FONT3_FILE = os.path.join(FONTDIR, "MunroSmall.ttf")
-FONT1_FILE = os.path.join(FONTDIR, "Arcade.ttf")
 FONT1_FILE = os.path.join(FONTDIR, "aesymatt.ttf")
+FONT1_FILE = os.path.join(FONTDIR, "Arcade.ttf")
+FONT1_FILE = os.path.join(FONTDIR, "MunroNarrow.ttf")
 
 IMAGESET_KEY = os.environ.get("IMAGESET", "b").lower()
 IMAGE_DIR = "imageset-%s" % (IMAGESET_KEY,)
@@ -56,10 +57,42 @@ else:
 
 
 def fmt(n):
-    if type(n) in (long, int):
-        return "{:1,d}".format(n)
-    elif type(n) is float:
-        return "{:1,.1f}".format(n)
-    else:
+    if type(n) not in (long, int, float):
         return n
+    if type(n) in (long, int):
+        s = "{:1,d}".format(n)
+    elif type(n) is float:
+        s = "{:1,.1f}".format(n)
+    parts = s.split(",")
+    if len(parts) <= 3:
+        return s
+    if len(parts) == 4:
+        return "%s thousand" % (",".join(parts[:3]))
+    elif len(parts) == 5:
+        return "%s million" % (",".join(parts[:3]))
+    elif len(parts) == 6:
+        return "%s billion" % (",".join(parts[:3]))
+    elif len(parts) == 7:
+        return "%s quadrillion" % (",".join(parts[:3]))
+    elif len(parts) == 8:
+        return "%s quintillion" % (",".join(parts[:3]))
+    elif len(parts) == 9:
+        return "%s sextillion" % (",".join(parts[:3]))
+    elif len(parts) == 10:
+        return "%s septillion" % (",".join(parts[:3]))
+    elif len(parts) == 11:
+        return "%s octillion" % (",".join(parts[:3]))
+    elif len(parts) == 12:
+        return "%s nonillion" % (",".join(parts[:3]))
+    else:
+        return s
+
+    """
+    6 aaa,bbb,ccc,ddd,eee,fff.234
+    5 aaa,bbb,ccc,ddd,eee.234
+    4 aaa,bbb,ccc,ddd.234   
+    3 aaa,bbb,ccc.234
+    2 aaa,bbb.234
+    1 aaa.234
+    """
 
