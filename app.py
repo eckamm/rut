@@ -236,7 +236,7 @@ class TheUpgrades:
         init_centery = 20
         left = init_left
         self.boxes = []
-        for idx, upgrade_id in enumerate(sorted(self.upgrades.keys())):
+        for idx, upgrade_id in enumerate(self.upgrades.order):
             row = (idx // per_row)
             col = (idx % per_row)
 
@@ -258,14 +258,14 @@ class TheUpgrades:
 
 
     def on_click(self, pos):
-        upgrade_ids = sorted(self.upgrades.keys())
+        upgrade_ids = self.upgrades.order
         for box, upgrade_id in zip(self.boxes, upgrade_ids):
             if box.collidepoint(pos):
                 ex1.buy_upgrade(self.current, self.upgrades, upgrade_id)
                 return True
 
     def on_mouseover(self, pos, rollover_widget):
-        upgrade_ids = sorted(self.upgrades.keys())
+        upgrade_ids = self.upgrades.order
         for box, upgrade_id in zip(self.boxes, upgrade_ids):
             if box.collidepoint(pos):
                 text = ex1.get_upgrade_text(self.current, self.upgrades, self.buildings, upgrade_id)
