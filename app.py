@@ -15,7 +15,7 @@ class XWidget:
         self.cpc = 1
         self.cookies = 0
         self.game_cookies = 0
-        self._font = pygame.font.SysFont(None, 15)
+        self._font = pygame.font.Font(os.path.join(GAMEDIR, FONT1_FILE), 15)
 
     def draw(self, surface):
         cps_render = self._font.render("DPS: %s" % fmt(self.cps), True, TEXT_COLOR)
@@ -78,7 +78,7 @@ class TheDonut:
 
 class FPSWidget:
     def __init__(self):
-        self._font = pygame.font.SysFont(None, 15)
+        self._font = pygame.font.Font(os.path.join(GAMEDIR, FONT1_FILE), 15)
         self.fps = 0.0
 
     def update(self, fps):
@@ -99,7 +99,7 @@ class TheBuildings:
             filenm = os.path.join(GAMEDIR, IMAGE_DIR, "building-%s.png" % (building_id,))
             self.images.append(pygame.image.load(filenm).convert_alpha())
         self.buildings = buildings
-        self._font = pygame.font.SysFont(None, 15)
+        self._font = pygame.font.Font(os.path.join(GAMEDIR, FONT1_FILE), 15)
         self.boxes = []
 
     def update(self, current, building_costs):
@@ -170,7 +170,7 @@ class GoldenWidget:
         self.active_box.center = (SCREEN_WIDTH/6, 4*SCREEN_HEIGHT/5)
         self.last_state = ("", False)  # state, active
 
-        self._font = pygame.font.SysFont(None, 15)
+        self._font = pygame.font.Font(os.path.join(GAMEDIR, FONT1_FILE), 15)
 
     def _pick_random_pos(self):
         w_margin = SCREEN_WIDTH//20
@@ -222,7 +222,7 @@ class TheUpgrades:
         self.upgrades = upgrades
         self.buildings = buildings
         self.images = images
-        self._font = pygame.font.SysFont(None, 30)
+        self._font = pygame.font.Font(os.path.join(GAMEDIR, FONT1_FILE), 30)
         self.boxes = []
 
     def update(self, current):
@@ -275,7 +275,7 @@ class TheUpgrades:
 
 class RolloverWidget:
     def __init__(self):
-        self._font = pygame.font.SysFont(None, 15)
+        self._font = pygame.font.Font(os.path.join(GAMEDIR, FONT1_FILE), 15)
         self.line1 = "."
         self.line2 = "."
         self.update("\n")

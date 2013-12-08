@@ -26,6 +26,12 @@ TICK = 50
 HEADER = 50
 MARGIN = 10
 
+FONTDIR = "fonts"
+FONT1_FILE = os.path.join(FONTDIR, "Munro.ttf")
+FONT2_FILE = os.path.join(FONTDIR, "MunroNarrow.ttf")
+FONT3_FILE = os.path.join(FONTDIR, "MunroSmall.ttf")
+FONT1_FILE = os.path.join(FONTDIR, "Arcade.ttf")
+FONT1_FILE = os.path.join(FONTDIR, "aesymatt.ttf")
 
 IMAGESET_KEY = os.environ.get("IMAGESET", "b").lower()
 IMAGE_DIR = "imageset-%s" % (IMAGESET_KEY,)
