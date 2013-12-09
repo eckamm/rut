@@ -444,6 +444,8 @@ def get_upgrade_text(current, upgrades, buildings, upgrade_id):
     name = upgrades[upgrade_id].get("name", upgrade_id)
     reqs = upgrades[upgrade_id]["requirements"]
     building_id, cnt = reqs.items()[0]
+    if name == "Upgrade %REt5$GfWtfdfR":
+        return "$Ggdf$TDWEF4\n$@#RFV #RFFf T#%GdfFQWE@TfvERty #TEGAD3rtgFDS#R"
     if building_id == "game_cookies":
         descr = "Requires %s total donuts" % (fmt(cnt))
     else:
