@@ -1,0 +1,12 @@
+cp upgrade-um.png building-b1.png
+cp upgrade-uf.png building-b2.png
+cp upgrade-utf.png building-b3.png
+cp upgrade-ufv.png building-b4.png
+cp upgrade-uq.png building-b5.png
+cp upgrade-ucet.png building-b6.png
+cp upgrade-umg.png building-b7.png
+cp upgrade-ut.png building-b8.png
+cp upgrade-uedt.png building-b9.png
+cp upgrade-udd.png building-bA.png
+cp upgrade-uod.png building-bB.png
+cp upgrade-uu.png building-bC.png

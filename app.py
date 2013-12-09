@@ -54,12 +54,12 @@ class TheDonut:
         self.img1 = pygame.image.load(os.path.join(GAMEDIR, image_file)).convert_alpha()
         self.img1 = pygame.transform.smoothscale(self.img1, (256, 256))
         self.box1 = self.img1.get_rect()
-        self.box1.center = (SCREEN_WIDTH/6, SCREEN_HEIGHT/2)
+        self.box1.center = (SCREEN_WIDTH/7, SCREEN_HEIGHT/2)
         image_file = DONUT_CLICKED_IMAGE
         self.img2 = pygame.image.load(os.path.join(GAMEDIR, image_file)).convert_alpha()
         self.img2 = pygame.transform.smoothscale(self.img2, (256, 256))
         self.box2 = self.img2.get_rect()
-        self.box2.center = (SCREEN_WIDTH/6, SCREEN_HEIGHT/2)
+        self.box2.center = (SCREEN_WIDTH/7, SCREEN_HEIGHT/2)
         self.timer = 0.0
 
     def update(self, elapsed):
@@ -173,7 +173,7 @@ class GoldenWidget:
         self.active_img = pygame.image.load(os.path.join(GAMEDIR, image_file)).convert_alpha()
         self.active_img = pygame.transform.smoothscale(self.active_img, (40, 40))
         self.active_box = self.active_img.get_rect()
-        self.active_box.center = (SCREEN_WIDTH/6, 4*SCREEN_HEIGHT/5)
+        self.active_box.center = (SCREEN_WIDTH/7, 4*SCREEN_HEIGHT/5)
         self.last_state = ("", False)  # state, active
 
         self._font = pygame.font.Font(os.path.join(GAMEDIR, FONT1_FILE), 15)
