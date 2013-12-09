@@ -125,7 +125,7 @@
         ["uu4", {"cost": 1000000000000000000000000, "target": "*", "incr_pct":5555.0, "requirements": {"bC":25}, "name": "Upgrade of Enchanting", "flavor": "A basic potionsmithy ought to take this up."}],
         ["uu5", {"cost": 100000000000000000000000000000, "target": "*", "incr_pct":55555.0, "requirements": {"bC":50}, "name": "Upgrade UUDDLRLRAB", "flavor": "Definitly no cheating going on here."}],
         ["uu6", {"cost": 100000000000000000000000000000000000, "target": "*", "incr_pct":555555.0, "requirements": {"bC":100}, "name": "Upgrade Finale", "flavor": "Goodbye! (There's definitly not a 200 building upgrade for this one...)"}],
-        ["uu7", {"cost": 1000000000000000000000000000000000000000000, "target": "*", "incr_pct":0.0, "requirements": {"bC":200}, "name": "Upgrade %REt5$GfWtfdfR", "flavor": "%$tF4TGsdUY4$FDg%"}]
+        ["fin7", {"cost": 0, "target": "*", "incr_pct":0.0, "requirements": {"bC":200}, "name": "Upgrade %REt5$GfWtfdfR", "flavor": "%$tF4TGsdUY4$FDg%"}]
 
 
 
