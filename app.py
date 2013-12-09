@@ -231,6 +231,26 @@ class TheUpgrades:
         self._font = pygame.font.Font(os.path.join(GAMEDIR, FONT1_FILE), 30)
         self.boxes = []
 
+        self.ximages = {}
+        for upgrade_id in sorted(upgrades.keys()):
+            filenm = os.path.join(GAMEDIR, IMAGE_DIR, "upgrade-%s.png" % (upgrade_id[:-1],))
+            filenm = filenm.replace("*", "ASTERISK")
+            self.ximages[upgrade_id[:-1]] = pygame.image.load(filenm).convert_alpha()
+
+        ctrl = [
+            ("bought", THECOLORS["black"], 0),
+            #("buyable", THECOLORS["green"], 128),
+            ("buyable", (32, 128, 32), 128),
+            ("available", (200, 32, 32), 200),
+            ("unavailable", THECOLORS["black"], 200),
+        ]
+        self.alphas = {}
+        for kind, color, alpha in ctrl:
+            self.alphas[kind] = pygame.Surface((40, 40))
+            self.alphas[kind].fill(color)
+            self.alphas[kind].set_alpha(alpha)
+
+ 
     def update(self, current):
         self.current = current
 
@@ -246,20 +266,32 @@ class TheUpgrades:
             row = (idx // per_row)
             col = (idx % per_row)
 
-            if self.current["upgrades"][upgrade_id]:
-                img = self.images.imgs[1]
-            elif upgrade_id in buyable:
-                img = self.images.imgs[0]
-            elif upgrade_id in buyable2:
-                img = self.images.imgs[3]
-            else:
-                img = self.images.imgs[2]
+#           if self.current["upgrades"][upgrade_id]:
+#               img = self.images.imgs[1]
+#           elif upgrade_id in buyable:
+#               img = self.images.imgs[0]
+#           elif upgrade_id in buyable2:
+#               img = self.images.imgs[3]
+#           else:
+#               img = self.images.imgs[2]
+            img = self.ximages[upgrade_id[:-1]]
 
             box = img.get_rect()
             box.left = init_left + col * box.width
             box.centery = init_centery + row * box.height
 
             surface.blit(img, box)
+
+            if self.current["upgrades"][upgrade_id]:
+                img = self.alphas["bought"]
+            elif upgrade_id in buyable:
+                img = self.alphas["buyable"]
+            elif upgrade_id in buyable2:
+                img = self.alphas["available"]
+            else:
+                img = self.alphas["unavailable"]
+            surface.blit(img, box)
+
             self.boxes.append(box)
 
 

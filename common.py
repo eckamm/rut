@@ -52,7 +52,7 @@ BUILDING2_IMAGE = os.path.join(IMAGE_DIR, "build2.png")
 
 if IMAGESET_KEY == "a":
     TEXT_COLOR = (255, 255, 255, 255)
-    TEXT_BACKGROUND = (25, 25, 25, 20)
+    TEXT_BACKGROUND = (25, 25, 25, 0)
     TEXT_ANTIALIAS = False
 elif IMAGESET_KEY == "b":
     TEXT_COLOR = (255, 255, 255, 255)
