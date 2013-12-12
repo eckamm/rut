@@ -50,6 +50,10 @@ class XWidget:
 
 class TheDonut:
     def __init__(self):
+        self._load_images()
+        self.timer = 0.0
+
+    def _load_images(self):
         image_file = DONUT_IMAGE
         self.img1 = pygame.image.load(os.path.join(GAMEDIR, image_file)).convert_alpha()
         self.img1 = pygame.transform.smoothscale(self.img1, (256, 256))
@@ -60,7 +64,6 @@ class TheDonut:
         self.img2 = pygame.transform.smoothscale(self.img2, (256, 256))
         self.box2 = self.img2.get_rect()
         self.box2.center = (SCREEN_WIDTH/7, SCREEN_HEIGHT/2)
-        self.timer = 0.0
 
     def update(self, elapsed):
         if self.timer > 0.0:
@@ -100,13 +103,16 @@ class FPSWidget:
 
 class TheBuildings:
     def __init__(self, buildings):
-        self.images = []
-        for building_id in sorted(buildings.keys()):
-            filenm = os.path.join(GAMEDIR, IMAGE_DIR, "building-%s.png" % (building_id,))
-            self.images.append(pygame.image.load(filenm).convert_alpha())
         self.buildings = buildings
+        self._load_images()
         self._font = pygame.font.Font(os.path.join(GAMEDIR, FONT1_FILE), 15)
         self.boxes = []
+
+    def _load_images(self):
+        self.images = []
+        for building_id in sorted(self.buildings.keys()):
+            filenm = os.path.join(GAMEDIR, IMAGE_DIR, "building-%s.png" % (building_id,))
+            self.images.append(pygame.image.load(filenm).convert_alpha())
 
     def update(self, current, building_costs):
         self.current = current
@@ -355,11 +361,13 @@ class Images:
 
 class BackgroundWidget:
     def __init__(self):
+        self._load_images()
+
+    def _load_images(self):
         img = pygame.image.load(os.path.join(GAMEDIR, BACKGROUND_IMAGE)).convert_alpha()
         self.img = pygame.transform.smoothscale(img, (SCREEN_WIDTH, SCREEN_HEIGHT))
         self.box = self.img.get_rect()
         self.box.center = (SCREEN_WIDTH/2, SCREEN_HEIGHT/2)
-
 
     def draw(self, surface):
         surface.blit(self.img, self.box)
@@ -414,6 +422,12 @@ def main():
 
             elif event.type == pygame.KEYDOWN and event.key == pygame.K_1:
                 stats_widget.showing = True
+
+            elif event.type == pygame.KEYDOWN and event.key == pygame.K_3:
+                background_widget._load_images()
+                donut_widget._load_images()
+                buildings_widget._load_images()
+
 
             elif event.type == pygame.KEYDOWN and event.key == pygame.K_a:
                 current["cookies"] += 100000000000000000

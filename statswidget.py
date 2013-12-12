@@ -1,6 +1,7 @@
 """
 This is an overlay box with some statistics in it which is shown
 when a button is clicked and goes away when the screen is clicked.
+
 """
 from common import *
 
@@ -33,7 +34,7 @@ class StatsWidget:
         self.cpc = 1
         self.cookies = 0
         self.game_cookies = 0
-        self._font = pygame.font.SysFont(None, 15)
+        self._font = pygame.font.Font(os.path.join(GAMEDIR, FONT1_FILE), 15)
 
     def update(self, lifetime, current):
         """

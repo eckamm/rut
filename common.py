@@ -10,6 +10,8 @@ from pygame.color import THECOLORS
 #from pymunk.vec2d import Vec2d
 #import pymunk.pygame_util
 
+GAMEDIR = os.path.dirname(os.path.abspath(sys.argv[0]))
+
 
 LEFTBUTTON = 1
 CENTERBUTTON = 2
@@ -35,6 +37,14 @@ FONT1_FILE = os.path.join(FONTDIR, "aesymatt.ttf")
 FONT1_FILE = os.path.join(FONTDIR, "Arcade.ttf")
 FONT1_FILE = os.path.join(FONTDIR, "Munro.ttf")
 FONT1_FILE = os.path.join(FONTDIR, "MunroNarrow.ttf")
+
+"""
+How about loading fonts centrally here instead?
+        self._font = pygame.font.Font(os.path.join(GAMEDIR, FONT1_FILE), 15)
+        self._font = pygame.font.Font(os.path.join(GAMEDIR, FONT1_FILE), 20)
+        self._font = pygame.font.Font(os.path.join(GAMEDIR, FONT1_FILE), 30)
+"""
+
 
 IMAGESET_KEY = os.environ.get("IMAGESET", "b").lower()
 IMAGE_DIR = "imageset-%s" % (IMAGESET_KEY,)
