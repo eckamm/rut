@@ -243,6 +243,30 @@ class GoldenWidget:
         if self.available_box.collidepoint(pos):
             self.golden.activate()
             return True
+            
+class ResetWidget:
+    """
+    waiting -> nothing
+    available -> display in random place on screen
+    available and active -> display name and effect under big donut
+    """
+    def __init__(self):
+        self._font = pygame.font.Font(os.path.join(GAMEDIR, FONT1_FILE), 15)
+        self.shards = 0
+        
+    def update(self, shards):
+        self.shards = shards
+        
+    def draw(self, surface):
+        antialias = False
+        render = self._font.render("Soft Reset Worth: %s" % self.shards, antialias, THECOLORS["white"])
+        self.box = render.get_rect()
+        self.box.bottomright = (SCREEN_WIDTH, SCREEN_HEIGHT)
+        surface.blit(render, self.box)
+
+    def on_click(self, pos):
+        if self.box.collidepoint(pos):
+            return True
  
 
 
@@ -423,6 +447,7 @@ def main():
     rollover_widget = RolloverWidget()
     golden_widget = GoldenWidget()
     stats_widget = StatsWidget()
+    reset_widget = ResetWidget()
 
     font_set_idx = 0
     Fonts.activate_font_set(font_set_idx)
@@ -476,6 +501,9 @@ def main():
                     pass
                 elif upgrades_widget.on_click(event.pos):
                     pass
+                elif reset_widget.on_click(event.pos):
+                    ex1.soft_reset(save_jdat["profiles"], profile_id, buildings, upgrades)
+                    current = save_jdat["profiles"][profile_id]["current"]
 
             elif event.type == pygame.MOUSEMOTION:
                 buildings_widget.on_mouseover(event.pos, rollover_widget)
@@ -489,7 +517,8 @@ def main():
         golden.update(elapsed)
         donut_widget.update(elapsed)
         stats_widget.update(current, lifetime)
-
+        reset_widget.update(ex1.get_shard_value(save_jdat["profiles"], profile_id))
+        
         building_costs = ex1.current_costs(current, buildings)
 
         # FINISH: make a XWidget.update() method.  Rename XWidget.
@@ -515,6 +544,7 @@ def main():
 
         golden_widget.draw(screen)
         stats_widget.draw(screen)
+        reset_widget.draw(screen)
 
         pygame.display.flip()
         ms_elapsed = clock.tick(TICK)
