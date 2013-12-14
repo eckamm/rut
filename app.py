@@ -1,11 +1,20 @@
+import os
+import sys
+os.environ["GAMEDIR"] = os.path.dirname(os.path.abspath(sys.argv[0]))
+
+
+
 import random
 
 from common import *
+from fonts import Fonts
 import ex1 
 from statswidget import StatsWidget
 
 import pygame.transform
 
+
+MODE = int(os.environ.get("MODE", 1))
 
 
 def make_text(font, text):
@@ -20,30 +29,33 @@ class XWidget:
         self.cpc = 1
         self.cookies = 0
         self.game_cookies = 0
-        self._font = pygame.font.Font(os.path.join(GAMEDIR, FONT1_FILE), 20)
 
     def draw(self, surface):
-        cps_render = self._font.render("DPS: %s" % fmt(self.cps), TEXT_ANTIALIAS, TEXT_COLOR, TEXT_BACKGROUND)
+        cps_render = Fonts.f15.render("DPS: %s" % fmt(self.cps), TEXT_ANTIALIAS, TEXT_COLOR, TEXT_BACKGROUND)
         cps_box = cps_render.get_rect()
-        cps_box.left = 10
-        cps_box.centery = 20
+        if MODE==2:
+            cps_box.right = 0.9 * SCREEN_WIDTH
+            cps_box.centery = 0.76 * SCREEN_HEIGHT
+        else:
+            cps_box.left = 10
+            cps_box.centery = 20
         surface.blit(cps_render, cps_box)
 
-        cpc_render = self._font.render("DPC: %s" % fmt(self.cpc), TEXT_ANTIALIAS, TEXT_COLOR, TEXT_BACKGROUND)
+        cpc_render = Fonts.f15.render("DPC: %s" % fmt(self.cpc), TEXT_ANTIALIAS, TEXT_COLOR, TEXT_BACKGROUND)
         cpc_box = cpc_render.get_rect()
-        cpc_box.left = 10
+        cpc_box.left = cps_box.left
         cpc_box.top = cps_box.bottom + 10
         surface.blit(cpc_render, cpc_box)
 
-        cookies_render = self._font.render("Donuts: %s" % fmt(self.cookies), TEXT_ANTIALIAS, TEXT_COLOR, TEXT_BACKGROUND)
+        cookies_render = Fonts.f15.render("Donuts: %s" % fmt(self.cookies), TEXT_ANTIALIAS, TEXT_COLOR, TEXT_BACKGROUND)
         cookies_box = cookies_render.get_rect()
-        cookies_box.left = 10
+        cookies_box.left = cpc_box.left
         cookies_box.top = cpc_box.bottom + 10
         surface.blit(cookies_render, cookies_box)
         
-        game_cookies_render = self._font.render("Total Donuts: %s" % fmt(self.game_cookies), TEXT_ANTIALIAS, TEXT_COLOR, TEXT_BACKGROUND)
+        game_cookies_render = Fonts.f15.render("Total Donuts: %s" % fmt(self.game_cookies), TEXT_ANTIALIAS, TEXT_COLOR, TEXT_BACKGROUND)
         game_cookies_box = game_cookies_render.get_rect()
-        game_cookies_box.left = 10
+        game_cookies_box.left = cookies_box.left
         game_cookies_box.top = cookies_box.bottom + 10
         surface.blit(game_cookies_render, game_cookies_box)
 
@@ -58,12 +70,18 @@ class TheDonut:
         self.img1 = pygame.image.load(os.path.join(GAMEDIR, image_file)).convert_alpha()
         self.img1 = pygame.transform.smoothscale(self.img1, (256, 256))
         self.box1 = self.img1.get_rect()
-        self.box1.center = (SCREEN_WIDTH/7, SCREEN_HEIGHT/2)
+        if MODE==2:
+            self.box1.center = (0.4*SCREEN_WIDTH, 0.36*SCREEN_HEIGHT)
+        else:
+            self.box1.center = (SCREEN_WIDTH/7, SCREEN_HEIGHT/2)
         image_file = DONUT_CLICKED_IMAGE
         self.img2 = pygame.image.load(os.path.join(GAMEDIR, image_file)).convert_alpha()
         self.img2 = pygame.transform.smoothscale(self.img2, (256, 256))
         self.box2 = self.img2.get_rect()
-        self.box2.center = (SCREEN_WIDTH/7, SCREEN_HEIGHT/2)
+        if MODE==2:
+            self.box2.center = (0.4*SCREEN_WIDTH, 0.36*SCREEN_HEIGHT)
+        else:
+            self.box2.center = (SCREEN_WIDTH/7, SCREEN_HEIGHT/2)
 
     def update(self, elapsed):
         if self.timer > 0.0:
@@ -86,7 +104,6 @@ class TheDonut:
 
 class FPSWidget:
     def __init__(self):
-        self._font = pygame.font.Font(os.path.join(GAMEDIR, FONT1_FILE), 15)
         self.fps = 0.0
 
     def update(self, fps):
@@ -94,7 +111,7 @@ class FPSWidget:
 
     def draw(self, surface):
         antialias = False
-        render = self._font.render("%5.2f fps" % (self.fps,), antialias, THECOLORS["white"])
+        render = Fonts.f15.render("%5.2f fps" % (self.fps,), antialias, THECOLORS["white"])
         box = render.get_rect()
         box.bottomleft = (0, SCREEN_HEIGHT)
         surface.blit(render, box)
@@ -105,7 +122,6 @@ class TheBuildings:
     def __init__(self, buildings):
         self.buildings = buildings
         self._load_images()
-        self._font = pygame.font.Font(os.path.join(GAMEDIR, FONT1_FILE), 15)
         self.boxes = []
 
     def _load_images(self):
@@ -128,14 +144,17 @@ class TheBuildings:
             else:
                 color = THECOLORS["orange"]
             name = self.buildings[building_id].get("name", building_id)
-            render = self._font.render("%s (%d) -- Cost: %s" % (name,
+            render = Fonts.f15.render("%s (%d) -- Cost: %s" % (name,
                 self.current["buildings"][building_id],
                 fmt(self.building_costs[building_id])),
                 TEXT_ANTIALIAS, color, TEXT_BACKGROUND)
 
             box2 = self.images[idx].get_rect()
             box2.centery = y
-            box2.left = 1.4 * SCREEN_WIDTH / 5
+            if MODE == 2:
+                box2.left = 0
+            else:
+                box2.left = 1.4 * SCREEN_WIDTH / 5
             surface.blit(self.images[idx],box2)
 
             box = render.get_rect()
@@ -182,8 +201,6 @@ class GoldenWidget:
         self.active_box.center = (SCREEN_WIDTH/7, 4*SCREEN_HEIGHT/5)
         self.last_state = ("", False)  # state, active
 
-        self._font = pygame.font.Font(os.path.join(GAMEDIR, FONT1_FILE), 15)
-
     def _pick_random_pos(self):
         w_margin = SCREEN_WIDTH//20
         h_margin = SCREEN_HEIGHT//20
@@ -208,7 +225,7 @@ class GoldenWidget:
             self.draw = self._draw_active
             # Prep the text for the current golden.
             rule = self.golden.get_ctrl()
-            self.text_render = self._font.render("%s" % (rule["name"],), TEXT_ANTIALIAS, (0, 255, 0), TEXT_BACKGROUND)
+            self.text_render = Fonts.f15.render("%s" % (rule["name"],), TEXT_ANTIALIAS, (0, 255, 0), TEXT_BACKGROUND)
             self.text_box = self.text_render.get_rect()
             self.text_box.top = self.active_box.bottom
             self.text_box.centerx = self.active_box.centerx
@@ -234,7 +251,6 @@ class TheUpgrades:
         self.upgrades = upgrades
         self.buildings = buildings
         self.images = images
-        self._font = pygame.font.Font(os.path.join(GAMEDIR, FONT1_FILE), 30)
         self.boxes = []
 
         self.ximages = {}
@@ -319,7 +335,6 @@ class TheUpgrades:
 
 class RolloverWidget:
     def __init__(self):
-        self._font = pygame.font.Font(os.path.join(GAMEDIR, FONT1_FILE), 15)
         self.line1 = "."
         self.line2 = "."
         self.update("\n")
@@ -332,12 +347,12 @@ class RolloverWidget:
         self.line1 = line1
         self.line2 = line2
 
-        self.line2_render = self._font.render(self.line2, TEXT_ANTIALIAS, (155, 155, 155), TEXT_BACKGROUND)
+        self.line2_render = Fonts.f15.render(self.line2, TEXT_ANTIALIAS, (155, 155, 155), TEXT_BACKGROUND)
         self.line2_box = self.line2_render.get_rect()
         self.line2_box.bottom = SCREEN_HEIGHT - 10
         self.line2_box.centerx = SCREEN_WIDTH / 2
 
-        self.line1_render = self._font.render(self.line1, TEXT_ANTIALIAS, TEXT_COLOR, TEXT_BACKGROUND)
+        self.line1_render = Fonts.f15.render(self.line1, TEXT_ANTIALIAS, TEXT_COLOR, TEXT_BACKGROUND)
         self.line1_box = self.line1_render.get_rect()
         self.line1_box.bottom = self.line2_box.top - 10
         self.line1_box.centerx = SCREEN_WIDTH / 2
@@ -409,6 +424,9 @@ def main():
     golden_widget = GoldenWidget()
     stats_widget = StatsWidget()
 
+    font_set_idx = 0
+    Fonts.activate_font_set(font_set_idx)
+
     running = True
     ticks = 0
     while running:
@@ -428,6 +446,9 @@ def main():
                 donut_widget._load_images()
                 buildings_widget._load_images()
 
+            elif event.type == pygame.KEYDOWN and event.key == pygame.K_f:
+                font_set_idx = (font_set_idx + 1) % len(Fonts.font_sets)
+                Fonts.activate_font_set(font_set_idx)
 
             elif event.type == pygame.KEYDOWN and event.key == pygame.K_a:
                 current["cookies"] += 100000000000000000
@@ -481,9 +502,10 @@ def main():
         upgrades_widget.update(current)
         golden_widget.update(golden)
 
-        screen.fill(THECOLORS["blue"])
-
-        background_widget.draw(screen)
+        if MODE==2:
+            screen.fill(THECOLORS["black"])
+        else:
+            background_widget.draw(screen)
         x_widget.draw(screen)
         buildings_widget.draw(screen)
         upgrades_widget.draw(screen)
