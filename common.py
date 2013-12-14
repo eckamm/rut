@@ -1,3 +1,8 @@
+try:
+    import android
+except ImportError:
+    android = None
+
 import os
 import sys
 import json
@@ -19,13 +24,22 @@ CENTERBUTTON = 2
 RIGHTBUTTON = 3
 
 WAIT = 1
-SCREEN_WIDTH = 1000
-SCREEN_HEIGHT = 600
-if os.environ.get("USE_WINDOW"):
-    DISPLAY_FLAGS = 0
-    DISPLAY_FLAGS = pygame.DOUBLEBUF
+if not android:
+    SCREEN_WIDTH = 1000
+    SCREEN_HEIGHT = 600
 else:
-    DISPLAY_FLAGS = pygame.FULLSCREEN|pygame.DOUBLEBUF
+# HTC Vivid -- 960, 540
+# Nexus 7 (2012) -- 1280, 800
+    SCREEN_WIDTH = 960
+    SCREEN_HEIGHT = 540
+if not android:
+    if os.environ.get("USE_WINDOW"):
+        DISPLAY_FLAGS = 0
+        DISPLAY_FLAGS = pygame.DOUBLEBUF
+    else:
+        DISPLAY_FLAGS = pygame.FULLSCREEN|pygame.DOUBLEBUF
+else:
+    DISPLAY_FLAGS = 0
 TICK = 50
 HEADER = 50
 MARGIN = 10

@@ -1,3 +1,16 @@
+try:
+    import android
+except ImportError:
+    android = None
+
+
+try:
+    import pygame.mixer as mixer
+    mixer.init()
+except ImportError:
+    import android.mixer as mixer
+
+
 import os
 import sys
 os.environ["GAMEDIR"] = os.path.dirname(os.path.abspath(sys.argv[0]))
@@ -14,8 +27,7 @@ from statswidget import StatsWidget
 import pygame.transform
 
 
-MODE = int(os.environ.get("MODE", 1))
-
+MODE = int(os.environ.get("MODE", 2))
 
 def make_text(font, text):
     """
@@ -34,8 +46,8 @@ class XWidget:
         cps_render = Fonts.f15.render("DPS: %s" % fmt(self.cps), TEXT_ANTIALIAS, TEXT_COLOR, TEXT_BACKGROUND)
         cps_box = cps_render.get_rect()
         if MODE==2:
-            cps_box.right = 0.9 * SCREEN_WIDTH
-            cps_box.centery = 0.76 * SCREEN_HEIGHT
+            cps_box.left = SCREEN_WIDTH - 400
+            cps_box.centery = 0.74 * SCREEN_HEIGHT
         else:
             cps_box.left = 10
             cps_box.centery = 20
@@ -198,7 +210,10 @@ class GoldenWidget:
         self.active_img = pygame.image.load(os.path.join(GAMEDIR, image_file)).convert_alpha()
         self.active_img = pygame.transform.smoothscale(self.active_img, (40, 40))
         self.active_box = self.active_img.get_rect()
-        self.active_box.center = (SCREEN_WIDTH/7, 4*SCREEN_HEIGHT/5)
+        if MODE==2:
+            self.active_box.center = (0.4*SCREEN_WIDTH, 0.6*SCREEN_HEIGHT)
+        else:
+            self.active_box.center = (SCREEN_WIDTH/7, 4*SCREEN_HEIGHT/5)
         self.last_state = ("", False)  # state, active
 
     def _pick_random_pos(self):
@@ -243,7 +258,8 @@ class GoldenWidget:
         if self.available_box.collidepoint(pos):
             self.golden.activate()
             return True
-            
+
+
 class ResetWidget:
     """
     waiting -> nothing
@@ -251,7 +267,6 @@ class ResetWidget:
     available and active -> display name and effect under big donut
     """
     def __init__(self):
-        self._font = pygame.font.Font(os.path.join(GAMEDIR, FONT1_FILE), 15)
         self.shards = 0
         
     def update(self, shards):
@@ -259,7 +274,7 @@ class ResetWidget:
         
     def draw(self, surface):
         antialias = False
-        render = self._font.render("Soft Reset Worth: %s" % self.shards, antialias, THECOLORS["white"])
+        render = Fonts.f15.render("Soft Reset Worth: %s" % self.shards, antialias, THECOLORS["white"])
         self.box = render.get_rect()
         self.box.bottomright = (SCREEN_WIDTH, SCREEN_HEIGHT)
         surface.blit(render, self.box)
@@ -267,7 +282,7 @@ class ResetWidget:
     def on_click(self, pos):
         if self.box.collidepoint(pos):
             return True
- 
+  
 
 
 class TheUpgrades:
@@ -414,9 +429,20 @@ class BackgroundWidget:
 
 
 
-def main():
+def main2():
     pygame.init()
-    screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), DISPLAY_FLAGS, 32)
+    if not android:
+        screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), DISPLAY_FLAGS, 32)
+    else:
+        screen = pygame.display.set_mode((0, 0))
+        w, h = screen.get_size()
+        print "Native resolution:", (w, h)
+#       w = w / 2
+#       h = h / 2
+#       print "Set resolution:", (w, h)
+        screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), DISPLAY_FLAGS, 32)
+#       screen = pygame.display.set_mode((w, h))
+        print "2:Set resolution:", screen.get_size()
     app_name = "Rockwell's Uninformed Tidemark"
     pygame.display.set_caption(app_name)
 
@@ -456,6 +482,15 @@ def main():
     ticks = 0
     while running:
         ticks += 1
+
+        if android:
+            if android.check_pause():
+                print "@@@@ pausing"
+                # Save the game state to a file.
+                with open(save_filenm, "w") as fp:
+                    json.dump(save_jdat, fp, indent=4)
+                android.wait_for_resume()
+                print "@@@@ resuming"
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -518,7 +553,7 @@ def main():
         donut_widget.update(elapsed)
         stats_widget.update(current, lifetime)
         reset_widget.update(ex1.get_shard_value(save_jdat["profiles"], profile_id))
-        
+
         building_costs = ex1.current_costs(current, buildings)
 
         # FINISH: make a XWidget.update() method.  Rename XWidget.
@@ -532,7 +567,8 @@ def main():
         golden_widget.update(golden)
 
         if MODE==2:
-            screen.fill(THECOLORS["black"])
+            #screen.fill(THECOLORS["black"])
+            background_widget.draw(screen)
         else:
             background_widget.draw(screen)
         x_widget.draw(screen)
@@ -554,6 +590,7 @@ def main():
 #       finish_timer.update((ms_elapsed/1000.0)*TICK) # FINISH: does flip() returns the ela
         pygame.event.pump()
 
+
     # Must do shutdown() to prep for background accumulation.
     ex1.shutdown(timing)
 
@@ -562,10 +599,19 @@ def main():
         json.dump(save_jdat, fp, indent=4)
 
 
-if __name__ == '__main__':
+def main():
+    if android:
+        android.init()
+        android.map_key(android.KEYCODE_BACK, pygame.K_ESCAPE)
+        android.map_key(android.KEYCODE_BACK, pygame.K_q)
+
     GAMEDIR = os.path.dirname(os.path.abspath(sys.argv[0]))
     if os.environ.get("PROFILE", "") == "1":
         import profile
-        profile.run("main()")
+        profile.run("main2()")
     else:
-        sys.exit(main())
+        sys.exit(main2())
+
+
+if __name__ == '__main__':
+    main()
