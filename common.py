@@ -12,6 +12,8 @@ pygame.init()
 import pygame.gfxdraw
 from pygame.color import THECOLORS
 
+from fmt import fmt
+
 #import pymunk
 #from pymunk.vec2d import Vec2d
 #import pymunk.pygame_util
@@ -30,8 +32,8 @@ if not android:
 else:
 # HTC Vivid -- 960, 540
 # Nexus 7 (2012) -- 1280, 800
-    SCREEN_WIDTH = 960
-    SCREEN_HEIGHT = 540
+    SCREEN_WIDTH = 1000
+    SCREEN_HEIGHT = 600
 if not android:
     if os.environ.get("USE_WINDOW"):
         DISPLAY_FLAGS = 0
@@ -47,7 +49,7 @@ MARGIN = 10
 
 IMAGESET_KEY = os.environ.get("IMAGESET", "b").lower()
 IMAGE_DIR = "imageset-%s" % (IMAGESET_KEY,)
-BACKGROUND_IMAGE = os.path.join(IMAGE_DIR, "background.png")
+BACKGROUND_IMAGE = os.path.join(IMAGE_DIR, "darkblue-background.png")
 GOLDEN_AVAILABLE_IMAGE = os.path.join(IMAGE_DIR, "golden-available.png")
 GOLDEN_ACTIVE_IMAGE = os.path.join(IMAGE_DIR, "golden-active.png")
 DONUT_IMAGE = os.path.join(IMAGE_DIR, "donut.png")
@@ -57,7 +59,12 @@ UPGRADE_STATE2_IMAGE = os.path.join(IMAGE_DIR, "placeholder2.png")
 UPGRADE_STATE3_IMAGE = os.path.join(IMAGE_DIR, "placeholder3.png")
 UPGRADE_STATE4_IMAGE = os.path.join(IMAGE_DIR, "placeholder4.png")
 BUILDING1_IMAGE = os.path.join(IMAGE_DIR, "build1.png")
-BUILDING2_IMAGE = os.path.join(IMAGE_DIR, "build2.png")
+BUILDING2_IMAGE = os.path.join(IMAGE_DIR, "build2.png") 
+BUTTON_BACK_IMAGE = os.path.join(IMAGE_DIR, "button-back.png")        # 147x46
+BUTTON_RESET_IMAGE = os.path.join(IMAGE_DIR, "button-reset.png")      # 147x46
+BUTTON_CREDITS_IMAGE = os.path.join(IMAGE_DIR, "button-credits.png")  # 147x46
+BUTTON_STATS_IMAGE = os.path.join(IMAGE_DIR, "button-stats.png")      # 147x46
+
 
 if IMAGESET_KEY == "a":
     TEXT_COLOR = (255, 255, 255, 255)
@@ -66,50 +73,17 @@ if IMAGESET_KEY == "a":
 elif IMAGESET_KEY == "b":
     TEXT_COLOR = (255, 255, 255, 255)
     TEXT_BACKGROUND = (25, 25, 25, 20)
-    TEXT_ANTIALIAS = False
+    TEXT_COLOR = (255, 255, 255, 255)
+    TEXT_COLOR = (33, 50, 64, 255)
+    TEXT_COLOR = (128, 66, 0, 255)
+    TEXT_COLOR = (0, 0, 0, 255)
+    TEXT_COLOR = (255, 255, 255, 255)
+    TEXT_BACKGROUND = (25, 25, 25, 20)
+    TEXT_BACKGROUND = None
+    TEXT_ANTIALIAS = True
 else:
     TEXT_COLOR = (255, 255, 255, 255)
     TEXT_BACKGROUND = (25, 25, 25, 20)
     TEXT_ANTIALIAS = False
 
-
-def fmt(n):
-    if type(n) not in (long, int, float):
-        return n
-    if type(n) in (long, int):
-        s = "{:1,d}".format(n)
-    elif type(n) is float:
-        s = "{:1,.1f}".format(n)
-    parts = s.split(",")
-    if len(parts) <= 3:
-        return s
-    if len(parts) == 4:
-        return "%s thousand" % (",".join(parts[:3]))
-    elif len(parts) == 5:
-        return "%s million" % (",".join(parts[:3]))
-    elif len(parts) == 6:
-        return "%s billion" % (",".join(parts[:3]))
-    elif len(parts) == 7:
-        return "%s quadrillion" % (",".join(parts[:3]))
-    elif len(parts) == 8:
-        return "%s quintillion" % (",".join(parts[:3]))
-    elif len(parts) == 9:
-        return "%s sextillion" % (",".join(parts[:3]))
-    elif len(parts) == 10:
-        return "%s septillion" % (",".join(parts[:3]))
-    elif len(parts) == 11:
-        return "%s octillion" % (",".join(parts[:3]))
-    elif len(parts) == 12:
-        return "%s nonillion" % (",".join(parts[:3]))
-    else:
-        return s
-
-    """
-    6 aaa,bbb,ccc,ddd,eee,fff.234
-    5 aaa,bbb,ccc,ddd,eee.234
-    4 aaa,bbb,ccc,ddd.234   
-    3 aaa,bbb,ccc.234
-    2 aaa,bbb.234
-    1 aaa.234
-    """
 

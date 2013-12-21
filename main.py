@@ -23,16 +23,25 @@ from common import *
 from fonts import Fonts
 import ex1 
 from statswidget import StatsWidget
+from creditswidget import CreditsWidget
+from openingwidget import OpeningWidget
+from buttonwidget import ButtonWidget
 
 import pygame.transform
 
 
 MODE = int(os.environ.get("MODE", 2))
 
-def make_text(font, text):
+def make_text(font, text, antialias, color, bg_color):
     """
-    returns (text_surface, bg_surface, box)
+    returns a surface
     """
+    return font.render(text, antialias, color)
+    if bg_color is None:
+        surface = font.render(text, antialias, color)
+    else:
+        surface = font.render(text, antialias, color, bg_color)
+    return surface
         
 
 class XWidget:
@@ -43,7 +52,9 @@ class XWidget:
         self.game_cookies = 0
 
     def draw(self, surface):
-        cps_render = Fonts.f15.render("DPS: %s" % fmt(self.cps), TEXT_ANTIALIAS, TEXT_COLOR, TEXT_BACKGROUND)
+#       TEXT_COLOR = (255, 255, 51) #THECOLORS["yellow"]
+#       TEXT_COLOR = (33, 50, 64) #THECOLORS["yellow"]
+        cps_render = make_text(Fonts.f15, "DPS: %s" % fmt(self.cps), TEXT_ANTIALIAS, TEXT_COLOR, TEXT_BACKGROUND)
         cps_box = cps_render.get_rect()
         if MODE==2:
             cps_box.left = SCREEN_WIDTH - 400
@@ -53,19 +64,19 @@ class XWidget:
             cps_box.centery = 20
         surface.blit(cps_render, cps_box)
 
-        cpc_render = Fonts.f15.render("DPC: %s" % fmt(self.cpc), TEXT_ANTIALIAS, TEXT_COLOR, TEXT_BACKGROUND)
+        cpc_render = make_text(Fonts.f15, "DPC: %s" % fmt(self.cpc), TEXT_ANTIALIAS, TEXT_COLOR, TEXT_BACKGROUND)
         cpc_box = cpc_render.get_rect()
         cpc_box.left = cps_box.left
         cpc_box.top = cps_box.bottom + 10
         surface.blit(cpc_render, cpc_box)
 
-        cookies_render = Fonts.f15.render("Donuts: %s" % fmt(self.cookies), TEXT_ANTIALIAS, TEXT_COLOR, TEXT_BACKGROUND)
+        cookies_render = make_text(Fonts.f15, "Donuts: %s" % fmt(self.cookies), TEXT_ANTIALIAS, TEXT_COLOR, TEXT_BACKGROUND)
         cookies_box = cookies_render.get_rect()
         cookies_box.left = cpc_box.left
         cookies_box.top = cpc_box.bottom + 10
         surface.blit(cookies_render, cookies_box)
         
-        game_cookies_render = Fonts.f15.render("Total Donuts: %s" % fmt(self.game_cookies), TEXT_ANTIALIAS, TEXT_COLOR, TEXT_BACKGROUND)
+        game_cookies_render = make_text(Fonts.f15, "Total Donuts: %s" % fmt(self.game_cookies), TEXT_ANTIALIAS, TEXT_COLOR, TEXT_BACKGROUND)
         game_cookies_box = game_cookies_render.get_rect()
         game_cookies_box.left = cookies_box.left
         game_cookies_box.top = cookies_box.bottom + 10
@@ -88,7 +99,7 @@ class TheDonut:
             self.box1.center = (SCREEN_WIDTH/7, SCREEN_HEIGHT/2)
         image_file = DONUT_CLICKED_IMAGE
         self.img2 = pygame.image.load(os.path.join(GAMEDIR, image_file)).convert_alpha()
-        self.img2 = pygame.transform.smoothscale(self.img2, (256, 256))
+        self.img2 = pygame.transform.smoothscale(self.img2, (240, 240))
         self.box2 = self.img2.get_rect()
         if MODE==2:
             self.box2.center = (0.4*SCREEN_WIDTH, 0.36*SCREEN_HEIGHT)
@@ -117,16 +128,21 @@ class TheDonut:
 class FPSWidget:
     def __init__(self):
         self.fps = 0.0
+        self.box1 = pygame.Rect(0, 0, 1, 1)
 
     def update(self, fps):
         self.fps = fps
 
+    def on_click(self, pos):
+        if self.box1.collidepoint(pos):
+            return True
+
     def draw(self, surface):
         antialias = False
-        render = Fonts.f15.render("%5.2f fps" % (self.fps,), antialias, THECOLORS["white"])
-        box = render.get_rect()
-        box.bottomleft = (0, SCREEN_HEIGHT)
-        surface.blit(render, box)
+        render = make_text(Fonts.f15, "%5.2f fps" % (self.fps,), antialias, THECOLORS["white"], TEXT_BACKGROUND)
+        self.box1 = render.get_rect()
+        self.box1.bottomleft = (0, SCREEN_HEIGHT)
+        surface.blit(render, self.box1)
 
 
 
@@ -156,7 +172,7 @@ class TheBuildings:
             else:
                 color = THECOLORS["orange"]
             name = self.buildings[building_id].get("name", building_id)
-            render = Fonts.f15.render("%s (%d) -- Cost: %s" % (name,
+            render = make_text(Fonts.f15, "%s (%d) -- Cost: %s" % (name,
                 self.current["buildings"][building_id],
                 fmt(self.building_costs[building_id])),
                 TEXT_ANTIALIAS, color, TEXT_BACKGROUND)
@@ -177,19 +193,59 @@ class TheBuildings:
             y += box2.height + 5
             self.boxes.append((box, box2))
 
+    def draw(self, surface):
+        y = 5
+        self.boxes = []
+        buyable = ex1.get_buyable_buildings(self.current, self.buildings)
+        for idx, building_id in enumerate(sorted(self.buildings.keys())):
+            if building_id in buyable:
+                color = TEXT_COLOR
+            else:
+                color = THECOLORS["orange"]
+            name = self.buildings[building_id].get("name", building_id)
+            render = make_text(Fonts.f15, "%s (%d)" % (name,
+                self.current["buildings"][building_id]),
+                TEXT_ANTIALIAS, color, TEXT_BACKGROUND)
+            render2 = make_text(Fonts.f12, "Cost: %s" % (
+                fmt(self.building_costs[building_id])),
+                TEXT_ANTIALIAS, color, TEXT_BACKGROUND)
+
+            box2 = self.images[idx].get_rect()
+            box2.top = y
+            if MODE == 2:
+                box2.left = 0
+            else:
+                box2.left = 1.4 * SCREEN_WIDTH / 5
+            surface.blit(self.images[idx], box2)
+
+            box = render.get_rect()
+            box.left = box2.right + 2
+            box.bottom = box2.centery
+            surface.blit(render, box)
+
+            box3 = render2.get_rect()
+            box3.left = box2.right + 2
+            box3.top = box2.centery
+            surface.blit(render2, box3)
+
+            y += box2.height + 5
+            self.boxes.append((box, box2, box3))
+
     def on_click(self, pos):
         building_ids = sorted(self.buildings.keys())
-        for (box1, box2), building_id in zip(self.boxes, building_ids):
-            if box1.collidepoint(pos) or box2.collidepoint(pos):
-                ex1.buy_building(self.current, self.buildings, building_id)
-                return True
+        for boxes, building_id in zip(self.boxes, building_ids):
+            for box in boxes:
+                if box.collidepoint(pos):
+                    ex1.buy_building(self.current, self.buildings, building_id)
+                    return True
 
     def on_mouseover(self, pos, rollover_widget):
         building_ids = sorted(self.buildings.keys())
-        for (box1, box2), building_id in zip(self.boxes, building_ids):
-            if box1.collidepoint(pos) or box2.collidepoint(pos):
-                text = ex1.get_building_text(self.current, self.buildings, building_id)
-                rollover_widget.update(text)
+        for boxes, building_id in zip(self.boxes, building_ids):
+            for box in boxes:
+                if box.collidepoint(pos):
+                    text = ex1.get_building_text(self.current, self.buildings, building_id)
+                    rollover_widget.update(text)
 
 
 
@@ -240,7 +296,7 @@ class GoldenWidget:
             self.draw = self._draw_active
             # Prep the text for the current golden.
             rule = self.golden.get_ctrl()
-            self.text_render = Fonts.f15.render("%s" % (rule["name"],), TEXT_ANTIALIAS, (0, 255, 0), TEXT_BACKGROUND)
+            self.text_render = make_text(Fonts.f15, "%s" % (rule["name"],), TEXT_ANTIALIAS, (0, 255, 0), TEXT_BACKGROUND)
             self.text_box = self.text_render.get_rect()
             self.text_box.top = self.active_box.bottom
             self.text_box.centerx = self.active_box.centerx
@@ -253,6 +309,8 @@ class GoldenWidget:
         surface.blit(self.text_render, self.text_box)
 
     def on_click(self, pos):
+        if not hasattr(self, "golden"):
+            return
         if self.golden.data["state"] != "available":
             return
         if self.available_box.collidepoint(pos):
@@ -274,7 +332,7 @@ class ResetWidget:
         
     def draw(self, surface):
         antialias = False
-        render = Fonts.f15.render("Soft Reset Worth: %s" % self.shards, antialias, THECOLORS["white"])
+        render = make_text(Fonts.f15, "Soft Reset Worth: %s" % self.shards, antialias, THECOLORS["white"], TEXT_BACKGROUND)
         self.box = render.get_rect()
         self.box.bottomright = (SCREEN_WIDTH, SCREEN_HEIGHT)
         surface.blit(render, self.box)
@@ -386,12 +444,12 @@ class RolloverWidget:
         self.line1 = line1
         self.line2 = line2
 
-        self.line2_render = Fonts.f15.render(self.line2, TEXT_ANTIALIAS, (155, 155, 155), TEXT_BACKGROUND)
+        self.line2_render = make_text(Fonts.f15, self.line2, TEXT_ANTIALIAS, (155, 155, 155), TEXT_BACKGROUND)
         self.line2_box = self.line2_render.get_rect()
         self.line2_box.bottom = SCREEN_HEIGHT - 10
         self.line2_box.centerx = SCREEN_WIDTH / 2
 
-        self.line1_render = Fonts.f15.render(self.line1, TEXT_ANTIALIAS, TEXT_COLOR, TEXT_BACKGROUND)
+        self.line1_render = make_text(Fonts.f15, self.line1, TEXT_ANTIALIAS, TEXT_COLOR, TEXT_BACKGROUND)
         self.line1_box = self.line1_render.get_rect()
         self.line1_box.bottom = self.line2_box.top - 10
         self.line1_box.centerx = SCREEN_WIDTH / 2
@@ -427,6 +485,25 @@ class BackgroundWidget:
         surface.blit(self.img, self.box)
 
 
+def opening_scene(screen):
+    pygame.display.flip()
+    opening_widget = OpeningWidget()
+    opening_widget.draw(screen)
+    pygame.display.flip()
+    clock = pygame.time.Clock()
+    running = True
+    while running:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
+                quit_game = True
+            elif ( event.type == pygame.MOUSEBUTTONDOWN or
+                   event.type == pygame.KEYDOWN ):
+                running = False
+                quit_game = False
+        ms_elapsed = clock.tick(TICK)
+        pygame.event.pump()
+    return quit_game
 
 
 def main2():
@@ -445,8 +522,14 @@ def main2():
         print "2:Set resolution:", screen.get_size()
     app_name = "Rockwell's Uninformed Tidemark"
     pygame.display.set_caption(app_name)
-
     clock = pygame.time.Clock()
+
+    quit_game = opening_scene(screen)
+    if quit_game:
+        running = False
+    else:
+        running = True
+
     ms_elapsed = 0.0
 
     images = Images()
@@ -473,12 +556,25 @@ def main2():
     rollover_widget = RolloverWidget()
     golden_widget = GoldenWidget()
     stats_widget = StatsWidget()
+    credits_widget = CreditsWidget()
     reset_widget = ResetWidget()
+
+
+    credits_button_widget = ButtonWidget(BUTTON_CREDITS_IMAGE)
+    tmp = credits_button_widget.box
+    tmp.centerx = SCREEN_WIDTH//2
+    tmp.top = 0
+    credits_button_widget.box = tmp
+
+    reset_button_widget = ButtonWidget(BUTTON_RESET_IMAGE)
+    tmp = reset_button_widget.box
+    tmp.right = credits_button_widget.box.left - 5
+    reset_button_widget.box = tmp
+
 
     font_set_idx = 0
     Fonts.activate_font_set(font_set_idx)
 
-    running = True
     ticks = 0
     while running:
         ticks += 1
@@ -486,11 +582,12 @@ def main2():
         if android:
             if android.check_pause():
                 print "@@@@ pausing"
-                # Save the game state to a file.
-                with open(save_filenm, "w") as fp:
-                    json.dump(save_jdat, fp, indent=4)
-                android.wait_for_resume()
-                print "@@@@ resuming"
+                running = False
+               ## Save the game state to a file.
+               #with open(save_filenm, "w") as fp:
+               #    json.dump(save_jdat, fp, indent=4)
+               #android.wait_for_resume()
+               #print "@@@@ resuming"
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -500,6 +597,9 @@ def main2():
 
             elif event.type == pygame.KEYDOWN and event.key == pygame.K_1:
                 stats_widget.showing = True
+
+            elif event.type == pygame.KEYDOWN and event.key == pygame.K_c:
+                credits_widget.showing = True
 
             elif event.type == pygame.KEYDOWN and event.key == pygame.K_3:
                 background_widget._load_images()
@@ -525,6 +625,8 @@ def main2():
                 # return True when the click was on the owning object.
                 if stats_widget.on_click(event.pos):
                     pass
+                elif credits_widget.on_click(event.pos):
+                    pass
                 elif golden_widget.on_click(event.pos):
                     pass
                 elif donut_widget.on_click(event.pos):
@@ -532,11 +634,13 @@ def main2():
                     current["cookies"] += current["cpc"]
                     current["game_cookies"] += current["cpc"]
                     lifetime["cookies"] += current["cpc"]
+                elif credits_button_widget.on_click(event.pos):
+                    credits_widget.showing = True
                 elif buildings_widget.on_click(event.pos):
                     pass
                 elif upgrades_widget.on_click(event.pos):
                     pass
-                elif reset_widget.on_click(event.pos):
+                elif reset_button_widget.on_click(event.pos):
                     ex1.soft_reset(save_jdat["profiles"], profile_id, buildings, upgrades)
                     current = save_jdat["profiles"][profile_id]["current"]
 
@@ -553,6 +657,8 @@ def main2():
         donut_widget.update(elapsed)
         stats_widget.update(current, lifetime)
         reset_widget.update(ex1.get_shard_value(save_jdat["profiles"], profile_id))
+        credits_button_widget.update(elapsed)
+        reset_button_widget.update(elapsed)
 
         building_costs = ex1.current_costs(current, buildings)
 
@@ -577,9 +683,12 @@ def main2():
         donut_widget.draw(screen)
         rollover_widget.draw(screen)
         fps_widget.draw(screen)
+        credits_button_widget.draw(screen)
+        reset_button_widget.draw(screen)
 
         golden_widget.draw(screen)
         stats_widget.draw(screen)
+        credits_widget.draw(screen)
         reset_widget.draw(screen)
 
         pygame.display.flip()
