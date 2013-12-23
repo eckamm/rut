@@ -7,12 +7,14 @@ from common import *
 
 from openingwidget import OpeningWidget
 from versionwidget import VersionWidget
+from rockwellwidget import RockwellWidget
 
 
 def opening_scene(screen):
     pygame.display.flip()
     opening_widget = OpeningWidget()
     version_widget = VersionWidget()
+    rockwell_widget = RockwellWidget()
     clock = pygame.time.Clock()
     running = True
     while running:
@@ -34,5 +36,6 @@ def opening_scene(screen):
         pygame.event.pump()
         opening_widget.draw(screen)
         version_widget.draw(screen)
+        rockwell_widget.draw(screen)
         pygame.display.flip()
     return quit_game
