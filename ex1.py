@@ -10,10 +10,11 @@ from common import fmt
 profiles[]
 
     timing
+        initial_ts -> float; set once
         start_ts -> float; set in startup() and shutdown()
         stop_ts -> float; set in startup() and shutdown()
         bg_seconds -> float; set by startup()
-        fg_seconds -> float; set by shutdown()
+        fg_seconds -> float; updated by update_state(); used to be set by shutdown()
 
     lifetime
         cookies -> float (earned ever)
@@ -294,7 +295,7 @@ def get_buyable_upgrades(current, upgrades, can_buy = True):
     return s
 
 
-def calc_cps(current, buildings, upgrades, xupgrades):
+def calc_cps(current, buildings, upgrades, xupgrades, bg=False):
     # xupgrades[building_id] -> [upgrade_id, upgrade_id, ...]
     cps = 0.0
     for building_id in buildings.keys():
@@ -328,21 +329,22 @@ def calc_cps(current, buildings, upgrades, xupgrades):
             cpc *= upgrades[upgrade_id].get("incr_pct", 1.0)
     cpc *= multcpc
 
-    # Apply golden cookie factors.
-    golden = GoldenModel(current["golden"])
-    cps_factor, cpc_factor = golden.get_factors()
-    cps *= cps_factor
-    cpc *= cpc_factor
+    if not bg:
+        # Apply golden cookie factors.
+        golden = GoldenModel(current["golden"])
+        cps_factor, cpc_factor = golden.get_factors()
+        cps *= cps_factor
+        cpc *= cpc_factor
 
     return cps, cpc
 
 
-def update_state(elapsed, lifetime, current, buildings, upgrades, xupgrades, bg=False):
+def update_state(elapsed, timing, lifetime, current, buildings, upgrades, xupgrades, bg=False):
     """
     elapsed is time in seconds since last update; e.g. 1/float(TICK)
     """
     sfactor = 1 + (lifetime["shards"]/50.0)
-    cps, cpc = calc_cps(current, buildings, upgrades, xupgrades)
+    cps, cpc = calc_cps(current, buildings, upgrades, xupgrades, bg=bg)
     cps *= sfactor
     cpc *= sfactor
     current["cps"] = cps
@@ -352,6 +354,8 @@ def update_state(elapsed, lifetime, current, buildings, upgrades, xupgrades, bg=
     lifetime["cookies"] += cps * elapsed
     if bg is True:
         lifetime["bg_cookies"] += cps * elapsed
+    else:
+        timing["fg_seconds"] += elapsed
 
 
 def startup(timing, lifetime, current, buildings, upgrades, xupgrades):
@@ -364,10 +368,12 @@ def startup(timing, lifetime, current, buildings, upgrades, xupgrades):
         timing["bg_seconds"] += bg_elapsed
         prev_cookies = current["cookies"]
         slimdown_factor = 0.1
-        update_state(slimdown_factor*bg_elapsed, lifetime, current, buildings, upgrades, xupgrades, bg=True)
+        update_state(slimdown_factor*bg_elapsed, timing, lifetime, current, buildings, upgrades, xupgrades, bg=True)
         print >>sys.stderr, "handled %.1f bg_seconds; gained %.1f donuts" % (bg_elapsed, current["cookies"]-prev_cookies)
     timing["start_ts"] = now
     timing["stop_ts"] = 0.0
+    if not timing.has_key("initial_ts"):
+        timing["initial_ts"] = now
 
 
 def shutdown(timing):
@@ -378,7 +384,7 @@ def shutdown(timing):
     fg_elapsed = now - timing["start_ts"]
     timing["start_ts"] = 0.0
     print >>sys.stderr, "handled %.1f fg_seconds" % fg_elapsed
-    timing["fg_seconds"] += fg_elapsed
+#   timing["fg_seconds"] += fg_elapsed
     timing["stop_ts"] = now
 
 
@@ -411,6 +417,7 @@ def soft_reset(profiles, profile_id, buildings, upgrades):
     profiles[profile_id]["current"] = mk_new_current(buildings, upgrades)
     print >>sys.stderr, "handled soft reset; shards=%s" % (profiles[profile_id]["lifetime"]["shards"],)
     
+
 def get_shard_value(profiles, profile_id):
     return int((math.sqrt(1+(8*(profiles[profile_id]["lifetime"]["cookies"]/(10**12))))-1)/2)
 

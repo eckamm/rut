@@ -24,8 +24,11 @@ class _Fonts:
                 "f15": pygame.font.Font(os.path.join(GAMEDIR, kind), 15),
                 "f12": pygame.font.Font(os.path.join(GAMEDIR, kind), 12),
                 "f20": pygame.font.Font(os.path.join(GAMEDIR, kind), 20),
+                "f25": pygame.font.Font(os.path.join(GAMEDIR, kind), 25),
                 "f30": pygame.font.Font(os.path.join(GAMEDIR, kind), 30),
+                "f35": pygame.font.Font(os.path.join(GAMEDIR, kind), 35),
                 "f40": pygame.font.Font(os.path.join(GAMEDIR, kind), 40),
+                "f80": pygame.font.Font(os.path.join(GAMEDIR, kind), 80),
             })
         self.activate_font_set(0)
 

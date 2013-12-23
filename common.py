@@ -18,7 +18,13 @@ from fmt import fmt
 #from pymunk.vec2d import Vec2d
 #import pymunk.pygame_util
 
+
+MODE = int(os.environ.get("MODE", 2))
+
 GAMEDIR = os.path.dirname(os.path.abspath(sys.argv[0]))
+
+
+VERSION = "0.0.5"
 
 
 LEFTBUTTON = 1
@@ -54,16 +60,23 @@ GOLDEN_AVAILABLE_IMAGE = os.path.join(IMAGE_DIR, "golden-available.png")
 GOLDEN_ACTIVE_IMAGE = os.path.join(IMAGE_DIR, "golden-active.png")
 DONUT_IMAGE = os.path.join(IMAGE_DIR, "donut.png")
 DONUT_CLICKED_IMAGE = os.path.join(IMAGE_DIR, "donut-clicked.png")
+DONUT_RED_IMAGE = os.path.join(IMAGE_DIR, "donut-red.png")
+DONUT_ORANGE_IMAGE = os.path.join(IMAGE_DIR, "donut-orange.png")
+DONUT_YELLOW_IMAGE = os.path.join(IMAGE_DIR, "donut-yellow.png")
+DONUT_GREEN_IMAGE = os.path.join(IMAGE_DIR, "donut-green.png")
+DONUT_BLUE_IMAGE = os.path.join(IMAGE_DIR, "donut-blue.png")
 UPGRADE_STATE1_IMAGE = os.path.join(IMAGE_DIR, "placeholder1.png")
 UPGRADE_STATE2_IMAGE = os.path.join(IMAGE_DIR, "placeholder2.png")
 UPGRADE_STATE3_IMAGE = os.path.join(IMAGE_DIR, "placeholder3.png")
 UPGRADE_STATE4_IMAGE = os.path.join(IMAGE_DIR, "placeholder4.png")
 BUILDING1_IMAGE = os.path.join(IMAGE_DIR, "build1.png")
 BUILDING2_IMAGE = os.path.join(IMAGE_DIR, "build2.png") 
-BUTTON_BACK_IMAGE = os.path.join(IMAGE_DIR, "button-back.png")        # 147x46
-BUTTON_RESET_IMAGE = os.path.join(IMAGE_DIR, "button-reset.png")      # 147x46
-BUTTON_CREDITS_IMAGE = os.path.join(IMAGE_DIR, "button-credits.png")  # 147x46
-BUTTON_STATS_IMAGE = os.path.join(IMAGE_DIR, "button-stats.png")      # 147x46
+BUTTON_BACK_IMAGE = os.path.join(IMAGE_DIR, "button-back.png")         # 147x46
+BUTTON_RESET_IMAGE = os.path.join(IMAGE_DIR, "button-reset.png")       # 147x46
+BUTTON_CREDITS_IMAGE = os.path.join(IMAGE_DIR, "button-credits.png")   # 147x46
+BUTTON_STATS_IMAGE = os.path.join(IMAGE_DIR, "button-stats.png")       # 147x46
+BUTTON_PLAY_IMAGE = os.path.join(IMAGE_DIR, "button-play.png")         # 147x46
+BUTTON_PROFILES_IMAGE = os.path.join(IMAGE_DIR, "button-profiles.png") # 147x46
 
 
 if IMAGESET_KEY == "a":
@@ -86,4 +99,15 @@ else:
     TEXT_BACKGROUND = (25, 25, 25, 20)
     TEXT_ANTIALIAS = False
 
+
+def make_text(font, text, antialias, color, bg_color):
+    """
+    returns a surface
+    """
+    return font.render(text, antialias, color)
+    if bg_color is None:
+        surface = font.render(text, antialias, color)
+    else:
+        surface = font.render(text, antialias, color, bg_color)
+    return surface
 

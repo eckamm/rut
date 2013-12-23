@@ -22,127 +22,19 @@ import random
 from common import *
 from fonts import Fonts
 import ex1 
+from backgroundwidget import BackgroundWidget
 from statswidget import StatsWidget
 from creditswidget import CreditsWidget
-from openingwidget import OpeningWidget
 from buttonwidget import ButtonWidget
+from fpswidget import FPSWidget
+from goldenwidget import GoldenWidget
+from donutwidget import DonutWidget
+from hudwidget import HUDWidget
+from resetwidget import ResetWidget
+from opening_scene import opening_scene
+from profiles_scene import profiles_scene
 
 import pygame.transform
-
-
-MODE = int(os.environ.get("MODE", 2))
-
-def make_text(font, text, antialias, color, bg_color):
-    """
-    returns a surface
-    """
-    return font.render(text, antialias, color)
-    if bg_color is None:
-        surface = font.render(text, antialias, color)
-    else:
-        surface = font.render(text, antialias, color, bg_color)
-    return surface
-        
-
-class XWidget:
-    def __init__(self):
-        self.cps = 0
-        self.cpc = 1
-        self.cookies = 0
-        self.game_cookies = 0
-
-    def draw(self, surface):
-#       TEXT_COLOR = (255, 255, 51) #THECOLORS["yellow"]
-#       TEXT_COLOR = (33, 50, 64) #THECOLORS["yellow"]
-        cps_render = make_text(Fonts.f15, "DPS: %s" % fmt(self.cps), TEXT_ANTIALIAS, TEXT_COLOR, TEXT_BACKGROUND)
-        cps_box = cps_render.get_rect()
-        if MODE==2:
-            cps_box.left = SCREEN_WIDTH - 400
-            cps_box.centery = 0.74 * SCREEN_HEIGHT
-        else:
-            cps_box.left = 10
-            cps_box.centery = 20
-        surface.blit(cps_render, cps_box)
-
-        cpc_render = make_text(Fonts.f15, "DPC: %s" % fmt(self.cpc), TEXT_ANTIALIAS, TEXT_COLOR, TEXT_BACKGROUND)
-        cpc_box = cpc_render.get_rect()
-        cpc_box.left = cps_box.left
-        cpc_box.top = cps_box.bottom + 10
-        surface.blit(cpc_render, cpc_box)
-
-        cookies_render = make_text(Fonts.f15, "Donuts: %s" % fmt(self.cookies), TEXT_ANTIALIAS, TEXT_COLOR, TEXT_BACKGROUND)
-        cookies_box = cookies_render.get_rect()
-        cookies_box.left = cpc_box.left
-        cookies_box.top = cpc_box.bottom + 10
-        surface.blit(cookies_render, cookies_box)
-        
-        game_cookies_render = make_text(Fonts.f15, "Total Donuts: %s" % fmt(self.game_cookies), TEXT_ANTIALIAS, TEXT_COLOR, TEXT_BACKGROUND)
-        game_cookies_box = game_cookies_render.get_rect()
-        game_cookies_box.left = cookies_box.left
-        game_cookies_box.top = cookies_box.bottom + 10
-        surface.blit(game_cookies_render, game_cookies_box)
-
-
-class TheDonut:
-    def __init__(self):
-        self._load_images()
-        self.timer = 0.0
-
-    def _load_images(self):
-        image_file = DONUT_IMAGE
-        self.img1 = pygame.image.load(os.path.join(GAMEDIR, image_file)).convert_alpha()
-        self.img1 = pygame.transform.smoothscale(self.img1, (256, 256))
-        self.box1 = self.img1.get_rect()
-        if MODE==2:
-            self.box1.center = (0.4*SCREEN_WIDTH, 0.36*SCREEN_HEIGHT)
-        else:
-            self.box1.center = (SCREEN_WIDTH/7, SCREEN_HEIGHT/2)
-        image_file = DONUT_CLICKED_IMAGE
-        self.img2 = pygame.image.load(os.path.join(GAMEDIR, image_file)).convert_alpha()
-        self.img2 = pygame.transform.smoothscale(self.img2, (240, 240))
-        self.box2 = self.img2.get_rect()
-        if MODE==2:
-            self.box2.center = (0.4*SCREEN_WIDTH, 0.36*SCREEN_HEIGHT)
-        else:
-            self.box2.center = (SCREEN_WIDTH/7, SCREEN_HEIGHT/2)
-
-    def update(self, elapsed):
-        if self.timer > 0.0:
-            self.timer -= elapsed
-
-    def on_click(self, pos):
-        if self.box1.collidepoint(pos):
-            if self.timer <= 0.0:
-                self.timer = 0.16
-            return True
-
-    def draw(self, surface):
-        if self.timer <= 0.0:
-            # normal
-            surface.blit(self.img1, self.box1)
-        else:
-            # pressed
-            surface.blit(self.img2, self.box2)
-
-
-class FPSWidget:
-    def __init__(self):
-        self.fps = 0.0
-        self.box1 = pygame.Rect(0, 0, 1, 1)
-
-    def update(self, fps):
-        self.fps = fps
-
-    def on_click(self, pos):
-        if self.box1.collidepoint(pos):
-            return True
-
-    def draw(self, surface):
-        antialias = False
-        render = make_text(Fonts.f15, "%5.2f fps" % (self.fps,), antialias, THECOLORS["white"], TEXT_BACKGROUND)
-        self.box1 = render.get_rect()
-        self.box1.bottomleft = (0, SCREEN_HEIGHT)
-        surface.blit(render, self.box1)
 
 
 
@@ -249,100 +141,6 @@ class TheBuildings:
 
 
 
-class GoldenWidget:
-    """
-    waiting -> nothing
-    available -> display in random place on screen
-    available and active -> display name and effect under big donut
-    """
-    def __init__(self):
-        image_file = GOLDEN_AVAILABLE_IMAGE
-        self.available_img = pygame.image.load(os.path.join(GAMEDIR, image_file)).convert_alpha()
-        self.available_img = pygame.transform.smoothscale(self.available_img, (40, 40))
-        self.available_box = self.available_img.get_rect()
-        self.available_box.center = (SCREEN_WIDTH/2, SCREEN_HEIGHT/2)
-
-        image_file = GOLDEN_ACTIVE_IMAGE
-        self.active_img = pygame.image.load(os.path.join(GAMEDIR, image_file)).convert_alpha()
-        self.active_img = pygame.transform.smoothscale(self.active_img, (40, 40))
-        self.active_box = self.active_img.get_rect()
-        if MODE==2:
-            self.active_box.center = (0.4*SCREEN_WIDTH, 0.6*SCREEN_HEIGHT)
-        else:
-            self.active_box.center = (SCREEN_WIDTH/7, 4*SCREEN_HEIGHT/5)
-        self.last_state = ("", False)  # state, active
-
-    def _pick_random_pos(self):
-        w_margin = SCREEN_WIDTH//20
-        h_margin = SCREEN_HEIGHT//20
-        x = w_margin + random.randrange(SCREEN_WIDTH-2*w_margin)
-        y = h_margin + random.randrange(SCREEN_HEIGHT-2*h_margin)
-        return x, y
-
-    def update(self, golden):
-        self.golden = golden
-        if self.last_state == (self.golden.data["state"], self.golden.data["active"]):
-            return
-        # Track the last state for the next call.
-        self.last_state = (golden.data["state"], golden.data["active"])
-        # There was a state transition, so pick a new random location for next golden.
-        self.available_box.center = self._pick_random_pos()
-        if self.golden.data["state"] == "waiting":
-            # Draw will do nothing during waiting state.
-            self.draw = lambda x:None
-        elif self.golden.data["state"] == "available" and not self.golden.data["active"]:
-            self.draw = self._draw_avail
-        elif self.golden.data["state"] == "available" and self.golden.data["active"]:
-            self.draw = self._draw_active
-            # Prep the text for the current golden.
-            rule = self.golden.get_ctrl()
-            self.text_render = make_text(Fonts.f15, "%s" % (rule["name"],), TEXT_ANTIALIAS, (0, 255, 0), TEXT_BACKGROUND)
-            self.text_box = self.text_render.get_rect()
-            self.text_box.top = self.active_box.bottom
-            self.text_box.centerx = self.active_box.centerx
-
-    def _draw_avail(self, surface):
-        surface.blit(self.available_img, self.available_box)
-
-    def _draw_active(self, surface):
-        surface.blit(self.active_img, self.active_box)
-        surface.blit(self.text_render, self.text_box)
-
-    def on_click(self, pos):
-        if not hasattr(self, "golden"):
-            return
-        if self.golden.data["state"] != "available":
-            return
-        if self.available_box.collidepoint(pos):
-            self.golden.activate()
-            return True
-
-
-class ResetWidget:
-    """
-    waiting -> nothing
-    available -> display in random place on screen
-    available and active -> display name and effect under big donut
-    """
-    def __init__(self):
-        self.shards = 0
-        
-    def update(self, shards):
-        self.shards = shards
-        
-    def draw(self, surface):
-        antialias = False
-        render = make_text(Fonts.f15, "Soft Reset Worth: %s" % self.shards, antialias, THECOLORS["white"], TEXT_BACKGROUND)
-        self.box = render.get_rect()
-        self.box.bottomright = (SCREEN_WIDTH, SCREEN_HEIGHT)
-        surface.blit(render, self.box)
-
-    def on_click(self, pos):
-        if self.box.collidepoint(pos):
-            return True
-  
-
-
 class TheUpgrades:
     def __init__(self, upgrades, buildings, images):
         self.upgrades = upgrades
@@ -361,7 +159,7 @@ class TheUpgrades:
             #("buyable", THECOLORS["green"], 128),
             ("buyable", (32, 128, 32), 128),
             ("available", (200, 32, 32), 200),
-            ("unavailable", THECOLORS["black"], 200),
+            ("unavailable", THECOLORS["black"], 120),
         ]
         self.alphas = {}
         for kind, color, alpha in ctrl:
@@ -369,7 +167,6 @@ class TheUpgrades:
             self.alphas[kind].fill(color)
             self.alphas[kind].set_alpha(alpha)
 
- 
     def update(self, current):
         self.current = current
 
@@ -413,7 +210,6 @@ class TheUpgrades:
 
             self.boxes.append(box)
 
-
     def on_click(self, pos):
         upgrade_ids = self.upgrades.order
         for box, upgrade_id in zip(self.boxes, upgrade_ids):
@@ -454,8 +250,6 @@ class RolloverWidget:
         self.line1_box.bottom = self.line2_box.top - 10
         self.line1_box.centerx = SCREEN_WIDTH / 2
 
-
-
     def draw(self, surface):
         surface.blit(self.line1_render, self.line1_box)
         surface.blit(self.line2_render, self.line2_box)
@@ -471,39 +265,6 @@ class Images:
             self.imgs.append(img)
 
 
-class BackgroundWidget:
-    def __init__(self):
-        self._load_images()
-
-    def _load_images(self):
-        img = pygame.image.load(os.path.join(GAMEDIR, BACKGROUND_IMAGE)).convert_alpha()
-        self.img = pygame.transform.smoothscale(img, (SCREEN_WIDTH, SCREEN_HEIGHT))
-        self.box = self.img.get_rect()
-        self.box.center = (SCREEN_WIDTH/2, SCREEN_HEIGHT/2)
-
-    def draw(self, surface):
-        surface.blit(self.img, self.box)
-
-
-def opening_scene(screen):
-    pygame.display.flip()
-    opening_widget = OpeningWidget()
-    opening_widget.draw(screen)
-    pygame.display.flip()
-    clock = pygame.time.Clock()
-    running = True
-    while running:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                running = False
-                quit_game = True
-            elif ( event.type == pygame.MOUSEBUTTONDOWN or
-                   event.type == pygame.KEYDOWN ):
-                running = False
-                quit_game = False
-        ms_elapsed = clock.tick(TICK)
-        pygame.event.pump()
-    return quit_game
 
 
 def main2():
@@ -520,9 +281,9 @@ def main2():
         screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), DISPLAY_FLAGS, 32)
 #       screen = pygame.display.set_mode((w, h))
         print "2:Set resolution:", screen.get_size()
+    screen.fill(THECOLORS["black"])
     app_name = "Rockwell's Uninformed Tidemark"
     pygame.display.set_caption(app_name)
-    clock = pygame.time.Clock()
 
     quit_game = opening_scene(screen)
     if quit_game:
@@ -530,14 +291,29 @@ def main2():
     else:
         running = True
 
-    ms_elapsed = 0.0
-
     images = Images()
 
     rules_filenm = os.path.join(GAMEDIR, "params.json")
     save_filenm = os.path.join(GAMEDIR, "savegame.json")
     save_jdat, buildings, upgrades, xupgrades = ex1.setup("savegame.json", "params.json")
-    profile_id = 0
+
+    while running:
+
+        profile_id = profiles_scene(screen, save_jdat)
+        if profile_id is None:
+            running = False
+
+        if running:
+            do_quit = game_scene(screen, images, profile_id, save_jdat, save_filenm, buildings, upgrades, xupgrades)
+            if do_quit:
+                running = False
+
+
+
+
+
+def game_scene(screen, images, profile_id, save_jdat, save_filenm, buildings, upgrades, xupgrades):
+
     lifetime = save_jdat["profiles"][profile_id]["lifetime"]
     current = save_jdat["profiles"][profile_id]["current"]
     timing = save_jdat["profiles"][profile_id]["timing"]
@@ -549,8 +325,8 @@ def main2():
 
     background_widget = BackgroundWidget()
     fps_widget = FPSWidget()
-    x_widget = XWidget()
-    donut_widget = TheDonut()
+    hud_widget = HUDWidget()
+    donut_widget = DonutWidget()
     buildings_widget = TheBuildings(buildings)
     upgrades_widget = TheUpgrades(upgrades, buildings, images)
     rollover_widget = RolloverWidget()
@@ -562,7 +338,7 @@ def main2():
 
     credits_button_widget = ButtonWidget(BUTTON_CREDITS_IMAGE)
     tmp = credits_button_widget.box
-    tmp.centerx = SCREEN_WIDTH//2
+    tmp.centerx = SCREEN_WIDTH//2 + 30
     tmp.top = 0
     credits_button_widget.box = tmp
 
@@ -571,11 +347,26 @@ def main2():
     tmp.right = credits_button_widget.box.left - 5
     reset_button_widget.box = tmp
 
+    stats_button_widget = ButtonWidget(BUTTON_STATS_IMAGE)
+    tmp = stats_button_widget.box
+    tmp.right = reset_button_widget.box.left - 5
+    stats_button_widget.box = tmp
+
+    profiles_button_widget = ButtonWidget(BUTTON_PROFILES_IMAGE)
+    tmp = profiles_button_widget.box
+    tmp.right = stats_button_widget.box.left - 5
+    profiles_button_widget.box = tmp
+
+
 
     font_set_idx = 0
     Fonts.activate_font_set(font_set_idx)
 
     ticks = 0
+    running = True
+    clock = pygame.time.Clock()
+    ms_elapsed = 0.0
+    do_quit = False
     while running:
         ticks += 1
 
@@ -591,8 +382,10 @@ def main2():
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
+                do_quit = True
                 running = False
             elif event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
+                do_quit = True
                 running = False
 
             elif event.type == pygame.KEYDOWN and event.key == pygame.K_1:
@@ -636,6 +429,11 @@ def main2():
                     lifetime["cookies"] += current["cpc"]
                 elif credits_button_widget.on_click(event.pos):
                     credits_widget.showing = True
+                elif stats_button_widget.on_click(event.pos):
+                    stats_widget.showing = True
+                elif profiles_button_widget.on_click(event.pos):
+                    do_quit = False
+                    running = False
                 elif buildings_widget.on_click(event.pos):
                     pass
                 elif upgrades_widget.on_click(event.pos):
@@ -652,21 +450,23 @@ def main2():
         # ex1.update_state(lifetime, current, elapsed)
         # ex1.calc_aux(lifetime, current) -> building_status, upgrade_status, golden_status?
         elapsed = ms_elapsed/1000.0
-        ex1.update_state(elapsed, lifetime, current, buildings, upgrades, xupgrades)
+        ex1.update_state(elapsed, timing, lifetime, current, buildings, upgrades, xupgrades)
         golden.update(elapsed)
         donut_widget.update(elapsed)
-        stats_widget.update(current, lifetime)
+        stats_widget.update(lifetime, current, timing)
         reset_widget.update(ex1.get_shard_value(save_jdat["profiles"], profile_id))
         credits_button_widget.update(elapsed)
         reset_button_widget.update(elapsed)
+        stats_button_widget.update(elapsed)
+        profiles_button_widget.update(elapsed)
 
         building_costs = ex1.current_costs(current, buildings)
 
-        # FINISH: make a XWidget.update() method.  Rename XWidget.
-        x_widget.cps = current["cps"]
-        x_widget.cpc = current["cpc"]
-        x_widget.cookies = current["cookies"]
-        x_widget.game_cookies = current["game_cookies"]
+        # FINISH: make a HUDWidget.update() method.  Rename HUDWidget.
+        hud_widget.cps = current["cps"]
+        hud_widget.cpc = current["cpc"]
+        hud_widget.cookies = current["cookies"]
+        hud_widget.game_cookies = current["game_cookies"]
 
         buildings_widget.update(current, building_costs)
         upgrades_widget.update(current)
@@ -677,7 +477,7 @@ def main2():
             background_widget.draw(screen)
         else:
             background_widget.draw(screen)
-        x_widget.draw(screen)
+        hud_widget.draw(screen)
         buildings_widget.draw(screen)
         upgrades_widget.draw(screen)
         donut_widget.draw(screen)
@@ -685,6 +485,8 @@ def main2():
         fps_widget.draw(screen)
         credits_button_widget.draw(screen)
         reset_button_widget.draw(screen)
+        stats_button_widget.draw(screen)
+        profiles_button_widget.draw(screen)
 
         golden_widget.draw(screen)
         stats_widget.draw(screen)
@@ -706,6 +508,8 @@ def main2():
     # Save the game state to a file.
     with open(save_filenm, "w") as fp:
         json.dump(save_jdat, fp, indent=4)
+
+    return do_quit
 
 
 def main():
