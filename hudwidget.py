@@ -1,3 +1,6 @@
+"""
+the widget with the current DPS, DPC, etc. read-outs
+"""
 from common import *
 from fonts import Fonts
 

@@ -55,37 +55,6 @@ class TheBuildings:
         self.building_costs = building_costs
 
     def draw(self, surface):
-        y = self.images[0].get_rect().h//2
-        self.boxes = []
-        buyable = ex1.get_buyable_buildings(self.current, self.buildings)
-        for idx, building_id in enumerate(sorted(self.buildings.keys())):
-            if building_id in buyable:
-                color = TEXT_COLOR
-            else:
-                color = THECOLORS["orange"]
-            name = self.buildings[building_id].get("name", building_id)
-            render = make_text(Fonts.f15, "%s (%d) -- Cost: %s" % (name,
-                self.current["buildings"][building_id],
-                fmt(self.building_costs[building_id])),
-                TEXT_ANTIALIAS, color, TEXT_BACKGROUND)
-
-            box2 = self.images[idx].get_rect()
-            box2.centery = y
-            if MODE == 2:
-                box2.left = 0
-            else:
-                box2.left = 1.4 * SCREEN_WIDTH / 5
-            surface.blit(self.images[idx],box2)
-
-            box = render.get_rect()
-            box.left = box2.right
-            box.centery = box2.centery
-            surface.blit(render, box)
-
-            y += box2.height + 5
-            self.boxes.append((box, box2))
-
-    def draw(self, surface):
         y = 5
         self.boxes = []
         buyable = ex1.get_buyable_buildings(self.current, self.buildings)
@@ -182,14 +151,6 @@ class TheUpgrades:
             row = (idx // per_row)
             col = (idx % per_row)
 
-#           if self.current["upgrades"][upgrade_id]:
-#               img = self.images.imgs[1]
-#           elif upgrade_id in buyable:
-#               img = self.images.imgs[0]
-#           elif upgrade_id in buyable2:
-#               img = self.images.imgs[3]
-#           else:
-#               img = self.images.imgs[2]
             img = self.ximages[upgrade_id[:-1]]
 
             box = img.get_rect()
@@ -255,18 +216,6 @@ class RolloverWidget:
         surface.blit(self.line2_render, self.line2_box)
 
 
-class Images:
-    def __init__(self):
-        nms = [UPGRADE_STATE1_IMAGE, UPGRADE_STATE2_IMAGE, UPGRADE_STATE3_IMAGE, UPGRADE_STATE4_IMAGE]
-        self.imgs = []
-        for nm in nms:
-            image_file = os.path.join(GAMEDIR, nm)
-            img = pygame.image.load(image_file).convert_alpha()
-            self.imgs.append(img)
-
-
-
-
 def main2():
     pygame.init()
     if not android:
@@ -291,7 +240,7 @@ def main2():
     else:
         running = True
 
-    images = Images()
+#   images = Images()
 
     rules_filenm = os.path.join(GAMEDIR, "params.json")
     save_filenm = os.path.join(GAMEDIR, "savegame.json")
@@ -304,7 +253,7 @@ def main2():
             running = False
 
         if running:
-            do_quit = game_scene(screen, images, profile_id, save_jdat, save_filenm, buildings, upgrades, xupgrades)
+            do_quit = game_scene(screen, None, profile_id, save_jdat, save_filenm, buildings, upgrades, xupgrades)
             if do_quit:
                 running = False
 
@@ -482,7 +431,8 @@ def game_scene(screen, images, profile_id, save_jdat, save_filenm, buildings, up
         upgrades_widget.draw(screen)
         donut_widget.draw(screen)
         rollover_widget.draw(screen)
-        fps_widget.draw(screen)
+        if DEBUG:
+            fps_widget.draw(screen)
         credits_button_widget.draw(screen)
         reset_button_widget.draw(screen)
         stats_button_widget.draw(screen)

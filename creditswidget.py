@@ -25,6 +25,7 @@ CTRL = [
     ["", "f30", "white"],
     ["Playtesting", "f30", "white"],
     ["Abe (8)", "f20", "white"],
+    ["Emma", "f20", "white"],
 ]
 
 

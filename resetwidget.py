@@ -16,7 +16,7 @@ class ResetWidget:
 
     def draw(self, surface):
         antialias = False
-        render = make_text(Fonts.f15, "Soft Reset Worth: %s" % self.shards, antialias, THECOLORS["white"], TEXT_BACKGROUND)
+        render = make_text(Fonts.f15, "Soft Reset Worth: %s" % fmt(self.shards), antialias, THECOLORS["white"], TEXT_BACKGROUND)
         self.box = render.get_rect()
         self.box.bottomright = (SCREEN_WIDTH, SCREEN_HEIGHT)
         surface.blit(render, self.box)

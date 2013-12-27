@@ -73,7 +73,7 @@ class StatsWidget:
 
         CTRL.append(("", "f15", "white"))
         CTRL.append(("Lifetime", "f35", "white"))
-        CTRL.append(("Shards: %s" % fmt(self.lifetime["shards"]), "f25", "white"))
+        CTRL.append(("Boxes: %s" % fmt(self.lifetime["shards"]), "f25", "white"))
         CTRL.append(("Donuts: %s" % fmt(self.lifetime["cookies"]), "f25", "white"))
         CTRL.append(("Foreground Donuts: %s" % fmt(self.lifetime["cookies"]-self.lifetime["bg_cookies"]), "f25", "white"))
         CTRL.append(("Background Donuts: %s" % fmt(self.lifetime["bg_cookies"]), "f25", "white"))

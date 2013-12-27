@@ -19,12 +19,13 @@ from fmt import fmt
 #import pymunk.pygame_util
 
 
+DEBUG = int(os.environ.get("DEBUG", 0))
 MODE = int(os.environ.get("MODE", 2))
 
 GAMEDIR = os.path.dirname(os.path.abspath(sys.argv[0]))
 
 
-VERSION = "0.0.5"
+VERSION = "0.0.6"
 
 
 LEFTBUTTON = 1
@@ -48,7 +49,7 @@ if not android:
         DISPLAY_FLAGS = pygame.FULLSCREEN|pygame.DOUBLEBUF
 else:
     DISPLAY_FLAGS = 0
-TICK = 50
+TICK = 12
 HEADER = 50
 MARGIN = 10
 
@@ -66,10 +67,6 @@ DONUT_ORANGE_IMAGE = os.path.join(IMAGE_DIR, "donut-orange.png")
 DONUT_YELLOW_IMAGE = os.path.join(IMAGE_DIR, "donut-yellow.png")
 DONUT_GREEN_IMAGE = os.path.join(IMAGE_DIR, "donut-green.png")
 DONUT_BLUE_IMAGE = os.path.join(IMAGE_DIR, "donut-blue.png")
-UPGRADE_STATE1_IMAGE = os.path.join(IMAGE_DIR, "placeholder1.png")
-UPGRADE_STATE2_IMAGE = os.path.join(IMAGE_DIR, "placeholder2.png")
-UPGRADE_STATE3_IMAGE = os.path.join(IMAGE_DIR, "placeholder3.png")
-UPGRADE_STATE4_IMAGE = os.path.join(IMAGE_DIR, "placeholder4.png")
 BUILDING1_IMAGE = os.path.join(IMAGE_DIR, "build1.png")
 BUILDING2_IMAGE = os.path.join(IMAGE_DIR, "build2.png") 
 BUTTON_BACK_IMAGE = os.path.join(IMAGE_DIR, "button-back.png")         # 147x46

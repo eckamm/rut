@@ -415,7 +415,7 @@ def soft_reset(profiles, profile_id, buildings, upgrades):
     # FINISH: need formula
     profiles[profile_id]["lifetime"]["shards"] = get_shard_value(profiles, profile_id)
     profiles[profile_id]["current"] = mk_new_current(buildings, upgrades)
-    print >>sys.stderr, "handled soft reset; shards=%s" % (profiles[profile_id]["lifetime"]["shards"],)
+    print >>sys.stderr, "handled soft reset; boxes=%s" % (profiles[profile_id]["lifetime"]["shards"],)
     
 
 def get_shard_value(profiles, profile_id):

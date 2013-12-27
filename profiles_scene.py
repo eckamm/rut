@@ -42,7 +42,7 @@ def profiles_scene(screen, save_jdat):
     ctrl = []
     for profile, img_file in zip(save_jdat["profiles"], img_files):
         letter = profile["name"]
-        shards = "%.0f box" % (profile["lifetime"]["shards"],)
+        shards = "%s box" % (fmt(profile["lifetime"]["shards"]),)
         if profile["lifetime"]["shards"] != 1:
             shards += "es"
         donut_img = pygame.image.load(os.path.join(GAMEDIR, img_file)).convert_alpha()
