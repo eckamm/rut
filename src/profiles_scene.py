@@ -74,6 +74,7 @@ def profiles_scene(screen, save_jdat):
         if android:
             if android.check_pause():
                 print "@@@@ pausing"
+                ret_val = None   # None means quit
                 running = False
 
         ms_elapsed = clock.tick(TICK)

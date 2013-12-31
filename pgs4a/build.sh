@@ -60,13 +60,17 @@ function sign_apk {
 setup_source
 # Configure the pgs4a project.
 (cd $PGS4ADIR && "$PYTHON" android.py configure "$PGM")
-# Build the APK.
-(cd $PGS4ADIR && "$PYTHON" android.py build "$PGM" release)
-(cd $PGS4ADIR && ls -l bin)
-# Sign the APK.  Output is in ./dist.
-sign_apk
+if [ "${1:-nodev}" == "dev" ]; then
+    # Build the APK, install to device, and start logcat.
+    (cd $PGS4ADIR && "$PYTHON" android.py build "$PGM" release install)
+    (cd $PGS4ADIR && ls -l bin)
+    (cd $PGS4ADIR && "$PYTHON" android.py logcat)
+else
+    # Build the APK.
+    (cd $PGS4ADIR && "$PYTHON" android.py build "$PGM" release)
+    # Sign the APK.  Output is in ./dist.
+    sign_apk
+    (cd $PGS4ADIR && ls -l bin)
+fi
 
 exit 0
-
-# (cd $PGS4ADIR && "$PYTHON" android.py build "$PGM" release install)
-# (cd $PGS4ADIR && "$PYTHON" android.py build "$PGM" logcat)

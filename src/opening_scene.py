@@ -23,6 +23,7 @@ def opening_scene(screen):
             if android.check_pause():
                 print "@@@@ pausing"
                 running = False
+                quit_game = True
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
