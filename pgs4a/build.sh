@@ -48,6 +48,7 @@ function sign_apk {
     # Verify...
     "$JARSIGNER" -verify -certs "$unaligned_apk"
     # Align...
+    if [ -e "$signed_apk" ]; then rm "$signed_apk"; fi
     "$ZIPALIGN" -v 4 "$unaligned_apk" "$signed_apk"
     rm "$unaligned_apk"
     ls -l "$signed_apk"
