@@ -7,7 +7,7 @@ class RockwellWidget:
 
     def _load_images(self):
         img = pygame.image.load(os.path.join(GAMEDIR, ROCKWELL_IMAGE)).convert_alpha()
-        self.img = pygame.transform.smoothscale(img, (200, 120))
+        self.img = pygame.transform.smoothscale(img, (120, 120))
         self.box = self.img.get_rect()
         self.box.bottomleft = (0, SCREEN_HEIGHT)
 

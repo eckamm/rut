@@ -25,7 +25,7 @@ MODE = int(os.environ.get("MODE", 2))
 GAMEDIR = os.path.dirname(os.path.abspath(sys.argv[0]))
 
 
-VERSION = "0.0.6"
+VERSION = "0.0.8"
 
 
 LEFTBUTTON = 1
@@ -56,10 +56,11 @@ MARGIN = 10
 
 IMAGESET_KEY = os.environ.get("IMAGESET", "b").lower()
 IMAGE_DIR = "imageset-%s" % (IMAGESET_KEY,)
-BACKGROUND_IMAGE = os.path.join(IMAGE_DIR, "darkblue-background.png")
+BACKGROUND_IMAGE = os.path.join(IMAGE_DIR, "darkblue-background.jpg")
 ROCKWELL_IMAGE = os.path.join(IMAGE_DIR, "rockwell.png")
 GOLDEN_AVAILABLE_IMAGE = os.path.join(IMAGE_DIR, "golden-available.png")
 GOLDEN_ACTIVE_IMAGE = os.path.join(IMAGE_DIR, "golden-active.png")
+TITLE_DONUT_IMAGE = os.path.join(IMAGE_DIR, "title-donut.png")
 DONUT_IMAGE = os.path.join(IMAGE_DIR, "donut.png")
 DONUT_CLICKED_IMAGE = os.path.join(IMAGE_DIR, "donut-clicked.png")
 DONUT_RED_IMAGE = os.path.join(IMAGE_DIR, "donut-red.png")

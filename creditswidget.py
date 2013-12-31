@@ -57,7 +57,7 @@ class CreditsWidget:
         self._draw_bg(surface)
         y = self.bg_box.top + 30
         x = SCREEN_WIDTH / 2
-        antialias = False
+        antialias = True
         for text, font, color in CTRL:
             render = getattr(Fonts, font).render(text, antialias, THECOLORS[color])
             box = render.get_rect()

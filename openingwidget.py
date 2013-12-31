@@ -17,8 +17,8 @@ class OpeningWidget:
         background_box = background_img.get_rect()
         background_box.center = (SCREEN_WIDTH/2, SCREEN_HEIGHT/2)
 
-        donut_img = pygame.image.load(os.path.join(GAMEDIR, DONUT_IMAGE)).convert_alpha()
-        donut_img = pygame.transform.smoothscale(donut_img, (SCREEN_WIDTH//3, SCREEN_HEIGHT//2))
+        donut_img = pygame.image.load(os.path.join(GAMEDIR, TITLE_DONUT_IMAGE)).convert_alpha()
+        donut_img = pygame.transform.smoothscale(donut_img, (320, 320))
         donut_box = donut_img.get_rect()
         donut_box.center = (SCREEN_WIDTH//2, SCREEN_HEIGHT//2)
 

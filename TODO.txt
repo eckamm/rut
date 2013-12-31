@@ -1,14 +1,14 @@
 0-9 difficulty (0 -> easiest)
 a-j desirability (a -> most desirable)
 
-5a: Android version
-1d: py2exe version
+DONE: 5a: Android version
+DONE: 1d: py2exe version
 
 ??: make upgrades better, not just incr_base_cps and incr_pct;
 
-??: order the upgrades properly
-??: soft reset UI
-??: stats UI
+DONE: ??: order the upgrades properly
+DONE: ??: soft reset UI
+DONE: ??: stats UI
 
 ----
 
@@ -26,16 +26,16 @@ DONE: 2a: more columns for upgrades
 DONE: 2g: time played
 
 DONE: 3b: offline cookie accumulation
-3a: make background.png UI
+DONE: 3a: make background.png UI
 3b: show offline gains as game launches
 DONE: 3b: better golden cookie UI
 DONE: 3c: plumbing for building icons
-3c: make individual building icons
+DONE: 3c: make individual building icons
 DONE: 3d: show donut click effect
 DONE: 3e: animate donut click
 
-4c: make individual upgrade icons
-4f: profile selection UI
+DONE: 4c: make individual upgrade icons
+DONE: 4f: profile selection UI
 
 DONE: 5a: heavenly shards / soft-reset engine
 

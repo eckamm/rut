@@ -87,6 +87,10 @@ def profiles_scene(screen, save_jdat):
             elif event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
                 ret_val = None   # None means quit
                 running = False
+            elif event.type == pygame.KEYDOWN and event.key == pygame.K_p:
+                # Removing this key action will also disable the Android "back" button.
+                ret_val = None   # None means quit
+                running = False
             elif event.type == pygame.MOUSEBUTTONDOWN and event.button == LEFTBUTTON:
                 for idx, (donut_img, donut_box, text1, box1, text2, box2, button) in enumerate(ctrl):
                     if button.on_click(event.pos):

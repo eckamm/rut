@@ -14,23 +14,23 @@ class GoldenWidget:
     def __init__(self):
         image_file = GOLDEN_AVAILABLE_IMAGE
         self.available_img = pygame.image.load(os.path.join(GAMEDIR, image_file)).convert_alpha()
-        self.available_img = pygame.transform.smoothscale(self.available_img, (40, 40))
+        self.available_img = pygame.transform.smoothscale(self.available_img, (64, 64))
         self.available_box = self.available_img.get_rect()
         self.available_box.center = (SCREEN_WIDTH/2, SCREEN_HEIGHT/2)
 
         image_file = GOLDEN_ACTIVE_IMAGE
         self.active_img = pygame.image.load(os.path.join(GAMEDIR, image_file)).convert_alpha()
-        self.active_img = pygame.transform.smoothscale(self.active_img, (40, 40))
+        self.active_img = pygame.transform.smoothscale(self.active_img, (64, 64))
         self.active_box = self.active_img.get_rect()
         if MODE==2:
-            self.active_box.center = (0.4*SCREEN_WIDTH, 0.6*SCREEN_HEIGHT)
+            self.active_box.center = (0.4*SCREEN_WIDTH, 0.65*SCREEN_HEIGHT)
         else:
             self.active_box.center = (SCREEN_WIDTH/7, 4*SCREEN_HEIGHT/5)
         self.last_state = ("", False)  # state, active
 
     def _pick_random_pos(self):
-        w_margin = SCREEN_WIDTH//20
-        h_margin = SCREEN_HEIGHT//20
+        w_margin = 64
+        h_margin = 64
         x = w_margin + random.randrange(SCREEN_WIDTH-2*w_margin)
         y = h_margin + random.randrange(SCREEN_HEIGHT-2*h_margin)
         return x, y

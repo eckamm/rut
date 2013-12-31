@@ -23,6 +23,7 @@ class _Fonts:
             self.font_sets.append({
                 "f15": pygame.font.Font(os.path.join(GAMEDIR, kind), 15),
                 "f12": pygame.font.Font(os.path.join(GAMEDIR, kind), 12),
+                "f18": pygame.font.Font(os.path.join(GAMEDIR, kind), 18),
                 "f20": pygame.font.Font(os.path.join(GAMEDIR, kind), 20),
                 "f25": pygame.font.Font(os.path.join(GAMEDIR, kind), 25),
                 "f30": pygame.font.Font(os.path.join(GAMEDIR, kind), 30),

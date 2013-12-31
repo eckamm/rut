@@ -1,0 +1,10 @@
+{"layout": "internal",
+"orientation": "landscape",
+"package": "com.rockwellgamestudio.rut",
+"include_pil": false,
+"name": "R.U.T.",
+"icon_name": "R.U.T.",
+"version": "0.0.8",
+"permissions": ["VIBRATE"],
+"include_sqlite": false,
+"numeric_version": "8"}

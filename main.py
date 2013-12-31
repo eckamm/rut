@@ -30,83 +30,12 @@ from fpswidget import FPSWidget
 from goldenwidget import GoldenWidget
 from donutwidget import DonutWidget
 from hudwidget import HUDWidget
+from buildingswidget import BuildingsWidget
 from resetwidget import ResetWidget
 from opening_scene import opening_scene
 from profiles_scene import profiles_scene
 
 import pygame.transform
-
-
-
-class TheBuildings:
-    def __init__(self, buildings):
-        self.buildings = buildings
-        self._load_images()
-        self.boxes = []
-
-    def _load_images(self):
-        self.images = []
-        for building_id in sorted(self.buildings.keys()):
-            filenm = os.path.join(GAMEDIR, IMAGE_DIR, "building-%s.png" % (building_id,))
-            self.images.append(pygame.image.load(filenm).convert_alpha())
-
-    def update(self, current, building_costs):
-        self.current = current
-        self.building_costs = building_costs
-
-    def draw(self, surface):
-        y = 5
-        self.boxes = []
-        buyable = ex1.get_buyable_buildings(self.current, self.buildings)
-        for idx, building_id in enumerate(sorted(self.buildings.keys())):
-            if building_id in buyable:
-                color = TEXT_COLOR
-            else:
-                color = THECOLORS["orange"]
-            name = self.buildings[building_id].get("name", building_id)
-            render = make_text(Fonts.f15, "%s (%d)" % (name,
-                self.current["buildings"][building_id]),
-                TEXT_ANTIALIAS, color, TEXT_BACKGROUND)
-            render2 = make_text(Fonts.f12, "Cost: %s" % (
-                fmt(self.building_costs[building_id])),
-                TEXT_ANTIALIAS, color, TEXT_BACKGROUND)
-
-            box2 = self.images[idx].get_rect()
-            box2.top = y
-            if MODE == 2:
-                box2.left = 0
-            else:
-                box2.left = 1.4 * SCREEN_WIDTH / 5
-            surface.blit(self.images[idx], box2)
-
-            box = render.get_rect()
-            box.left = box2.right + 2
-            box.bottom = box2.centery
-            surface.blit(render, box)
-
-            box3 = render2.get_rect()
-            box3.left = box2.right + 2
-            box3.top = box2.centery
-            surface.blit(render2, box3)
-
-            y += box2.height + 5
-            self.boxes.append((box, box2, box3))
-
-    def on_click(self, pos):
-        building_ids = sorted(self.buildings.keys())
-        for boxes, building_id in zip(self.boxes, building_ids):
-            for box in boxes:
-                if box.collidepoint(pos):
-                    ex1.buy_building(self.current, self.buildings, building_id)
-                    return True
-
-    def on_mouseover(self, pos, rollover_widget):
-        building_ids = sorted(self.buildings.keys())
-        for boxes, building_id in zip(self.boxes, building_ids):
-            for box in boxes:
-                if box.collidepoint(pos):
-                    text = ex1.get_building_text(self.current, self.buildings, building_id)
-                    rollover_widget.update(text)
 
 
 
@@ -243,8 +172,13 @@ def main2():
 #   images = Images()
 
     rules_filenm = os.path.join(GAMEDIR, "params.json")
-    save_filenm = os.path.join(GAMEDIR, "savegame.json")
-    save_jdat, buildings, upgrades, xupgrades = ex1.setup("savegame.json", "params.json")
+    if android:
+        save_filenm = os.path.join(GAMEDIR, "savegame.json")
+    else:
+        save_filenm = os.path.join(os.path.expanduser("~"), "rut-savegame.json")
+        print "@@@", save_filenm
+
+    save_jdat, buildings, upgrades, xupgrades = ex1.setup(save_filenm, "params.json")
 
     while running:
 
@@ -276,7 +210,8 @@ def game_scene(screen, images, profile_id, save_jdat, save_filenm, buildings, up
     fps_widget = FPSWidget()
     hud_widget = HUDWidget()
     donut_widget = DonutWidget()
-    buildings_widget = TheBuildings(buildings)
+#   buildings_widget = TheBuildings(buildings)
+    buildings_widget = BuildingsWidget(buildings)
     upgrades_widget = TheUpgrades(upgrades, buildings, images)
     rollover_widget = RolloverWidget()
     golden_widget = GoldenWidget()
@@ -351,6 +286,15 @@ def game_scene(screen, images, profile_id, save_jdat, save_filenm, buildings, up
             elif event.type == pygame.KEYDOWN and event.key == pygame.K_f:
                 font_set_idx = (font_set_idx + 1) % len(Fonts.font_sets)
                 Fonts.activate_font_set(font_set_idx)
+
+            elif event.type == pygame.KEYDOWN and event.key == pygame.K_g:
+                from fmt import fmt as xxfmt
+                xxfmt.next()
+
+            elif event.type == pygame.KEYDOWN and event.key == pygame.K_p:
+                # Removing this key action will also disable the Android "back" button.
+                do_quit = False
+                running = False
 
             elif event.type == pygame.KEYDOWN and event.key == pygame.K_a:
                 current["cookies"] += 100000000000000000
@@ -465,8 +409,7 @@ def game_scene(screen, images, profile_id, save_jdat, save_filenm, buildings, up
 def main():
     if android:
         android.init()
-        android.map_key(android.KEYCODE_BACK, pygame.K_ESCAPE)
-        android.map_key(android.KEYCODE_BACK, pygame.K_q)
+        android.map_key(android.KEYCODE_BACK, pygame.K_p)
 
     GAMEDIR = os.path.dirname(os.path.abspath(sys.argv[0]))
     if os.environ.get("PROFILE", "") == "1":
