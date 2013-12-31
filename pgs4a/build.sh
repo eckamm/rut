@@ -10,11 +10,13 @@ SCRIPTDIR=$(readlink -fn "$(dirname "$0")")
 SRCDIR=$(readlink -fn "$SCRIPTDIR/../src")
 
 # Utility locations...
-PYTHON="/cygdrive/c/Python27/python.exe"
-PGS4ADIR="/cygdrive/c/pgs4a-0.9.4"
-KEYTOOL="/cygdrive/c/Program Files/Java/jre7/bin/keytool.exe"
-JARSIGNER="/cygdrive/c/Program Files/Java/jdk1.7.0_10/bin/jarsigner.exe"
-ZIPALIGN="/cygdrive/c/pgs4a-0.9.4/android-sdk/tools/zipalign.exe"
+. ~/.utility-config.sh
+# Example utility-config.sh:
+#     PYTHON="/cygdrive/c/Python27/python.exe"
+#     PGS4ADIR="/cygdrive/c/pgs4a-0.9.4"
+#     KEYTOOL="/cygdrive/c/Program Files/Java/jre7/bin/keytool.exe"
+#     JARSIGNER="/cygdrive/c/Program Files/Java/jdk1.7.0_10/bin/jarsigner.exe"
+#     ZIPALIGN="/cygdrive/c/pgs4a-0.9.4/android-sdk/tools/zipalign.exe"
 
 BUILDDIR="$PGS4ADIR/$PGM"
 

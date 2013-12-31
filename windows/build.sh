@@ -6,8 +6,10 @@ SCRIPTDIR=$(readlink -fn "$(dirname "$0")")
 SRCDIR=$(readlink -fn "$SCRIPTDIR/../src")
 
 # Utility locations...
-PYTHON="/cygdrive/c/Python27/python.exe"
-ISCC="/cygdrive/c/Program Files (x86)/Inno Setup 5/ISCC.exe"
+. ~/.utility-config.sh
+# Example ~/.utility-config.sh:
+#     PYTHON="/cygdrive/c/Python27/python.exe"
+#     ISCC="/cygdrive/c/Program Files (x86)/Inno Setup 5/ISCC.exe"
 
 mkdir -p build
 BUILDDIR="build/$PGM"
