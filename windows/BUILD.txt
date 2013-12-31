@@ -1,40 +1,16 @@
+The build.sh script is for using Windows py2exe in a Cygwin environment.
 
+The build.sh script will create an executabe installer.
 
-== Build a Windows Executable ==
-
-The file py2exe-setup.py is the "Windows executable build script".
-
-If the version changes, update:
-    self.project_version = "0.0.8"
-
-If the extra folders which need to be included changes, update:
-    self.extra_datas = ["params.json", "fonts", "imageset-b"]
-
-Then run the following:
-    c:\Python27\python.exe py2exe-setup.py
-
-The output will be in the dist directory.    
-
-
-
-== Create a Windows Installer ==
-
-The Windows executable build in the dist directory can be used
-to create a Windows Installer.
-
-The file rut.iss contains the package specs for Inno Setup 5 to
-create a Windows installer.
-
-If the version changes, update:
-    #define MyAppVersion "0.0.8"
-
-If the files or folders which need to be included changes, update
-the [Files] section.
-
-Then run the folllowing:
-    c:\Program Files (x86)\Inno Setup 5\ISCC.exe rut.iss
-
-The output is:
-    dist/setup-rut.exe
+    1. Edit py2exe-setup.py.
+        * version (project_version)
+        * files and directories to include (extra_datas)
+    2. Edit rut.iss.
+        * version (MyAppVersion)
+        * files and directories to include ([Files] section)
+    3. Edit build.sh.
+        * file/directory cleanup in setup_source
+    4. Run build.sh.
+    5. The output is in ./dist.
 
 

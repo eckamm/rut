@@ -12,7 +12,7 @@ DONE: ??: stats UI
 
 ----
 
-0c: use narrower font
+DONE: 0c: use narrower font
 DONE: 0e: add background image
 
 DONE: 1b: upgrades at 100 buildings
@@ -22,7 +22,7 @@ DONE: 1d: Goldens can appear half off the screen when near screen edges.
 1h: fullscreen/window switching
 
 DONE: 2a: more columns for upgrades
-2c: add line to rollover and use bigger font
+2a: add line to rollover and use bigger font
 DONE: 2g: time played
 
 DONE: 3b: offline cookie accumulation
@@ -43,8 +43,8 @@ DONE: 6a: golden cookies
 
 
 goals:
-    ?i: polish
+    ?a: polish
     ?d: completeness
-    ?a: more features
+    ?d: more features
 
 

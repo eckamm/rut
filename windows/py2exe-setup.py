@@ -153,8 +153,8 @@ class BuildExe:
                 'icon_resources': [(0, self.icon_file)],
                 'copyright': self.copyright
             }],
-            options = {'py2exe': {'optimize': 2, 'bundle_files': 1, 'compressed': True, \
-                                  'excludes': self.exclude_modules, 'packages': self.extra_modules, \
+            options = {'py2exe': {'optimize': 2, 'bundle_files': 1, 'compressed': True,
+                                  'excludes': self.exclude_modules, 'packages': self.extra_modules,
                                   'dll_excludes': self.exclude_dll,
                                   'includes': self.extra_scripts} },
             zipfile = self.zipfile_name,

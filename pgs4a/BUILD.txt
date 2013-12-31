@@ -1,0 +1,12 @@
+The build.sh script is for using Windows Python and Java in a Cygwin environment.
+
+The build.sh script will create a R.U.T. APK and sign it.
+
+    1. Edit rut.android.json.
+        * version
+    2. Edit build.sh.
+        * APK_VERSION
+        * file/directory cleanup in setup_source
+    3. Run build.sh.
+    4. The output is in ./dist.
+
