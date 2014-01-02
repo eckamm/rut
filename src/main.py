@@ -150,9 +150,9 @@ def main2():
     if not android:
         screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), DISPLAY_FLAGS, 32)
     else:
-        screen = pygame.display.set_mode((0, 0))
-        w, h = screen.get_size()
-        print "Native resolution:", (w, h)
+#       screen = pygame.display.set_mode((0, 0))
+#       w, h = screen.get_size()
+#       print "Native resolution:", (w, h)
 #       w = w / 2
 #       h = h / 2
 #       print "Set resolution:", (w, h)

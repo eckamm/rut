@@ -3,8 +3,7 @@ set -eux
 # Project specific parameters...
 PGM="rut"
 APK_NAME="R.U.T."    # TODO: get from .android.json
-APK_VERSION="0.0.8"  # TODO: get from source
-KEYSTORE="/home/eric/keys/rockwellgamestudio.keystore"
+APK_VERSION="0.0.9"  # TODO: get from source
 KEYALIAS="main"
 SCRIPTDIR=$(readlink -fn "$(dirname "$0")")
 SRCDIR=$(readlink -fn "$SCRIPTDIR/../src")
@@ -14,9 +13,6 @@ SRCDIR=$(readlink -fn "$SCRIPTDIR/../src")
 # Example utility-config.sh:
 #     PYTHON="/cygdrive/c/Python27/python.exe"
 #     PGS4ADIR="/cygdrive/c/pgs4a-0.9.4"
-#     KEYTOOL="/cygdrive/c/Program Files/Java/jre7/bin/keytool.exe"
-#     JARSIGNER="/cygdrive/c/Program Files/Java/jdk1.7.0_10/bin/jarsigner.exe"
-#     ZIPALIGN="/cygdrive/c/pgs4a-0.9.4/android-sdk/tools/zipalign.exe"
 
 BUILDDIR="$PGS4ADIR/$PGM"
 
@@ -35,26 +31,6 @@ function setup_source {
     cp "$PGM.android.json" "$BUILDDIR/.android.json"
 }
 
-function sign_apk {
-    local unsigned_apk="${APK_NAME}-${APK_VERSION}-release-unsigned.apk"
-    local unaligned_apk=$(echo "$unsigned_apk" | sed 's/unsigned/unaligned/')
-    local signed_apk=$(echo "$unaligned_apk" | sed 's/unaligned/signed/')
-
-    mkdir -p dist && cd dist
-    # Copy local...
-    cp "$PGS4ADIR/bin/$unsigned_apk" .
-    chmod 644 "$unsigned_apk"
-    # Sign...
-    "$JARSIGNER" -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore "$(cygpath -w "$KEYSTORE")" "$unsigned_apk" "$KEYALIAS"
-    mv "$unsigned_apk" "$unaligned_apk"
-    # Verify...
-    "$JARSIGNER" -verify -certs "$unaligned_apk"
-    # Align...
-    if [ -e "$signed_apk" ]; then rm "$signed_apk"; fi
-    "$ZIPALIGN" -v 4 "$unaligned_apk" "$signed_apk"
-    rm "$unaligned_apk"
-    ls -l "$signed_apk"
-}
 
 # Copy the source into a temporary build directory.
 setup_source
@@ -63,14 +39,12 @@ setup_source
 if [ "${1:-nodev}" == "dev" ]; then
     # Build the APK, install to device, and start logcat.
     (cd $PGS4ADIR && "$PYTHON" android.py build "$PGM" release install)
-    (cd $PGS4ADIR && ls -l bin)
+    ls -l "$PGS4ADIR/bin"
     (cd $PGS4ADIR && "$PYTHON" android.py logcat)
 else
     # Build the APK.
     (cd $PGS4ADIR && "$PYTHON" android.py build "$PGM" release)
-    # Sign the APK.  Output is in ./dist.
-    sign_apk
-    (cd $PGS4ADIR && ls -l bin)
+    ls -l "$PGS4ADIR/bin"
 fi
 
 exit 0

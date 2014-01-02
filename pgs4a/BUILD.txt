@@ -8,5 +8,5 @@ The build.sh script will create a R.U.T. APK and sign it.
         * APK_VERSION
         * file/directory cleanup in setup_source
     3. Run build.sh.
-    4. The output is in ./dist.
+    4. The output is in $PGS4ADIR/bin.
 
