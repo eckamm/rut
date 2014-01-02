@@ -1,6 +1,4 @@
-set -e
-set -u
-set -x
+set -eux
 
 # Project specific parameters...
 PGM="rut"
@@ -41,22 +39,12 @@ setup_source
 if [ "${1:-nodev}" == "dev" ]; then
     # Build the APK, install to device, and start logcat.
     (cd $PGS4ADIR && "$PYTHON" android.py build "$PGM" release install)
-<<<<<<< HEAD
     ls -l "$PGS4ADIR/bin"
-=======
-    (cd $PGS4ADIR && ls -l bin)
->>>>>>> dsfdsfdsfsdf
     (cd $PGS4ADIR && "$PYTHON" android.py logcat)
 else
     # Build the APK.
     (cd $PGS4ADIR && "$PYTHON" android.py build "$PGM" release)
-<<<<<<< HEAD
     ls -l "$PGS4ADIR/bin"
-=======
-    # Sign the APK.  Output is in ./dist.
-    sign_apk
-    (cd $PGS4ADIR && ls -l bin)
->>>>>>> dsfdsfdsfsdf
 fi
 
 exit 0
