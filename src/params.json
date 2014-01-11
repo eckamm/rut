@@ -110,7 +110,7 @@
         ["udd3", {"cost": 250000000000, "target": "bA", "incr_pct":2.0, "requirements": {"bA":10}, "name": "Octal Core", "flavor": "2*2+2+2"}],
         ["udd4", {"cost": 5000000000000, "target": "bA", "incr_pct":2.0, "requirements": {"bA":25}, "name": "Decisi Core", "flavor": "(2*2)*(2*2)"}],
         ["udd5", {"cost": 25000000000000, "target": "bA", "incr_pct":2.0, "requirements": {"bA":50}, "name": "Tridecdual Core", "flavor": "(22*2)-(2*2*2*2)+(2*2)"}],
-        ["udd6", {"cost": 250000000000000, "target": "bA", "incr_pct":2.0, "requirements": {"bA":100}, "name": "QuadQuad Quadratic Core", "flavor": "2((22*2)-(2*2*2*2)+(2*2))"}],
+        ["udd6", {"cost": 250000000000000, "target": "bA", "incr_pct":2.0, "requirements": {"bA":100}, "name": "Quadecquad Core", "flavor": "2((22*2)-(2*2*2*2)+(2*2))"}],
         
         ["uod1", {"cost": 2500000000000, "target": "bB", "incr_base_cps":25000000.0, "requirements": {"bB":1}, "name": "Mass Condenser", "flavor": "Condenses mass on to your donut."}],
         ["uod2", {"cost": 5000000000000, "target": "bB", "incr_pct":2.0, "requirements": {"bB":5}, "name": "Spin", "flavor": "Now avaliable in two flavors!"}],

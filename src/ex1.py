@@ -79,10 +79,10 @@ class GoldenModel:
     ["cookies", 2.0] -> add 2*current["cookies"]
     """
     rules = {
-        "gr10": {"name": "Frenzy", "weight": 20, "effects": {"cps": 2.0, "cpc": 2.0}, "duration": 15.0},
-        "gr20": {"name": "Super-frenzy", "weight": 10, "effects": {"cps": 8.0, "cpc": 8.0}, "duration": 10.0},
-        "gr30": {"name": "Super-click", "weight": 1, "effects": {"cps": 1.0, "cpc": 1000.0}, "duration": 5.0},
-        "gr40": {"name": "MEGAFRENZY", "weight": 1, "effects": {"cps": 55.0, "cpc": 55.0}, "duration": 5.0},
+        "gr10": {"name": "Mega Donut", "weight": 20, "effects": {"cps": 2.0, "cpc": 2.0}, "duration": 88.0},
+        "gr20": {"name": "Super Donut", "weight": 10, "effects": {"cps": 8.0, "cpc": 8.0}, "duration": 88.0},
+        "gr30": {"name": "Mega Click", "weight": 5, "effects": {"cps": 1.0, "cpc": 1000.0}, "duration": 55.0},
+        "gr40": {"name": "CAPS LOCK DONUT", "weight": 3, "effects": {"cps": 55.0, "cpc": 55.0}, "duration": 55.0},
     }
 
     def __init__(self, data):
@@ -107,7 +107,7 @@ class GoldenModel:
             if d["timer"] <= 0.0:
                 # transition from available to waiting
                 d["state"] = "waiting"
-                d["timer"] = float(random.randrange(60, 180))
+                d["timer"] = float(random.randrange(120, 360))
                 d["active"] = False
                 print >>sys.stderr, "golden transitioned to waiting; timer=%.1f" % (d["timer"],)
         else:
