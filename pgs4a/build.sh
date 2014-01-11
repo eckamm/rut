@@ -4,7 +4,6 @@ set -eux
 PGM="rut"
 APK_NAME="R.U.T."    # TODO: get from .android.json
 APK_VERSION="0.0.9"  # TODO: get from source
-KEYALIAS="main"
 SCRIPTDIR=$(readlink -fn "$(dirname "$0")")
 SRCDIR=$(readlink -fn "$SCRIPTDIR/../src")
 

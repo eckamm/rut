@@ -219,3 +219,6 @@ pip-log.txt
 #############
 *.stackdump
 savegame.json
+
+pgu-0.18/
+pgu-0.18.zip
