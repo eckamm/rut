@@ -328,6 +328,10 @@ def calc_cps(current, buildings, upgrades, xupgrades, bg=False):
         if current["upgrades"][upgrade_id]:
             cpc *= upgrades[upgrade_id].get("incr_pct", 1.0)
     cpc *= multcpc
+    for upgrade_id in xupgrades.get(building_id, []):
+        if current["upgrades"][upgrade_id]:
+            cpc += (upgrades[upgrade_id].get("incr_dpc_by_pct_dps", 0.0) * cps)
+
 
     if not bg:
         # Apply golden cookie factors.
@@ -478,6 +482,8 @@ def get_upgrade_text(current, upgrades, buildings, upgrade_id):
             descr2 = "Adds to DPS by %s donuts." % (upgrades[upgrade_id]["incr_pct"])
         else:
             descr2 = "Adds %s donuts to %s's base DPS." % (fmt(upgrades[upgrade_id]["incr_base_cps"]), buildings[building_id]["name"])
+    if upgrades[upgrade_id].get("incr_dpc_by_pct_dps", "") != "":
+        descr2 = "Adds %s%% of your DPS to your DPC." % (upgrades[upgrade_id]["incr_dpc_by_pct_dps"])
     
     
     return "%s -- %s donuts -- %s -- %s\n%s" % (name, fmt(upgrades[upgrade_id]["cost"]), descr, descr2,flavor)

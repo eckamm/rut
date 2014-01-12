@@ -19,14 +19,24 @@
 
         ["uc1", {"cost": 50, "target": "click", "incr_pct":2.0, "requirements": {"game_cookies":100}, "name": "Singular Click", "flavor": "One click."}],
         ["uc2", {"cost": 200, "target": "click", "incr_pct":2.0, "requirements": {"game_cookies":400}, "name": "Dual Click", "flavor": "A small group clicks."}],
-        ["uc3", {"cost": 800, "target": "click", "incr_pct":2.0, "requirements": {"game_cookies":1600}, "name": "Triple Click", "flavor": "A few clicks."}],
-        ["uc4", {"cost": 3200, "target": "click", "incr_pct":2.0, "requirements": {"game_cookies":6400}, "name": "Quad Click", "flavor": "Some clicks."}],
-        ["uc5", {"cost": 12800, "target": "click", "incr_pct":2.0, "requirements": {"game_cookies":25600}, "name": "Quinta Click", "flavor": "Some more clicks."}],
-        ["uc6", {"cost": 51200, "target": "click", "incr_pct":2.0, "requirements": {"game_cookies":102400}, "name": "Sixtal Click", "flavor": "A gang of clicks."}],
-        ["uc7", {"cost": 204800, "target": "click", "incr_pct":2.0, "requirements": {"game_cookies":409600}, "name": "Septimal Click", "flavor": "A lot of clicks."}],
-        ["uc8", {"cost": 819200, "target": "click", "incr_pct":2.0, "requirements": {"game_cookies":1638400}, "name": "Octal Click", "flavor": "A LOT of clicks."}],
-        ["uc9", {"cost": 3276800, "target": "click", "incr_pct":2.0, "requirements": {"game_cookies":6553600}, "name": "Novenal Click", "flavor": "Too many clicks."}],
-        ["ucA", {"cost": 13107200, "target": "click", "incr_pct":2.0, "requirements": {"game_cookies":26214400}, "name": "Deci Click", "flavor": "Really, 1000000000 clicks? Might want to think about outside storage."}],
+        ["uc3", {"cost": 800, "target": "click", "incr_dpc_by_pct_dps":0.01, "requirements": {"game_cookies":1600}, "name": "Triple Click", "flavor": "A few clicks."}],
+        ["uc4", {"cost": 3200, "target": "click", "incr_dpc_by_pct_dps":0.01, "requirements": {"game_cookies":6400}, "name": "Quad Click", "flavor": "Some clicks."}],
+        ["uc5", {"cost": 12800, "target": "click", "incr_dpc_by_pct_dps":0.02, "requirements": {"game_cookies":25600}, "name": "Quinta Click", "flavor": "Some more clicks."}],
+        ["uc6", {"cost": 51200, "target": "click", "incr_dpc_by_pct_dps":0.02, "requirements": {"game_cookies":102400}, "name": "Sixtal Click", "flavor": "A gang of clicks."}],
+        ["uc7", {"cost": 204800, "target": "click", "incr_dpc_by_pct_dps":0.03, "requirements": {"game_cookies":409600}, "name": "Septimal Click", "flavor": "A lot of clicks."}],
+        ["uc8", {"cost": 819200, "target": "click", "incr_dpc_by_pct_dps":0.03, "requirements": {"game_cookies":1638400}, "name": "Octal Click", "flavor": "A LOT of clicks."}],
+        ["uc9", {"cost": 3276800, "target": "click", "incr_dpc_by_pct_dps":0.04, "requirements": {"game_cookies":6553600}, "name": "Novenal Click", "flavor": "Too many clicks."}],
+        ["ucA", {"cost": 13107200, "target": "click", "incr_dpc_by_pct_dps":0.04, "requirements": {"game_cookies":26214400}, "name": "Deci Click", "flavor": "Really, 1000000000 clicks? Might want to think about outside storage."}],
+        ["ucB", {"cost": 100000000, "target": "click", "incr_dpc_by_pct_dps":0.05, "requirements": {"game_cookies":200000000}, "name": "Walking Click", "flavor": "A leisurely click."}],
+        ["ucC", {"cost": 10000000000, "target": "click", "incr_dpc_by_pct_dps":0.05, "requirements": {"game_cookies":20000000000}, "name": "Running Click", "flavor": "A normal-paced click."}],
+        ["ucD", {"cost": 1000000000000, "target": "click", "incr_dpc_by_pct_dps":0.06, "requirements": {"game_cookies":2000000000000}, "name": "Sprinting Click", "flavor": "A fast click."}],
+        ["ucE", {"cost": 100000000000000, "target": "click", "incr_dpc_by_pct_dps":0.06, "requirements": {"game_cookies":200000000000000}, "name": "Cheetah Click", "flavor": "A very fast click."}],
+        ["ucF", {"cost": 100000000000000000, "target": "click", "incr_dpc_by_pct_dps":0.07, "requirements": {"game_cookies":200000000000000000}, "name": "Light-speed Click", "flavor": "A click faster than you can fathom."}],
+        ["ucG", {"cost": 1000000000000000000000, "target": "click", "incr_dpc_by_pct_dps":0.07, "requirements": {"game_cookies":2000000000000000000000}, "name": "Tachyon Click", "flavor": "A click that will keep getting faster..."}],
+
+
+
+
         
         ["u*1", {"cost": 55, "target": "*", "incr_pct":1.05, "requirements": {"game_cookies":555}, "name": "Plain Donut", "flavor": "A plain donut that always gets eaten last in the variety pack."}],
         ["u*2", {"cost": 555, "target": "*", "incr_pct":1.10, "requirements": {"game_cookies":5555}, "name": "Glazed Donut", "flavor": "A glazed donut. Yum!"}],
