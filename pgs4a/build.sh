@@ -3,7 +3,7 @@ set -eux
 # Project specific parameters...
 PGM="rut"
 APK_NAME="R.U.T."    # TODO: get from .android.json
-APK_VERSION="0.0.9"  # TODO: get from source
+APK_VERSION="0.1.2"  # TODO: get from source
 SCRIPTDIR=$(readlink -fn "$(dirname "$0")")
 SRCDIR=$(readlink -fn "$SCRIPTDIR/../src")
 
@@ -30,6 +30,10 @@ function setup_source {
     cp "$PGM.android.json" "$BUILDDIR/.android.json"
 }
 
+if [ "${1:-nodev}" == "logcat" ]; then
+    (cd $PGS4ADIR && "$PYTHON" android.py logcat)
+    exit 0
+fi
 
 # Copy the source into a temporary build directory.
 setup_source

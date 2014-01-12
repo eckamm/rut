@@ -219,6 +219,7 @@ def game_scene(screen, images, profile_id, save_jdat, save_filenm, buildings, up
     credits_widget = CreditsWidget()
     reset_widget = ResetWidget()
 
+    golden_widget.update(golden)
 
     credits_button_widget = ButtonWidget(BUTTON_CREDITS_IMAGE)
     tmp = credits_button_widget.box
@@ -274,6 +275,9 @@ def game_scene(screen, images, profile_id, save_jdat, save_filenm, buildings, up
 
             elif event.type == pygame.KEYDOWN and event.key == pygame.K_1:
                 stats_widget.showing = True
+
+            elif event.type == pygame.KEYDOWN and event.key == pygame.K_2:
+                golden_widget.golden.data["timer"] = 0.1
 
             elif event.type == pygame.KEYDOWN and event.key == pygame.K_c:
                 credits_widget.showing = True
@@ -338,6 +342,7 @@ def game_scene(screen, images, profile_id, save_jdat, save_filenm, buildings, up
             elif event.type == pygame.MOUSEMOTION:
                 buildings_widget.on_mouseover(event.pos, rollover_widget)
                 upgrades_widget.on_mouseover(event.pos, rollover_widget)
+                golden_widget.on_mouseover(event.pos, rollover_widget)
 
         # FINISH: make functions in ex1 which do all this work.
         # ex1.update_state(lifetime, current, elapsed)

@@ -79,10 +79,10 @@ class GoldenModel:
     ["cookies", 2.0] -> add 2*current["cookies"]
     """
     rules = {
-        "gr10": {"name": "Mega Donut", "weight": 20, "effects": {"cps": 2.0, "cpc": 2.0}, "duration": 88.0},
-        "gr20": {"name": "Super Donut", "weight": 10, "effects": {"cps": 8.0, "cpc": 8.0}, "duration": 88.0},
-        "gr30": {"name": "Mega Click", "weight": 5, "effects": {"cps": 1.0, "cpc": 1000.0}, "duration": 55.0},
-        "gr40": {"name": "CAPS LOCK DONUT", "weight": 3, "effects": {"cps": 55.0, "cpc": 55.0}, "duration": 55.0},
+        "gr10": {"name": "Mega Donut", "weight": 20, "effects": {"cps": 2.0, "cpc": 2.0}, "duration": 88.0, "flavor": "Mega Donut!!!!!! -- 2xDPC 2xDPS\nDoubling is better than nothing."},
+        "gr20": {"name": "Super Donut", "weight": 10, "effects": {"cps": 8.0, "cpc": 8.0}, "duration": 88.0, "flavor": "Super Donut!!!!!! -- 8xDPC 8xDPS\nEight times as sweet."},
+        "gr30": {"name": "Mega Click", "weight": 5, "effects": {"cps": 1.0, "cpc": 1000.0}, "duration": 55.0, "flavor": "Mega Click!!!!!! -- 1000xDPC\nGreat for the clicker in you."},
+        "gr40": {"name": "CAPS LOCK DONUT", "weight": 3, "effects": {"cps": 55.0, "cpc": 55.0}, "duration": 55.0, "flavor": "CAPS LOCK DONUT!!!!!! -- 55xDPC 55xDPS\n55x, no way!"},
     }
 
     def __init__(self, data):

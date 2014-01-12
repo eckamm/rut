@@ -73,3 +73,10 @@ class GoldenWidget:
             self.golden.activate()
             return True
 
+    def on_mouseover(self, pos, rollover_widget):
+        if self.golden.data["state"] == "available" and self.golden.data["active"]:
+            if self.active_box.collidepoint(pos):
+                rule = self.golden.get_ctrl()
+                text = rule["flavor"]
+                rollover_widget.update(text)
+

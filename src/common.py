@@ -25,7 +25,7 @@ MODE = int(os.environ.get("MODE", 2))
 GAMEDIR = os.path.dirname(os.path.abspath(sys.argv[0]))
 
 
-VERSION = "0.0.9"
+VERSION = "0.1.2"
 
 
 LEFTBUTTON = 1

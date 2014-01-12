@@ -4,7 +4,7 @@
 #define MyShortName "rut"
 #define MySrcDir "build\rut\dist"
 #define MyAppName "R.U.T."
-#define MyAppVersion "0.0.8"
+#define MyAppVersion "0.0.10"
 #define MyAppPublisher "Rockwell Game Studio"
 #define MyAppExeName "main.exe"
 
